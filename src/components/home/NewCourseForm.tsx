@@ -67,7 +67,7 @@ export function NewCourseForm() {
           maxLength={2000}
           placeholder="The theory of relativity — I know nothing about physics, and I'd love to finally understand why time slows down…"
           aria-label="What do you want to learn?"
-          className="block min-h-[88px] w-full resize-none bg-transparent px-5 pt-4 pb-2 font-[family-name:var(--font-newsreader)] text-[21px] leading-relaxed text-text outline-none placeholder:text-muted/60"
+          className="block min-h-[88px] w-full resize-none bg-transparent px-5 pt-4 pb-2 focus-visible:outline-none font-[family-name:var(--font-newsreader)] text-[21px] leading-relaxed text-text outline-none placeholder:text-muted/60"
         />
         <div className="flex flex-wrap items-center justify-between gap-3 px-3 pb-2 pt-1">
           <div role="radiogroup" aria-label="Level" className="flex rounded-full bg-border/40 p-1 font-ui text-[13px]">
@@ -93,7 +93,7 @@ export function NewCourseForm() {
         </div>
       </div>
       <ErrorText>{error}</ErrorText>
-      <div className="mt-5 flex flex-wrap justify-center gap-2">
+      <div className="mt-9 flex flex-wrap justify-center gap-2.5">
         {SUGGESTIONS.map((s) => (
           <button
             key={s}
