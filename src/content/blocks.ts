@@ -138,6 +138,35 @@ export const stepsWidget = z.object({
   caption,
 });
 
+const conceptNode = z.object({
+  id: identifier,
+  label: z.string().min(1).max(60),
+  summary: md,
+  x: z.number().min(0).max(100),
+  y: z.number().min(0).max(100),
+  group: z.number().int().min(0).max(3).optional(),
+});
+
+/** A map of how ideas connect (Map format). Selecting a node can open a quick bite about it. */
+export const conceptMapWidget = z
+  .object({
+    type: z.literal("conceptMap"),
+    id,
+    nodes: z.array(conceptNode).min(4).max(24),
+    edges: z.array(z.object({ from: identifier, to: identifier, label: z.string().max(60).optional() })).max(60).default([]),
+    caption,
+  })
+  .superRefine((m, ctx) => {
+    const ids = new Set<string>();
+    m.nodes.forEach((n, i) => {
+      if (ids.has(n.id)) ctx.addIssue({ code: "custom", path: ["nodes", i, "id"], message: `duplicate node id "${n.id}"` });
+      ids.add(n.id);
+    });
+    m.edges.forEach((e, i) => {
+      if (!ids.has(e.from) || !ids.has(e.to)) ctx.addIssue({ code: "custom", path: ["edges", i], message: `edge ${e.from} → ${e.to} refers to a node that does not exist` });
+    });
+  });
+
 /** Every widget except `custom` — used as the fallback for custom widgets. */
 export const libraryWidget = z.discriminatedUnion("type", [
   diagramWidget,
@@ -164,6 +193,7 @@ export const customWidget = z.object({
 });
 
 export const blockSchema = z.discriminatedUnion("type", [
+  conceptMapWidget,
   paragraphBlock,
   headingBlock,
   calloutBlock,
@@ -201,6 +231,7 @@ export const WIDGET_TYPES = new Set<BlockType>([
   "reveal",
   "steps",
   "custom",
+  "conceptMap",
 ]);
 
 /** Text blocks whose prose can be selected for ask-about-selection. */
@@ -208,6 +239,19 @@ export const TEXT_BLOCK_TYPES = new Set<BlockType>(["paragraph", "callout", "lis
 
 /** Strict schema for one AI section response (used for validation + repair). */
 export const sectionBlocksSchema = z.object({ blocks: z.array(blockSchema).min(1) });
+
+/** Drop duplicate nodes and edges that point at missing nodes, so one bad edge does not lose the whole map. */
+function cleanConceptMap(m: Record<string, unknown>) {
+  if (!Array.isArray(m.nodes)) return;
+  const seen = new Set<string>();
+  m.nodes = m.nodes.filter((n) => {
+    const nid = (n as { id?: unknown })?.id;
+    if (typeof nid !== "string" || seen.has(nid)) return false;
+    seen.add(nid);
+    return true;
+  });
+  if (Array.isArray(m.edges)) m.edges = m.edges.filter((e) => seen.has((e as { from?: string })?.from ?? "") && seen.has((e as { to?: string })?.to ?? ""));
+}
 
 /**
  * Keep every valid block, drop invalid ones, and make ids present and unique.
@@ -221,6 +265,7 @@ export function parseBlocksLenient(raw: unknown): Block[] {
     if (!item || typeof item !== "object") return;
     const candidate = { ...(item as Record<string, unknown>) };
     if (typeof candidate.id !== "string" || !candidate.id) candidate.id = `b${i}`;
+    if (candidate.type === "conceptMap") cleanConceptMap(candidate);
     const parsed = blockSchema.safeParse(candidate);
     if (!parsed.success) return;
     let blockId = parsed.data.id;

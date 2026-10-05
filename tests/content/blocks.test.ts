@@ -8,9 +8,9 @@ describe("blockSchema", () => {
     for (const b of everyBlock) expect(blockSchema.safeParse(b).success, b.type).toBe(true);
   });
 
-  it("knows all 11 widget types", () => {
+  it("knows all 12 widget types", () => {
     expect([...WIDGET_TYPES].sort()).toEqual(
-      ["cards", "chart", "compare", "custom", "diagram", "formula", "plot", "reveal", "scrolly", "steps", "timeline"].sort(),
+      ["cards", "chart", "compare", "conceptMap", "custom", "diagram", "formula", "plot", "reveal", "scrolly", "steps", "timeline"].sort(),
     );
   });
 

@@ -1,4 +1,5 @@
 import {
+  type AnyPgColumn,
   boolean,
   index,
   integer,
@@ -11,6 +12,7 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 import type { Block } from "@/content/blocks";
+import type { FormatId } from "@/content/formats";
 import type { Theme } from "@/content/theme";
 import type { LessonPlan, Quiz } from "@/content/outline";
 
@@ -77,6 +79,10 @@ export const courses = pgTable(
     language: text("language").notNull(),
     level: text("level").$type<Level>().notNull(),
     status: text("status").$type<CourseStatus>().notNull().default("outlining"),
+    /** How the topic is taught: a multi-lesson course or a single-page format (src/content/formats.ts). */
+    format: text("format").$type<FormatId>().notNull().default("course"),
+    /** The item this one came from (a map's quick bites, a course's cheat sheet). */
+    parentId: uuid("parent_id").references((): AnyPgColumn => courses.id, { onDelete: "set null" }),
     /** Set while an outline rewrite (reshape/steer) is running. */
     busy: text("busy").$type<"reshaping" | "steering">(),
     theme: jsonb("theme").$type<Theme>(),

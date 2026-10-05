@@ -94,6 +94,8 @@ export function BlockView({ block, sectionId, paragraphMd, paragraphAside, varia
       );
     case "custom":
       return <CustomWidget block={block} renderFallback={(fb) => <LibraryWidgetView block={fb} />} />;
+    case "conceptMap":
+      return null;
     default:
       return <LibraryWidgetView block={block} />;
   }

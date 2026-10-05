@@ -26,7 +26,7 @@ describe("MockProvider", () => {
       const parsed = sectionBlocksSchema.parse(await ask("section", { position }));
       parsed.blocks.forEach((b) => types.add(b.type));
     }
-    for (const w of WIDGET_TYPES) expect(types.has(w), w).toBe(true);
+    for (const w of WIDGET_TYPES) if (w !== "conceptMap") expect(types.has(w), w).toBe(true); // maps only appear in the Map format
   });
 
   it("streams answers word by word", async () => {
