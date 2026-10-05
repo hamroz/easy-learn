@@ -1,0 +1,7 @@
+# Local-only: let the container use the OpenCode sign-ins you already have on this machine.
+# Copy to compose.override.yaml (git-ignored; docker compose loads it automatically) and adjust the path.
+# Read-only: the app can use your provider keys but never changes them. Not for the VPS — sign in there instead.
+services:
+  web:
+    volumes:
+      - ${HOME}/.local/share/opencode/auth.json:/data/home/.local/share/opencode/auth.json:ro
