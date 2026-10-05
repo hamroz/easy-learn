@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/Button";
 import { ErrorText } from "@/components/ui/Field";
 import { Dots } from "@/components/ui/Spinner";
 import { Quiz } from "./Quiz";
+import { formatInfo, isSinglePage } from "@/content/formats";
+import { useRouter } from "next/navigation";
 
 /** End-of-lesson box: continue, steer the course in your own words, or (only if asked) a quiz. */
 export function WhatNext({ view, onChanged, onReached }: { view: LessonViewJson; onChanged: () => void; onReached: () => void }) {
@@ -59,16 +61,47 @@ export function WhatNext({ view, onChanged, onReached }: { view: LessonViewJson;
 
   const next = nav.next;
   const isLast = !next;
+  const single = isSinglePage(course.format);
+  const router = useRouter();
+  const [deepening, setDeepening] = useState(false);
+  const goDeeper = async () => {
+    setDeepening(true);
+    setError(undefined);
+    try {
+      const { url } = await api<{ url: string }>(`/api/courses/${course.id}/deeper`, { body: {} });
+      router.push(url);
+    } catch (e) {
+      setError((e as Error).message);
+      setDeepening(false);
+    }
+  };
 
   return (
     <div ref={ref} className="mt-28 font-ui">
       <div className="flex items-center gap-4 text-muted">
         <span className="h-px flex-1 bg-border" />
-        <span className="text-[12px] uppercase tracking-[0.18em]">{isLast ? "End of the course" : "End of the lesson"}</span>
+        <span className="text-[12px] uppercase tracking-[0.18em]">{single ? `End of the ${formatInfo(course.format).noun}` : isLast ? "End of the course" : "End of the lesson"}</span>
         <span className="h-px flex-1 bg-border" />
       </div>
 
-      {next && (
+      {single && (
+        <button
+          type="button"
+          onClick={goDeeper}
+          disabled={deepening}
+          className="group mt-10 flex w-full items-center justify-between gap-4 rounded-[var(--radius)] bg-text px-6 py-5 text-left text-bg transition hover:opacity-95 disabled:opacity-70"
+        >
+          <div className="min-w-0">
+            <div className="text-[12px] uppercase tracking-[0.14em] opacity-70">Go deeper</div>
+            <div className="mt-1 font-[family-name:var(--font-heading)] text-[22px]">{deepening ? "Designing a course…" : "Turn this into a full course"}</div>
+          </div>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="shrink-0 transition group-hover:translate-x-1" aria-hidden>
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </button>
+      )}
+
+      {!single && next && (
         <Link
           href={`/courses/${course.id}/lessons/${next.id}`}
           className="group mt-10 flex items-center justify-between gap-4 rounded-[var(--radius)] bg-text px-6 py-5 text-bg transition hover:opacity-95"
@@ -86,6 +119,7 @@ export function WhatNext({ view, onChanged, onReached }: { view: LessonViewJson;
         </Link>
       )}
 
+      {!single && (
       <div className="mt-6 rounded-[var(--radius)] border border-border bg-surface p-5">
         <label htmlFor="steer" className="text-[14px] font-medium text-text">
           {isLast ? "Want to keep going?" : "Or choose your own direction"}
@@ -116,6 +150,7 @@ export function WhatNext({ view, onChanged, onReached }: { view: LessonViewJson;
           </>
         )}
       </div>
+      )}
 
       <div className="mt-6 rounded-[var(--radius)] border border-border bg-surface p-5">
         {quiz ? (

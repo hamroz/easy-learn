@@ -7,14 +7,17 @@ import type { FormatId } from "@/content/formats";
 /** Priorities: lower runs first. */
 const PRIORITY = { outline: 5, rewrite: 5, current: 10, prefetch: 50 } as const;
 
-export async function createCourse(userId: string, input: { topic: string; level: Level; format?: FormatId; parentId?: string | null }) {
+export async function createCourse(
+  userId: string,
+  input: { topic: string; level: Level; format?: FormatId; parentId?: string | null; title?: string },
+) {
   const [pref] = await db.select({ language: settings.language }).from(settings).where(eq(settings.userId, userId));
   const topic = input.topic.trim();
   const [course] = await db
     .insert(courses)
     .values({
       userId,
-      title: topic.slice(0, 120),
+      title: (input.title ?? topic).slice(0, 120),
       topicPrompt: topic,
       language: pref?.language || "auto",
       level: input.level,

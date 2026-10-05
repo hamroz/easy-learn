@@ -25,7 +25,7 @@ export async function biteForMapNode(userId: string, lessonId: string, nodeId: s
   const topic = `${node.label} — in the context of "${course.title}". ${node.summary}`.slice(0, 2000);
   const existing = await childWithTopic(userId, course.id, "bite", topic);
   if (existing) return existing;
-  const bite = await createCourse(userId, { topic, level: course.level, format: "bite", parentId: course.id });
+  const bite = await createCourse(userId, { topic, level: course.level, format: "bite", parentId: course.id, title: node.label });
   return bite.id;
 }
 
@@ -37,7 +37,7 @@ export async function cheatSheetFor(userId: string, courseId: string): Promise<s
   if (existing) return existing;
   const ls = await db.select().from(lessons).where(eq(lessons.courseId, course.id)).orderBy(asc(lessons.position));
   const topic = `A cheat sheet for the course "${course.title}", covering: ${ls.map((l) => `${l.title} (${l.summary})`).join("; ")}`.slice(0, 2000);
-  const sheet = await createCourse(userId, { topic, level: course.level, format: "cheatsheet", parentId: course.id });
+  const sheet = await createCourse(userId, { topic, level: course.level, format: "cheatsheet", parentId: course.id, title: `Cheat sheet: ${course.title}` });
   return sheet.id;
 }
 
@@ -47,6 +47,6 @@ export async function goDeeper(userId: string, courseId: string): Promise<string
   if (item.format === "course") throw new HttpError(400, "This is already a course");
   const existing = await childWithTopic(userId, item.id, "course");
   if (existing) return existing;
-  const course = await createCourse(userId, { topic: item.topicPrompt, level: item.level, format: "course", parentId: item.id });
+  const course = await createCourse(userId, { topic: item.topicPrompt, level: item.level, format: "course", parentId: item.id, title: item.title });
   return course.id;
 }

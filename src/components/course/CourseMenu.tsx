@@ -5,7 +5,19 @@ import { useEffect, useRef, useState } from "react";
 import { api } from "@/lib/api";
 import { fontById, type FontId } from "@/content/fonts";
 
-export function CourseMenu({ courseId, isExample, fonts, currentFont }: { courseId: string; isExample: boolean; fonts: FontId[]; currentFont: FontId }) {
+export function CourseMenu({
+  courseId,
+  format,
+  isExample,
+  fonts,
+  currentFont,
+}: {
+  courseId: string;
+  format: string;
+  isExample: boolean;
+  fonts: FontId[];
+  currentFont: FontId;
+}) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -26,6 +38,11 @@ export function CourseMenu({ courseId, isExample, fonts, currentFont }: { course
     setOpen(false);
     await api(`/api/courses/${courseId}`, { method: "PATCH", body: { fontPair } });
     router.refresh();
+  };
+  const cheatSheet = async () => {
+    setOpen(false);
+    const { url } = await api<{ url: string }>(`/api/courses/${courseId}/cheatsheet`, { body: {} });
+    router.push(url);
   };
   const remove = async () => {
     setOpen(false);
@@ -64,6 +81,11 @@ export function CourseMenu({ courseId, isExample, fonts, currentFont }: { course
                 </button>
               ))}
             </div>
+          )}
+          {format === "course" && (
+            <button onClick={cheatSheet} className="block w-full rounded-xl px-3 py-2 text-left hover:bg-border/40">
+              Make a cheat sheet
+            </button>
           )}
           <button onClick={toggleExample} className="block w-full rounded-xl px-3 py-2 text-left hover:bg-border/40">
             {isExample ? "Remove from examples" : "Show as an example"}

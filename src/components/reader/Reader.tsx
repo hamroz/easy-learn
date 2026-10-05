@@ -17,6 +17,9 @@ import { AskLayer } from "./ask/AskLayer";
 import { ParagraphTools } from "./ParagraphTools";
 import type { VariantJson } from "@/lib/types";
 import type { FontId } from "@/content/fonts";
+import { formatInfo, isSinglePage } from "@/content/formats";
+import { useRouter } from "next/navigation";
+import { ReaderContext } from "./ReaderContext";
 
 export function Reader({ initial, fonts }: { initial: LessonViewJson; fonts: FontId[] }) {
   const { view, setView, refresh } = useLessonData(initial);
@@ -88,21 +91,36 @@ export function Reader({ initial, fonts }: { initial: LessonViewJson; fonts: Fon
     setRetrying(false);
   };
 
+  const router = useRouter();
+  const single = isSinglePage(course.format);
+  const info = formatInfo(course.format);
+  const parent = view.parent;
+  const openBite = useCallback(
+    async (nodeId: string) => {
+      const { url } = await api<{ url: string }>(`/api/lessons/${lesson.id}/map-bites`, { body: { nodeId } });
+      router.push(url);
+    },
+    [lesson.id, router],
+  );
+  const backHref = single ? (parent ? `/courses/${parent.id}` : "/") : `/courses/${course.id}`;
+  const backLabel = single ? (parent ? parent.title : "Library") : course.title;
+
   const planning = sections.length === 0 && (lesson.status === "queued" || lesson.status === "generating" || lesson.status === "planned");
 
   return (
+    <ReaderContext.Provider value={{ lessonId: lesson.id, openBite: course.format === "map" ? openBite : undefined }}>
     <div style={themeStyle(course.theme, fonts)} className={`${themeClass(course.theme)} min-h-screen`}>
       <header className="sticky top-0 z-30 border-b border-border/60 bg-[color-mix(in_oklab,var(--bg)_82%,transparent)] backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-          <Link href={`/courses/${course.id}`} className="flex min-w-0 items-center gap-2 font-ui text-[13px] text-muted transition hover:text-text">
+          <Link href={backHref} className="flex min-w-0 items-center gap-2 font-ui text-[13px] text-muted transition hover:text-text">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
               <path d="M15 6l-6 6 6 6" />
             </svg>
-            <span className="truncate">{course.title}</span>
+            <span className="truncate">{backLabel}</span>
           </Link>
           <div className="flex items-center gap-1">
             <span className="hidden font-ui text-[12px] tabular-nums text-muted sm:inline">
-              {lesson.position + 1} / {nav.lessons.length}
+              {single ? info.label : `${lesson.position + 1} / ${nav.lessons.length}`}
             </span>
             <SchemeToggle />
           </div>
@@ -124,7 +142,7 @@ export function Reader({ initial, fonts }: { initial: LessonViewJson; fonts: Fon
         <article ref={articleRef}>
           <header className="pt-16 sm:pt-24">
             <div className="font-ui text-[12.5px] uppercase tracking-[0.18em] text-muted">
-              Lesson {lesson.position + 1} of {nav.lessons.length}
+              {single ? `${info.label} · ${info.minutes}` : `Lesson ${lesson.position + 1} of ${nav.lessons.length}`}
             </div>
             <h1 className="mt-4 font-[family-name:var(--font-heading)] text-[40px] leading-[1.08] tracking-tight text-text sm:text-[52px]">{lesson.title}</h1>
             <p className="mt-5 font-[family-name:var(--font-body)] text-[20px] leading-relaxed text-muted">{lesson.summary}</p>
@@ -133,7 +151,7 @@ export function Reader({ initial, fonts }: { initial: LessonViewJson; fonts: Fon
           {planning && (
             <div className="mt-16" aria-busy>
               <p className="flex items-center gap-2 font-ui text-[14px] text-muted">
-                Planning this lesson <Dots />
+                {single ? `Planning this ${info.noun}` : "Planning this lesson"} <Dots />
               </p>
               <div className="mt-8 space-y-3">
                 {[100, 94, 98, 60].map((w, i) => (
@@ -166,6 +184,7 @@ export function Reader({ initial, fonts }: { initial: LessonViewJson; fonts: Fon
 
         {allReady && <WhatNext view={view} onChanged={refresh} onReached={markComplete} />}
 
+        {!single && (
         <nav className="mt-16 flex items-center justify-between gap-4 font-ui text-[13px]">
           {nav.prev ? (
             <Link href={`/courses/${course.id}/lessons/${nav.prev.id}`} className="min-w-0 text-muted hover:text-text">
@@ -178,7 +197,9 @@ export function Reader({ initial, fonts }: { initial: LessonViewJson; fonts: Fon
             All lessons
           </Link>
         </nav>
+        )}
       </main>
     </div>
+    </ReaderContext.Provider>
   );
 }

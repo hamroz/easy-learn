@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/Button";
 import { ErrorText } from "@/components/ui/Field";
+import { FORMATS, type FormatId, formatInfo } from "@/content/formats";
 
 const LEVELS = [
   { id: "beginner", label: "Beginner" },
@@ -25,6 +26,7 @@ export function NewCourseForm() {
   const router = useRouter();
   const [topic, setTopic] = useState("");
   const [level, setLevel] = useState<(typeof LEVELS)[number]["id"]>("beginner");
+  const [format, setFormat] = useState<FormatId>("course");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
   const ref = useRef<HTMLTextAreaElement>(null);
@@ -42,7 +44,7 @@ export function NewCourseForm() {
     setBusy(true);
     setError(undefined);
     try {
-      const { course } = await api<{ course: { id: string } }>("/api/courses", { body: { topic, level } });
+      const { course } = await api<{ course: { id: string } }>("/api/courses", { body: { topic, level, format } });
       router.push(`/courses/${course.id}`);
     } catch (e) {
       setError((e as Error).message);
@@ -52,6 +54,26 @@ export function NewCourseForm() {
 
   return (
     <div>
+      <div role="radiogroup" aria-label="Format" className="mb-4 flex flex-wrap justify-center gap-1.5 font-ui text-[13px]">
+        {FORMATS.map((f) => (
+          <button
+            key={f.id}
+            type="button"
+            role="radio"
+            aria-checked={format === f.id}
+            onClick={() => setFormat(f.id)}
+            title={f.minutes}
+            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 transition ${
+              format === f.id ? "border-text bg-text text-bg" : "border-border text-muted hover:border-muted/50 hover:text-text"
+            }`}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d={f.icon} />
+            </svg>
+            {f.label}
+          </button>
+        ))}
+      </div>
       <div className="rounded-[28px] border border-border bg-surface p-2 shadow-[0_1px_0_rgba(0,0,0,0.02),0_30px_80px_-40px_rgba(0,0,0,0.35)] transition focus-within:border-accent/60 focus-within:shadow-[0_0_0_4px_color-mix(in_oklab,var(--accent)_14%,transparent),0_30px_80px_-40px_rgba(0,0,0,0.35)]">
         <textarea
           ref={ref}
@@ -65,7 +87,7 @@ export function NewCourseForm() {
           }}
           rows={2}
           maxLength={2000}
-          placeholder="The theory of relativity — I know nothing about physics, and I'd love to finally understand why time slows down…"
+          placeholder={formatInfo(format).placeholder}
           aria-label="What do you want to learn?"
           className="block min-h-[88px] w-full resize-none bg-transparent px-5 pt-4 pb-2 focus-visible:outline-none font-[family-name:var(--font-newsreader)] text-[21px] leading-relaxed text-text outline-none placeholder:text-muted/60"
         />
@@ -85,7 +107,7 @@ export function NewCourseForm() {
             ))}
           </div>
           <Button onClick={submit} loading={busy} disabled={topic.trim().length < 2} className="rounded-full pl-5 pr-4">
-            Create course
+            {format === "course" ? "Create course" : `Create ${formatInfo(format).noun}`}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
               <path d="M5 12h14M13 6l6 6-6 6" />
             </svg>

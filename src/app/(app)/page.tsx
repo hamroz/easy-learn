@@ -5,6 +5,7 @@ import { AppHeader } from "@/components/ui/AppHeader";
 import { AutoRefresh } from "@/components/ui/AutoRefresh";
 import { NewCourseForm } from "@/components/home/NewCourseForm";
 import { CourseCard } from "@/components/home/CourseCard";
+import { Library } from "@/components/home/Library";
 import { AddExamplesButton } from "@/components/examples/AddExamplesButton";
 
 export default async function HomePage() {
@@ -32,16 +33,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {mine.length > 0 && (
-          <section className="mt-24">
-            <h2 className="mb-6 font-ui text-[13px] font-medium uppercase tracking-[0.14em] text-muted">Your courses</h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {mine.map((c) => (
-                <CourseCard key={c.id} course={c} fonts={fonts} />
-              ))}
-            </div>
-          </section>
-        )}
+        {mine.length > 0 && <Library items={mine} fonts={fonts} />}
 
         {examples.length > 0 && (
           <section className="mt-20">

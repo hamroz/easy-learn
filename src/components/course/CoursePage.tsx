@@ -14,6 +14,7 @@ import { OutlineEditor } from "./OutlineEditor";
 import { LessonList } from "./LessonList";
 import { CourseMenu } from "./CourseMenu";
 import { type FontId, resolveFont } from "@/content/fonts";
+import { formatInfo, isSinglePage } from "@/content/formats";
 
 const LEVEL_LABEL = { beginner: "Beginner", intermediate: "Intermediate", advanced: "Advanced" } as const;
 
@@ -24,7 +25,7 @@ export function CoursePage({ view, fonts }: { view: CourseViewJson; fonts: FontI
   const generating = lessons.some((l) => l.status === "queued" || l.status === "generating");
   // The cover is drawn after the outline; keep refreshing briefly until it arrives.
   const coverPending = !course.coverSvg && course.status !== "failed" && Date.now() - new Date(course.createdAt).getTime() < 180_000;
-  const pending = course.status === "outlining" || !!course.busy || generating || coverPending;
+  const pending = course.status === "outlining" || !!course.busy || generating || coverPending || (isSinglePage(course.format) && lessons.length === 0);
 
   const retry = async () => {
     setRetrying(true);
@@ -53,7 +54,7 @@ export function CoursePage({ view, fonts }: { view: CourseViewJson; fonts: FontI
             <h1 className="font-[family-name:var(--font-heading)] text-[38px] leading-[1.1] tracking-tight sm:text-[48px]">
               {course.status === "outlining" ? <span className="text-muted">{course.title}</span> : course.title}
             </h1>
-            {course.status !== "outlining" && <CourseMenu courseId={course.id} isExample={course.isExample} fonts={fonts} currentFont={resolveFont(course.theme?.fontPair, fonts)} />}
+            {course.status !== "outlining" && <CourseMenu courseId={course.id} format={course.format} isExample={course.isExample} fonts={fonts} currentFont={resolveFont(course.theme?.fontPair, fonts)} />}
           </div>
           {course.subtitle && <p className="mt-3 font-[family-name:var(--font-body)] text-[19px] leading-relaxed text-muted">{course.subtitle}</p>}
           {course.status !== "outlining" && (
@@ -69,7 +70,7 @@ export function CoursePage({ view, fonts }: { view: CourseViewJson; fonts: FontI
         )}
 
         <section className="mt-12">
-          {course.status === "outlining" && <OutlineSkeleton />}
+          {course.status === "outlining" && <OutlineSkeleton noun={formatInfo(course.format).noun} single={isSinglePage(course.format)} />}
           {course.status === "failed" && (
             <div className="rounded-2xl border border-border bg-surface p-6">
               <p className="font-[family-name:var(--font-heading)] text-[22px]">The course could not be designed.</p>
@@ -93,11 +94,20 @@ export function CoursePage({ view, fonts }: { view: CourseViewJson; fonts: FontI
   );
 }
 
-function OutlineSkeleton() {
+function OutlineSkeleton({ noun, single }: { noun: string; single: boolean }) {
+  if (single)
+    return (
+      <div>
+        <p className="mb-6 flex items-center gap-3 font-ui text-[14px] text-muted">
+          Writing your {noun} — it opens by itself when ready <Dots />
+        </p>
+        {[100, 96, 88, 0, 100, 70].map((w, i) => (w === 0 ? <div key={i} className="h-6" /> : <div key={i} className="shimmer mb-3 h-[14px] rounded-md" style={{ width: `${w}%` }} />))}
+      </div>
+    );
   return (
     <div>
       <p className="mb-6 flex items-center gap-3 font-ui text-[14px] text-muted">
-        Designing your course — choosing a path and a look <Dots />
+        Designing your {noun} — choosing a shape and a look <Dots />
       </p>
       <div className="space-y-3">
         {[0, 1, 2, 3, 4].map((i) => (

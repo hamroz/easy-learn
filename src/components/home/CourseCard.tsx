@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Theme } from "@/content/theme";
 import type { FontId } from "@/content/fonts";
+import { formatInfo, isSinglePage } from "@/content/formats";
 import { themeClass, themeStyle } from "@/lib/theme";
 import { Dots } from "@/components/ui/Spinner";
 
@@ -15,15 +16,18 @@ export type CourseCardData = {
   lessonCount: number;
   completedCount: number;
   next: { id: string; title: string; position: number } | null;
+  format: string;
 };
 
 function StatusLine({ c }: { c: CourseCardData }) {
+  const info = formatInfo(c.format);
   if (c.status === "outlining")
     return (
       <span className="inline-flex items-center gap-2">
-        Designing your course <Dots />
+        Designing your {info.noun} <Dots />
       </span>
     );
+  if (isSinglePage(c.format)) return <span>{info.label} · {info.minutes}</span>;
   if (c.busy) return <span className="inline-flex items-center gap-2">Rewriting the outline <Dots /></span>;
   if (c.status === "failed") return <span className="text-[#b42318] dark:text-[#ff8a80]">Something went wrong — open to retry</span>;
   if (c.status === "outline_ready") return <span>Outline ready · {c.lessonCount} lessons</span>;
@@ -51,10 +55,18 @@ export function CourseCard({ course: c, fonts }: { course: CourseCardData; fonts
         )}
       </div>
       <div className="flex flex-1 flex-col p-5">
+        {isSinglePage(c.format) && (
+          <span className="mb-2 inline-flex w-fit items-center gap-1.5 rounded-full bg-border/50 px-2.5 py-0.5 font-ui text-[11.5px] text-muted">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d={formatInfo(c.format).icon} />
+            </svg>
+            {formatInfo(c.format).label}
+          </span>
+        )}
         <h3 className="font-[family-name:var(--font-heading)] text-[21px] leading-snug tracking-tight text-text">{c.title}</h3>
         {c.subtitle && <p className="mt-1.5 line-clamp-2 text-[14px] leading-relaxed text-muted">{c.subtitle}</p>}
         <div className="mt-auto pt-5">
-          {c.status === "active" && (
+          {c.status === "active" && !isSinglePage(c.format) && (
             <div className="mb-3 h-1 overflow-hidden rounded-full bg-border">
               <div className="h-full rounded-full bg-accent transition-[width] duration-700" style={{ width: `${pct}%` }} />
             </div>

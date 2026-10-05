@@ -2,6 +2,7 @@
 
 import type { Block, LibraryWidget } from "@/content/blocks";
 import { Cards } from "@/components/widgets/Cards";
+import { ConceptMap } from "@/components/widgets/ConceptMap";
 import { Chart } from "@/components/widgets/Chart";
 import { Compare } from "@/components/widgets/Compare";
 import { CustomWidget } from "@/components/widgets/CustomWidget";
@@ -95,7 +96,7 @@ export function BlockView({ block, sectionId, paragraphMd, paragraphAside, varia
     case "custom":
       return <CustomWidget block={block} renderFallback={(fb) => <LibraryWidgetView block={fb} />} />;
     case "conceptMap":
-      return null;
+      return <ConceptMap block={block} />;
     default:
       return <LibraryWidgetView block={block} />;
   }

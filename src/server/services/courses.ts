@@ -84,6 +84,7 @@ export async function listCourses(userId: string) {
       theme: c.theme,
       coverSvg: c.coverSvg,
       isExample: c.isExample,
+      format: c.format,
       lessonCount: s?.total ?? 0,
       completedCount: s?.completed ?? 0,
       next: next ? { id: next.id, title: next.title, position: next.position } : null,
@@ -125,6 +126,9 @@ export async function lessonView(userId: string, lessonId: string) {
     db.select().from(threads).where(and(eq(threads.lessonId, lessonId), eq(threads.userId, userId))).orderBy(asc(threads.createdAt)),
     db.select().from(quizzes).where(eq(quizzes.lessonId, lessonId)).orderBy(desc(quizzes.createdAt)).limit(1),
   ]);
+  const [parent] = course.parentId
+    ? await db.select({ id: courses.id, title: courses.title, format: courses.format }).from(courses).where(and(eq(courses.id, course.parentId), eq(courses.userId, userId)))
+    : [];
   const variantRows = secs.length
     ? await db.select().from(blockVariants).where(inArray(blockVariants.sectionId, secs.map((s) => s.id))).orderBy(asc(blockVariants.createdAt))
     : [];
@@ -141,7 +145,9 @@ export async function lessonView(userId: string, lessonId: string) {
       theme: course.theme,
       busy: course.busy,
       error: course.error,
+      format: course.format,
     },
+    parent: parent ? { id: parent.id, title: parent.title, format: parent.format } : null,
     lesson: {
       id: lesson.id,
       position: lesson.position,
