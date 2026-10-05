@@ -26,7 +26,7 @@ export const POST = route<{ params: Promise<{ id: string }> }>(async (req, { par
         }
       };
       try {
-        const message = await answerInThread(user.id, id, content, req.signal, { onDelta: (text) => send("delta", { text }) });
+        const message = await answerInThread(user.id, id, content, req.signal, { onDelta: (text) => send("delta", { text }), onReset: () => send("reset", {}) });
         send("done", { message: { id: message.id, role: message.role, content: message.content } });
       } catch (e) {
         const err = e instanceof ProviderError ? { kind: e.kind, error: e.message } : { kind: "failed", error: "Could not get an answer" };

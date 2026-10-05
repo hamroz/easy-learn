@@ -3,10 +3,11 @@ import { db } from "@/server/db/client";
 import { type Job, jobs } from "@/server/db/schema";
 import { AIOutputError, ProviderError } from "@/server/ai";
 import { handlers } from "./handlers";
-import { claimNext, complete, fail, type JobType, onEnqueue } from "./queue";
+import { claimNext, complete, fail, type JobType, onEnqueue, renewLease } from "./queue";
 
-/** Generation can take two provider calls (answer + repair) of up to 6 minutes each. */
+/** Leases are renewed every minute while a job runs, so one slow call never lets another worker steal it. */
 const LEASE_MS = 15 * 60_000;
+const HEARTBEAT_MS = 60_000;
 
 function isRetryable(err: unknown) {
   if (err instanceof ProviderError) return err.retryable;
@@ -20,6 +21,8 @@ async function execute(job: Job) {
     await fail(job, new Error(`Unknown job type ${job.type}`), false);
     return;
   }
+  const heartbeat = setInterval(() => void renewLease(job.id, LEASE_MS).catch(() => {}), HEARTBEAT_MS);
+  heartbeat.unref?.();
   try {
     await handler.run(job);
     await complete(job.id);
@@ -28,6 +31,8 @@ async function execute(job: Job) {
     const message = err instanceof Error ? err.message : String(err);
     console.error(`[jobs] ${job.type} ${job.id} attempt ${job.attempts} failed (${outcome}): ${message}`);
     if (outcome === "failed") await handler.onFailed?.(job, message).catch((e) => console.error("[jobs] onFailed error", e));
+  } finally {
+    clearInterval(heartbeat);
   }
 }
 

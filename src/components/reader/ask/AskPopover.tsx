@@ -120,6 +120,9 @@ export function AskPopover({
           if (event === "delta") {
             const text = (data as { text: string }).text;
             setMessages((m) => m.map((x) => (x.streaming ? { ...x, content: x.content + text } : x)));
+          } else if (event === "reset") {
+            // The first model failed mid-answer; the backup model starts over.
+            setMessages((m) => m.map((x) => (x.streaming ? { ...x, content: "" } : x)));
           } else if (event === "done") {
             const msg = (data as { message: Msg }).message;
             setMessages((m) => m.map((x) => (x.streaming ? { ...msg } : x)));

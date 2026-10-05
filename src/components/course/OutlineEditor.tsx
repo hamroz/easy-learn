@@ -114,7 +114,7 @@ export function OutlineEditor({ course, lessons }: { course: CourseViewJson["cou
                 }}
                 placeholder="Lesson title"
                 aria-label={`Lesson ${i + 1} title`}
-                className="block w-full resize-none bg-transparent font-[family-name:var(--font-heading)] text-[20px] leading-snug text-text outline-none placeholder:text-muted/50"
+                className="block w-full resize-none bg-transparent font-[family-name:var(--font-heading)] text-[20px] leading-snug text-text outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-4 focus-visible:ring-offset-surface placeholder:text-muted/50"
               />
               <textarea
                 ref={fit}
@@ -126,7 +126,7 @@ export function OutlineEditor({ course, lessons }: { course: CourseViewJson["cou
                 }}
                 placeholder="What this lesson covers (optional)"
                 aria-label={`Lesson ${i + 1} summary`}
-                className="mt-1 block w-full resize-none bg-transparent text-[15px] leading-relaxed text-muted outline-none placeholder:text-muted/50"
+                className="mt-1 block w-full resize-none bg-transparent text-[15px] leading-relaxed text-muted outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-4 focus-visible:ring-offset-surface placeholder:text-muted/50"
               />
             </div>
             <div className="flex shrink-0 flex-col items-center gap-0.5 opacity-40 transition group-hover:opacity-100 group-focus-within:opacity-100">
@@ -155,7 +155,7 @@ export function OutlineEditor({ course, lessons }: { course: CourseViewJson["cou
           value={instruction}
           onChange={(e) => setInstruction(e.target.value)}
           placeholder="Less math, more intuition · Add a lesson on black holes · Make it shorter…"
-          className="mt-2 block w-full resize-none bg-transparent text-[15px] leading-relaxed text-text outline-none placeholder:text-muted/60"
+          className="mt-2 block w-full resize-none bg-transparent text-[15px] leading-relaxed text-text outline-none focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-4 focus-visible:ring-offset-surface placeholder:text-muted/60"
         />
         <div className="mt-2 flex justify-end">
           <Button variant="secondary" size="sm" onClick={() => run("reshape")} loading={busy === "reshape"} disabled={instruction.trim().length < 2}>

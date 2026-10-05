@@ -47,6 +47,13 @@ export async function claimNext(leaseMs: number): Promise<Job | null> {
   return job ?? null;
 }
 
+/** Keep a running job's lease alive while it works (long CLI calls plus a fallback can exceed one lease). */
+export async function renewLease(id: string, leaseMs: number) {
+  await db.execute(
+    sql`UPDATE jobs SET locked_until = now() + (${leaseMs}::int * interval '1 millisecond') WHERE id = ${id} AND status = 'running'`,
+  );
+}
+
 export async function complete(id: string) {
   await db.update(jobs).set({ status: "done", lockedUntil: null, error: null }).where(eq(jobs.id, id));
 }

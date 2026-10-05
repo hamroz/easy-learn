@@ -56,6 +56,29 @@ describe("aiFor", () => {
     expect(spy.mock.calls.map((c) => c[0].model)).toEqual(["a", "a", "b"]); // primary + its repair, then fallback
   });
 
+  it("tells the caller before switching to the fallback, so streamed partial text can be discarded", async () => {
+    await usePreset({ answer: { primary: { provider: "mock", model: "a", effort: null }, fallback: { provider: "mock", model: "b", effort: null } } });
+    const original = MockProvider.prototype.complete;
+    vi.spyOn(MockProvider.prototype, "complete").mockImplementation(async function (this: MockProvider, req) {
+      if (req.model === "a") {
+        req.onDelta?.("half an ");
+        throw new ProviderError("failed", "dropped");
+      }
+      return original.call(this, req);
+    });
+    let streamed = "";
+    let resets = 0;
+    const text = await (await aiFor(userId, "answer")).complete(
+      { task: "answer", system: "s", prompt: "p", meta: { quote: "q" }, onDelta: (d) => (streamed += d) },
+      { onFallback: () => {
+        resets++;
+        streamed = "";
+      } },
+    );
+    expect(resets).toBe(1);
+    expect(streamed).toBe(text);
+  });
+
   it("does not fall back when the request was cancelled", async () => {
     await usePreset({ answer: { primary: { provider: "mock", model: "a", effort: null }, fallback: { provider: "mock", model: "b", effort: null } } });
     const spy = vi.spyOn(MockProvider.prototype, "complete").mockRejectedValue(new ProviderError("aborted", "cancelled"));

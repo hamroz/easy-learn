@@ -52,7 +52,10 @@ export function createOpenRouterStreamParser(onDelta?: (text: string) => void) {
       const data = line.slice(5).trim();
       if (!data || data === "[DONE]") return;
       try {
-        const ev = JSON.parse(data) as { error?: { message?: string; code?: number }; choices?: { delta?: { content?: string } }[] };
+        const ev = JSON.parse(data) as {
+          error?: { message?: string; code?: number };
+          choices?: { delta?: { content?: string }; finish_reason?: string | null }[];
+        };
         if (ev.error) {
           error ??= errorFrom(ev.error.code, ev.error.message ?? "OpenRouter error");
           return;
@@ -62,13 +65,15 @@ export function createOpenRouterStreamParser(onDelta?: (text: string) => void) {
           text += d;
           onDelta?.(d);
         }
+        if (ev.choices?.[0]?.finish_reason === "error") error ??= new ProviderError("failed", "OpenRouter stopped with an error mid-answer");
       } catch {
         /* keep-alive or partial line */
       }
     },
     finish(): { text?: string; error?: ProviderError } {
-      if (error && !text) return { error };
-      return text ? { text } : { error: error ?? new ProviderError("failed", "OpenRouter returned no text") };
+      // An error after partial text means the answer is incomplete: report it so the fallback can run.
+      if (error) return { error };
+      return text ? { text } : { error: new ProviderError("failed", "OpenRouter returned no text") };
     },
   };
 }
@@ -124,9 +129,10 @@ export class OpenRouterProvider implements AIProvider {
           buffer = buffer.slice(nl + 1);
         }
       }
-    } catch {
+    } catch (e) {
       if (req.signal?.aborted) throw new ProviderError("aborted", "Request was cancelled");
       if (timeout.aborted) throw new ProviderError("timeout", "OpenRouter did not answer in time");
+      throw new ProviderError("failed", `OpenRouter connection dropped mid-answer: ${(e as Error).message}`);
     }
     if (buffer.trim()) parser.push(buffer.trim());
     const out = parser.finish();

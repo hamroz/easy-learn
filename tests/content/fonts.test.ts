@@ -20,6 +20,11 @@ describe("font catalogue", () => {
     expect(resolveFont("plex", ["inter", "plex"])).toBe("plex");
   });
 
+  it("maps stored legacy ids before resolving (older courses keep their font)", () => {
+    expect(resolveFont("editorial", ["literata", "newsreader"])).toBe("newsreader");
+    expect(resolveFont("technical", ["grotesk"])).toBe("grotesk");
+  });
+
   it("never allows an empty or unknown enabled list", () => {
     expect(normalizeEnabledFonts([])).toEqual(DEFAULT_FONTS);
     expect(normalizeEnabledFonts(["plex", "comic-sans", "plex"])).toEqual(["plex"]);

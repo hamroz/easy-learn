@@ -63,6 +63,19 @@ describe("OpenRouter", () => {
     expect(r.error?.message).toMatch(/OpenRouter key/);
   });
 
+  it("reports an error that arrives after some text instead of returning the partial text", () => {
+    const p = createOpenRouterStreamParser();
+    p.push('data: {"choices":[{"delta":{"content":"half an ans"}}]}');
+    p.push('data: {"error":{"message":"Upstream provider failed","code":502}}');
+    expect(p.finish().error?.message).toMatch(/Upstream provider failed/);
+  });
+
+  it("treats finish_reason error as a failure", () => {
+    const p = createOpenRouterStreamParser();
+    p.push('data: {"choices":[{"delta":{"content":"partial"},"finish_reason":"error"}]}');
+    expect(p.finish().error).toBeTruthy();
+  });
+
   it("refuses to run without a key", async () => {
     const err = await new OpenRouterProvider(null).complete({ task: "answer", system: "s", prompt: "p" }).catch((e) => e);
     expect(err.kind).toBe("not_logged_in");

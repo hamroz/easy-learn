@@ -44,18 +44,20 @@ export async function aiFor(userId: string, task: TaskKey) {
 
   const withRef = (ref: ModelRef, req: CompleteRequest): CompleteRequest => ({ ...req, model: ref.model, effort: (ref.effort as CompleteRequest["effort"]) ?? undefined });
 
-  async function attempt<T>(run: (b: Bound) => Promise<T>): Promise<T> {
+  async function attempt<T>(run: (b: Bound) => Promise<T>, onFallback?: () => void): Promise<T> {
     try {
       return await run(primary);
     } catch (e) {
       if (!fallbackRef || !canFallBack(e)) throw e;
       console.warn(`[ai] ${task}: ${describe(primary.ref)} failed (${(e as Error).message.slice(0, 160)}); trying ${describe(fallbackRef)}`);
+      onFallback?.();
       return run(await bind(fallbackRef));
     }
   }
 
   return {
-    complete: (req: CompleteRequest) => attempt((b) => b.provider.complete(withRef(b.ref, req))),
+    /** `onFallback` runs before the backup model starts — e.g. to discard text streamed by the failed attempt. */
+    complete: (req: CompleteRequest, opts?: { onFallback?: () => void }) => attempt((b) => b.provider.complete(withRef(b.ref, req)), opts?.onFallback),
     json: <T>(schema: z.ZodType<T>, req: CompleteRequest, opts?: { lenient?: (raw: unknown) => T | null }) =>
       attempt((b) => generateJson(b.provider, schema, withRef(b.ref, req), opts)),
     describe: () => describe(primary.ref),

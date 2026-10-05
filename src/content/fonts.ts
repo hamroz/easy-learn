@@ -37,7 +37,8 @@ export function normalizeEnabledFonts(list: unknown): FontId[] {
 /** The font a course actually renders with: its own if still enabled, otherwise the first enabled one. */
 export function resolveFont(pair: string | null | undefined, enabled: readonly FontId[]): FontId {
   const list = enabled.length ? enabled : DEFAULT_FONTS;
-  return pair && (list as string[]).includes(pair) ? (pair as FontId) : list[0];
+  const id = pair ? (LEGACY_FONT_IDS[pair] ?? pair) : null;
+  return id && (list as string[]).includes(id) ? (id as FontId) : list[0];
 }
 
 export function fontById(id: FontId) {

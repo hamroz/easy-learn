@@ -65,7 +65,13 @@ export const DEFAULT_EFFORT: Record<TaskKey, "low" | "medium" | "high"> = {
   quiz: "low",
 };
 
-export function uniformPreset(id: string, name: string, provider: ProviderKey, models: { lesson?: string | null; chat?: string | null } = {}): Preset {
+export function uniformPreset(
+  id: string,
+  name: string,
+  provider: ProviderKey,
+  models: { lesson?: string | null; chat?: string | null } = {},
+  opts: { effort?: boolean } = {},
+): Preset {
   const chatTasks: TaskKey[] = ["answer", "rewrite", "quiz"];
   const routes = Object.fromEntries(
     TASKS.map((t) => [
@@ -74,7 +80,7 @@ export function uniformPreset(id: string, name: string, provider: ProviderKey, m
         primary: {
           provider,
           model: (chatTasks.includes(t) ? models.chat : models.lesson) ?? null,
-          effort: provider === "mock" ? null : DEFAULT_EFFORT[t],
+          effort: provider === "mock" || opts.effort === false ? null : DEFAULT_EFFORT[t],
         },
         fallback: null,
       },
@@ -85,6 +91,7 @@ export function uniformPreset(id: string, name: string, provider: ProviderKey, m
 
 export const BUILTIN_PRESETS: Preset[] = [
   uniformPreset("builtin:codex", "Codex — balanced", "codex-cli"),
-  uniformPreset("builtin:opencode", "OpenCode — its default model", "opencode-cli"),
+  // OpenCode's default model is unknown here, so leave effort to it.
+  uniformPreset("builtin:opencode", "OpenCode — its default model", "opencode-cli", {}, { effort: false }),
   uniformPreset("builtin:mock", "Sample content (offline)", "mock"),
 ];

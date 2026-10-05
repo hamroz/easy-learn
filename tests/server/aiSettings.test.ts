@@ -15,6 +15,14 @@ beforeEach(async () => {
 });
 afterAll(closeDb);
 
+describe("built-in presets", () => {
+  it("do not force an effort on OpenCode's unknown default model", async () => {
+    const { BUILTIN_PRESETS, TASKS } = await import("@/content/ai");
+    const oc = BUILTIN_PRESETS.find((p) => p.id === "builtin:opencode")!;
+    for (const t of TASKS) expect(oc.routes[t].primary.effort).toBeNull();
+  });
+});
+
 describe("AI settings", () => {
   it("defaults to a built-in preset when nothing is stored", async () => {
     const s = await getAiSettings(userId);

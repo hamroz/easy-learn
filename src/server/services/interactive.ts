@@ -81,7 +81,7 @@ async function threadContext(userId: string, threadId: string) {
   return { thread, section, lesson, course, history };
 }
 
-export type AnswerEvents = { onDelta: (t: string) => void };
+export type AnswerEvents = { onDelta: (t: string) => void; onReset?: () => void };
 
 /**
  * Persist the user's question, stream the answer, persist the answer. Partial answers are kept
@@ -111,6 +111,11 @@ export async function answerInThread(userId: string, threadId: string, content: 
       onDelta: (t) => {
         streamed += t;
         ev.onDelta(t);
+      },
+    }, {
+      onFallback: () => {
+        streamed = "";
+        ev.onReset?.();
       },
     });
     const [row] = await db.insert(messages).values({ threadId, role: "assistant", content: text.trim() }).returning();
