@@ -50,11 +50,20 @@ export function runCli(opts: RunCliOptions): Promise<RunCliResult> {
   return new Promise((resolve, reject) => {
     if (opts.signal?.aborted) return reject(new ProviderError("aborted", "Request was cancelled"));
 
+    // Own process group, so a timeout also kills grandchildren (npm shims spawn the native binary).
     const child = spawn(opts.cmd, opts.args, {
       cwd: opts.cwd ?? scratchDir(),
       env: opts.env ?? cliEnv(),
       stdio: ["pipe", "pipe", "pipe"],
+      detached: true,
     });
+    const signalGroup = (sig: NodeJS.Signals) => {
+      try {
+        if (child.pid) process.kill(-child.pid, sig);
+      } catch {
+        /* group already gone */
+      }
+    };
 
     const lines: string[] = [];
     let stderr = "";
@@ -63,10 +72,11 @@ export function runCli(opts: RunCliOptions): Promise<RunCliResult> {
     let killReason: "timeout" | "aborted" | null = null;
 
     const kill = (reason: "timeout" | "aborted") => {
-      if (killReason || child.exitCode !== null) return;
+      if (killReason || settled) return;
       killReason = reason;
-      child.kill("SIGTERM");
-      setTimeout(() => child.exitCode === null && child.kill("SIGKILL"), 3000).unref();
+      signalGroup("SIGTERM");
+      // Always finish the group off, even if the call already settled: grandchildren may ignore TERM.
+      setTimeout(() => signalGroup("SIGKILL"), 3000).unref();
     };
 
     const timer = setTimeout(() => kill("timeout"), opts.timeoutMs);
@@ -111,15 +121,24 @@ export function runCli(opts: RunCliOptions): Promise<RunCliResult> {
       ),
     );
 
-    child.on("close", (code) =>
+    // If the process exited but something still holds its pipes, stop waiting after a grace period.
+    child.on("exit", () => {
+      setTimeout(() => {
+        child.stdout.destroy();
+        child.stderr.destroy();
+        onClose(child.exitCode);
+      }, 1500).unref();
+    });
+
+    const onClose = (code: number | null) =>
       finish(() => {
         if (buffer.trim()) emit(buffer.trim());
         if (killReason === "timeout")
           return reject(new ProviderError("timeout", `\`${opts.cmd}\` did not finish within ${Math.round(opts.timeoutMs / 1000)}s`));
         if (killReason === "aborted") return reject(new ProviderError("aborted", "Request was cancelled"));
         resolve({ code, lines, stderr });
-      }),
-    );
+      });
+    child.on("close", onClose);
 
     child.stdin.on("error", () => {});
     child.stdin.end(opts.stdin ?? "");

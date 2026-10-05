@@ -6,6 +6,7 @@ import {
   GENERATION_TIMEOUT_MS,
   ProviderError,
   type ProviderHealth,
+  withSignInHint,
 } from "./types";
 
 type ClaudeEvent = {
@@ -57,11 +58,21 @@ export function createClaudeStreamParser(onDelta?: (text: string) => void) {
   };
 }
 
+const SIGN_IN = "sign in by running `claude` and typing /login (Docker: `docker compose exec -it web claude`)";
+
 export class ClaudeCliProvider implements AIProvider {
   readonly id = "claude-cli" as const;
   constructor(private readonly bin = process.env.CLAUDE_BIN || "claude") {}
 
   async complete(req: CompleteRequest): Promise<string> {
+    try {
+      return await this.run(req);
+    } catch (e) {
+      throw withSignInHint(e, SIGN_IN);
+    }
+  }
+
+  private async run(req: CompleteRequest): Promise<string> {
     const args = [
       "-p",
       "--output-format",

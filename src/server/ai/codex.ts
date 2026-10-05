@@ -6,6 +6,7 @@ import {
   GENERATION_TIMEOUT_MS,
   ProviderError,
   type ProviderHealth,
+  withSignInHint,
 } from "./types";
 
 /** Pull the human-readable message out of codex's nested JSON error strings. */
@@ -45,11 +46,21 @@ export function parseCodexEvents(lines: string[]): { text?: string; error?: Prov
 const SYSTEM_WRAPPER = (system: string, prompt: string) =>
   `<instructions>\n${system}\n\nAnswer directly in your reply. Do not run shell commands, do not read or write files, and do not ask questions.\n</instructions>\n\n${prompt}`;
 
+const SIGN_IN = "sign in with `codex login --device-auth` (Docker: `docker compose exec -it web codex login --device-auth`)";
+
 export class CodexCliProvider implements AIProvider {
   readonly id = "codex-cli" as const;
   constructor(private readonly bin = process.env.CODEX_BIN || "codex") {}
 
   async complete(req: CompleteRequest): Promise<string> {
+    try {
+      return await this.run(req);
+    } catch (e) {
+      throw withSignInHint(e, SIGN_IN);
+    }
+  }
+
+  private async run(req: CompleteRequest): Promise<string> {
     const args = ["exec", "--json", "--skip-git-repo-check", "--ephemeral", "--ignore-user-config", "--sandbox", "read-only"];
     if (req.model) args.push("-m", req.model);
     if (req.effort) args.push("-c", `model_reasoning_effort="${req.effort}"`);

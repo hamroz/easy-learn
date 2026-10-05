@@ -5,6 +5,7 @@ import { api } from "@/lib/api";
 import type { SectionJson } from "@/lib/types";
 import { Button } from "@/components/ui/Button";
 import { Dots } from "@/components/ui/Spinner";
+import { BlockBoundary } from "./BlockBoundary";
 import { BlockView, type BlockViewProps } from "./BlockView";
 
 export function SectionView({
@@ -34,7 +35,9 @@ export function SectionView({
       {section.status === "ready" && (
         <div className="animate-fade-up">
           {section.blocks.map((b) => (
-            <BlockView key={b.id} block={b} sectionId={section.id} {...(b.type === "paragraph" ? paragraphProps?.(section.id, b.id) : {})} />
+            <BlockBoundary key={b.id}>
+              <BlockView block={b} sectionId={section.id} {...(b.type === "paragraph" ? paragraphProps?.(section.id, b.id) : {})} />
+            </BlockBoundary>
           ))}
         </div>
       )}

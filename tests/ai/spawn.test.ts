@@ -1,3 +1,4 @@
+import { spawnSync } from "node:child_process";
 import { describe, expect, it } from "vitest";
 import { runCli } from "@/server/ai/spawn";
 import { ProviderError } from "@/server/ai/types";
@@ -36,4 +37,20 @@ describe("runCli", () => {
     const err = await runCli({ cmd: process.execPath, args: ["-e", "setInterval(() => {}, 1000)"], timeoutMs: 5000, signal: ac.signal }).catch((e) => e);
     expect(err.kind).toBe("aborted");
   });
+
+  it("finishes on timeout even when a grandchild keeps the output pipe open", async () => {
+    const started = Date.now();
+    const bin = new URL("../fixtures/cli/hung-wrapper.mjs", import.meta.url).pathname;
+    const err = await runCli({ cmd: bin, args: [], timeoutMs: 300 }).catch((e) => e);
+    expect(err.kind).toBe("timeout");
+    expect(Date.now() - started).toBeLessThan(8000);
+  });
+
+  it("kills the whole process group, including grandchildren that ignore SIGTERM", async () => {
+    const bin = new URL("../fixtures/cli/hung-wrapper.mjs", import.meta.url).pathname;
+    await runCli({ cmd: bin, args: [], timeoutMs: 300 }).catch(() => {});
+    await new Promise((r) => setTimeout(r, 3600));
+    const left = spawnSync("pgrep", ["-f", "process.on\\('SIGTERM'"]).stdout.toString().trim();
+    expect(left).toBe("");
+  }, 10_000);
 });

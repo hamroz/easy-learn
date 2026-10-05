@@ -13,6 +13,9 @@ import {
   steerCourse,
 } from "@/server/services/generation";
 import { resetDb } from "../helpers/db";
+import { vi } from "vitest";
+import { MockProvider } from "@/server/ai/mock";
+import { ensureLessonGenerating } from "@/server/services/generation";
 import type { BlockOf } from "@/content/blocks";
 
 let userId: string;
@@ -109,5 +112,27 @@ describe("generation pipeline (mock provider)", () => {
     const [again] = await db.select().from(sections).where(eq(sections.id, sec.id));
     expect(again.status).toBe("ready");
     expect(again.error).toBeNull();
+  });
+
+  it("steer never deletes a lesson that started generating while the AI was thinking", async () => {
+    const course = await createCourse(userId, { topic: "Relativity", level: "beginner" });
+    await runJobsUntilIdle();
+    await steerCourse(course.id, 0, "focus on GPS");
+    const tail = (await lessonsOf(course.id))[3];
+    // The reader opens lesson 4 while the steer call is in flight.
+    const original = MockProvider.prototype.complete;
+    const spy = vi.spyOn(MockProvider.prototype, "complete").mockImplementation(async function (this: MockProvider, req) {
+      if (req.task === "steer") await ensureLessonGenerating(tail.id);
+      return original.call(this, req);
+    });
+    try {
+      await runJobsUntilIdle();
+    } finally {
+      spy.mockRestore();
+    }
+    const after = await lessonsOf(course.id);
+    expect(after.some((l) => l.id === tail.id)).toBe(true);
+    expect(after.map((l) => l.position)).toEqual(after.map((_, i) => i));
+    expect(after.filter((l) => l.title.startsWith("Steered"))).toHaveLength(3);
   });
 });

@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { parseCodexEvents } from "@/server/ai/codex";
+import { CodexCliProvider, parseCodexEvents } from "@/server/ai/codex";
 import { createClaudeStreamParser } from "@/server/ai/claude";
 
 const lines = (name: string) =>
@@ -47,5 +47,14 @@ describe("createClaudeStreamParser", () => {
     p.push("warning: something");
     for (const l of lines("claude-success.jsonl")) p.push(l);
     expect(p.finish().text).toBe('{"word": "meadow"}');
+  });
+});
+
+describe("provider errors", () => {
+  it("tell the owner exactly how to sign in", async () => {
+    const bin = new URL("../fixtures/cli/fake-codex-logged-out.mjs", import.meta.url).pathname;
+    const err = await new CodexCliProvider(bin).complete({ task: "outline", system: "s", prompt: "p", timeoutMs: 10_000 }).catch((e) => e);
+    expect(err.kind).toBe("not_logged_in");
+    expect(err.message).toContain("codex login --device-auth");
   });
 });

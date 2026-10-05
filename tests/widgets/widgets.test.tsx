@@ -2,6 +2,7 @@
 import { act, cleanup, fireEvent, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { BlockView } from "@/components/reader/BlockView";
+import { BlockBoundary } from "@/components/reader/BlockBoundary";
 import { Markdown } from "@/components/reader/Markdown";
 import { blockSchema, type Block } from "@/content/blocks";
 import { scopeSvg } from "@/lib/svg";
@@ -48,6 +49,28 @@ describe("BlockView", () => {
     const { container } = render(<BlockView block={blocks.at(-1)!} sectionId="s" />);
     expect(container.querySelector("iframe")).toBeFalsy();
     expect(container.textContent).toMatch(/simulation/i);
+  });
+});
+
+describe("BlockBoundary", () => {
+  it("contains a widget that throws instead of crashing the lesson", () => {
+    const Boom = () => {
+      throw new Error("bad AI widget");
+    };
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const { container } = render(
+      <div>
+        <p>before</p>
+        <BlockBoundary>
+          <Boom />
+        </BlockBoundary>
+        <p>after</p>
+      </div>,
+    );
+    spy.mockRestore();
+    expect(container.textContent).toContain("before");
+    expect(container.textContent).toContain("after");
+    expect(container.textContent).toMatch(/could not be shown/i);
   });
 });
 

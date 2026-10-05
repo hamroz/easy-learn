@@ -73,3 +73,11 @@ export function classifyError(message: string): ProviderError {
   if (/rate.?limit|usage limit|429|too many requests|quota/.test(m)) return new ProviderError("rate_limited", message);
   return new ProviderError("failed", message);
 }
+
+/** Add the exact sign-in command to "not logged in" / "missing" errors so every failure state can show it. */
+export function withSignInHint(err: unknown, how: string): unknown {
+  if (err instanceof ProviderError && (err.kind === "not_logged_in" || err.kind === "missing")) {
+    return new ProviderError(err.kind, `${err.message} — ${how}`);
+  }
+  return err;
+}

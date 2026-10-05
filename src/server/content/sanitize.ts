@@ -1,12 +1,28 @@
 import DOMPurify from "isomorphic-dompurify";
 import type { Block } from "@/content/blocks";
 
-/** Sanitize AI-generated SVG: no scripts, handlers, foreign content or external references. */
+/** Any url(...) that is not a same-document reference like url(#gradient). */
+const EXTERNAL_URL = /url\(\s*(?!['"]?#)/i;
+
+let hooked = false;
+function ensureHooks() {
+  if (hooked) return;
+  hooked = true;
+  DOMPurify.addHook("uponSanitizeAttribute", (_node, data) => {
+    if (EXTERNAL_URL.test(data.attrValue)) data.keepAttr = false;
+  });
+}
+
+/**
+ * Sanitize AI-generated SVG: no scripts, handlers, foreign content, <style> (it would restyle the whole
+ * page once inlined) or external url() references.
+ */
 export function sanitizeSvg(svg: string): string {
   if (!/<svg[\s>]/i.test(svg)) return "";
+  ensureHooks();
   const clean = DOMPurify.sanitize(svg, {
     USE_PROFILES: { svg: true, svgFilters: true },
-    FORBID_TAGS: ["foreignObject", "image", "script", "a", "use", "animate", "set", "animateMotion", "animateTransform"],
+    FORBID_TAGS: ["foreignObject", "image", "script", "style", "a", "use", "animate", "set", "animateMotion", "animateTransform"],
     FORBID_ATTR: ["href", "xlink:href"],
   });
   return /<svg[\s>]/i.test(clean) ? clean : "";

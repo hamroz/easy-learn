@@ -79,6 +79,13 @@ export function buildAnchor(root: Node, range: Range): Anchor | null {
   const raw = textOffsetsFromRange(root, range);
   if (!raw) return null;
   const text = selectableText(root);
+  // Inline formulas are atomic: a boundary inside one moves to its edge.
+  for (const el of (root as Element).querySelectorAll?.(".math-inline") ?? []) {
+    const s = pointToOffset(root, el, 0);
+    const e = s + selectableText(el).length;
+    if (raw.start > s && raw.start < e) raw.start = s;
+    if (raw.end > s && raw.end < e) raw.end = e;
+  }
   const off = snapToWords(text, raw.start, raw.end);
   if (off.end <= off.start) return null;
   return {

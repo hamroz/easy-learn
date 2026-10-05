@@ -17,7 +17,7 @@ The reader selected a passage in a lesson and asked about it. Answer in a small 
 - Match the reader's level; define any new term. If the passage simplifies something, say what the fuller picture is.
 - Inline markdown is fine (**bold**, *italic*, lists, \`code\`), and inline math between single dollar signs like $E = mc^2$.
 - Do not quiz the reader. Do not tell them to look elsewhere.
-${languageRule(input.course.language)} (If the reader writes in another language, answer in theirs.)`;
+${languageRule(input.course.language)} If the reader types their own question in another language, answer in theirs. Preset questions from the popover's buttons ("Explain this simply", "Give me an example", "Why does this matter?") are always answered in the course language.`;
 
   const history = input.history.length
     ? `\nConversation so far:\n${input.history.map((m) => `${m.role === "user" ? "Reader" : "You"}: ${m.content}`).join("\n\n")}\n`

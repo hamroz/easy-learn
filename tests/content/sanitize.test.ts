@@ -20,4 +20,12 @@ describe("sanitizeSvg", () => {
   it("returns an empty string for non-SVG input", () => {
     expect(sanitizeSvg("<div>hello</div>")).toBe("");
   });
+
+  it("removes <style> elements and external url() references, keeping url(#id)", () => {
+    const out = sanitizeSvg(
+      `<svg viewBox="0 0 1 1"><style>@import url(https://evil.example/x.css); body{display:none}</style><rect fill="url(https://evil.example/a.svg#p)" style="filter:url(https://evil.example/f)"/><path fill="url(#grad)"/></svg>`,
+    );
+    expect(out).not.toMatch(/<style|evil\.example/);
+    expect(out).toContain('fill="url(#grad)"');
+  });
 });

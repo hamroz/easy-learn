@@ -63,6 +63,19 @@ describe("word snapping", () => {
   });
 });
 
+describe("math anchoring", () => {
+  it("treats an inline formula as one unit when a selection starts or ends inside it", () => {
+    const root = dom(
+      `<p>Energy <span class="math-inline"><span class="katex"><span class="katex-mathml"><math><mi>E</mi></math></span><span class="katex-html" aria-hidden="true">E=mc2</span></span></span> is famous.</p>`,
+    ).firstElementChild!;
+    const html = root.querySelector(".katex-html")!.firstChild!;
+    const r = document.createRange();
+    r.setStart(root.firstChild!, 0);
+    r.setEnd(html, 2); // "E=" — ends right after a symbol word-snapping would not extend
+    expect(buildAnchor(root, r)?.quote).toBe("Energy E=mc2");
+  });
+});
+
 describe("reanchor", () => {
   const anchor = { start: 10, end: 15, quote: "brown", prefix: "The quick ", suffix: " fox" };
   it("keeps offsets that still match", () => {

@@ -36,13 +36,18 @@ function rewriteHandler(mode: "reshape" | "steer"): JobHandler {
       });
 
       await db.transaction(async (tx) => {
-        if (planned.length) await tx.delete(lessons).where(inArray(lessons.id, planned.map((l) => l.id)));
-        // Re-number kept lessons densely, then append the new tail.
-        for (const [i, l] of fixed.entries()) {
-          if (l.position !== i) await tx.update(lessons).set({ position: i }).where(eq(lessons.id, l.id));
-        }
+        // The AI call took minutes: re-read under lock and only replace lessons that are still untouched,
+        // so a lesson the reader opened meanwhile (now queued/generating) is never deleted.
+        const now = await tx.select().from(lessons).where(eq(lessons.courseId, course.id)).orderBy(asc(lessons.position)).for("update");
+        const replaceable = new Set(planned.map((l) => l.id));
+        const doomed = now.filter((l) => replaceable.has(l.id) && l.status === "planned" && l.position > afterPosition);
+        const kept = now.filter((l) => !doomed.includes(l));
+        if (doomed.length) await tx.delete(lessons).where(inArray(lessons.id, doomed.map((l) => l.id)));
+        // Re-number kept lessons densely (two passes avoid transient duplicates), then append the new tail.
+        for (const [i, l] of kept.entries()) await tx.update(lessons).set({ position: 10_000 + i }).where(eq(lessons.id, l.id));
+        for (const [i, l] of kept.entries()) await tx.update(lessons).set({ position: i }).where(eq(lessons.id, l.id));
         await tx.insert(lessons).values(
-          out.lessons.map((l, i) => ({ courseId: course.id, position: fixed.length + i, title: l.title, summary: l.summary })),
+          out.lessons.map((l, i) => ({ courseId: course.id, position: kept.length + i, title: l.title, summary: l.summary })),
         );
         await tx.update(courses).set({ busy: null, error: null }).where(eq(courses.id, course.id));
       });

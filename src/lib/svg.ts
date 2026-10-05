@@ -21,7 +21,8 @@ export function scopeSvg(svg: string, prefix: string): string {
 export function applyVisibility(container: Element | null, prefix: string, controlled: Iterable<string>, shown: Set<string>) {
   if (!container) return;
   for (const id of controlled) {
-    const el = container.querySelector<SVGElement>(`[id="${prefix}-${id}"]`);
+    const quoted = `${prefix}-${id}`.replace(/["\\]/g, "\\$&");
+    const el = container.querySelector<SVGElement>(`[id="${quoted}"]`);
     if (!el) continue;
     el.style.transition = "opacity 500ms ease";
     el.style.opacity = shown.has(id) ? "1" : "0";

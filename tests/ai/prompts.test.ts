@@ -58,6 +58,11 @@ describe("prompts", () => {
     expect(p.system).toContain("ru");
   });
 
+  it("answer prompt keeps preset button questions in the course language", () => {
+    const p = buildAnswerPrompt({ course, lessonTitle: "Свет", sectionText: "t", quote: "q", history: [], question: "Explain this simply" });
+    expect(p.system).toMatch(/buttons?.*course language/i);
+  });
+
   it("quiz prompt is the only one that asks for questions", () => {
     expect(buildQuizPrompt({ course, lessonTitle: "Свет", lessonText: "text" }).system).toMatch(/quiz/i);
   });
