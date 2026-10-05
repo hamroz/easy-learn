@@ -131,9 +131,9 @@ describe("API", () => {
     expect(quiz.content.questions.length).toBeGreaterThanOrEqual(3);
   });
 
-  it("saves settings", async () => {
-    await putSettings(req("PUT", "/api/settings", { provider: "mock", lessonModel: "x-model", chatModel: "", language: "ru" }));
+  it("saves the course language", async () => {
+    await putSettings(req("PUT", "/api/settings", { language: "ru" }));
     const s = await (await getSettings(req("GET", "/api/settings"))).json();
-    expect(s.settings).toMatchObject({ provider: "mock", lessonModel: "x-model", chatModel: null, language: "ru" });
+    expect(s.language).toBe("ru");
   });
 });

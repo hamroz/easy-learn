@@ -1,10 +1,11 @@
-import { getProvider, PROVIDER_IDS, type ProviderId } from "@/server/ai";
+import { VISIBLE_PROVIDERS } from "@/content/ai";
+import { providerFor } from "@/server/ai/routing";
 import { json, requireUser, route } from "@/server/http";
 
 export const GET = route(async (req) => {
-  await requireUser(req);
-  const results = await Promise.all(
-    PROVIDER_IDS.map(async (id: ProviderId) => ({ id, ...(await getProvider(id).health()) })),
+  const user = await requireUser(req);
+  const providers = await Promise.all(
+    VISIBLE_PROVIDERS.map(async (id) => ({ id, ...(await (await providerFor(id, user.id)).health()) })),
   );
-  return json({ providers: results });
+  return json({ providers });
 });
