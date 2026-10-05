@@ -1,6 +1,6 @@
 /**
  * Validate a course document and create it on an Easy Learn instance:
- *   npx tsx --env-file=.env.local scripts/send-course.ts authored/<slug>.json
+ *   npx tsx --env-file=.env --env-file=.env.local scripts/send-course.ts authored/<slug>.json
  * Needs EASY_LEARN_URL (e.g. http://localhost:3100) and EASY_LEARN_TOKEN (Settings → Authoring access).
  */
 import { readFile } from "node:fs/promises";

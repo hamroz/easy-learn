@@ -16,7 +16,7 @@
     "prebuild": "node scripts/copy-widget-libs.mjs",
     "test:e2e": "playwright test",
     "course:validate": "tsx scripts/validate-course.ts",
-    "course:send": "tsx --env-file=.env.local scripts/send-course.ts"
+    "course:send": "tsx --env-file=.env --env-file=.env.local scripts/send-course.ts"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.20",

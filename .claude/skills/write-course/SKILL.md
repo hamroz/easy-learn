@@ -50,13 +50,15 @@ Save it as `authored/<slug>.json` (git-ignored):
 - **Plots:** curves are functions of `x`; sliders are extra parameters used by the curves (the validator checks).
 - `coverSvg` may be omitted — the app then draws one.
 
-## 4. Validate, then send
+## 4. Validate, preview, then send
+If the course has a custom simulation, preview it on the dev server first when one is running.
+
 ```bash
 npx tsx scripts/validate-course.ts authored/<slug>.json
-npx tsx --env-file=.env.local scripts/send-course.ts authored/<slug>.json
+npx tsx --env-file=.env --env-file=.env.local scripts/send-course.ts authored/<slug>.json
 ```
 Fix every validation issue and re-run. `send-course` needs `EASY_LEARN_URL` (local Docker: `http://localhost:3100`)
-and `EASY_LEARN_TOKEN` in `.env.local`; if the token is missing, ask the owner to create one in
+and `EASY_LEARN_TOKEN` in `.env` or `.env.local`; if the token is missing, ask the owner to create one in
 Settings → Authoring access and add it there (never ask them to paste it into chat).
 
 ## 5. Report
