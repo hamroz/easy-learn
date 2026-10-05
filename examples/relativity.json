@@ -1,0 +1,1220 @@
+{
+ "version": 1,
+ "course": {
+  "title": "Why Time Slows Down",
+  "subtitle": "A beginner’s journey from everyday motion to Einstein’s surprising picture of space and time.",
+  "topicPrompt": "The theory of relativity — I know nothing about physics and want to finally understand why time slows down",
+  "language": "en",
+  "level": "beginner",
+  "theme": {
+   "dark": {
+    "bg": "#171d27",
+    "text": "#edf0ed",
+    "muted": "#aab4bd",
+    "accent": "#89b6c5",
+    "border": "#343f4c",
+    "accent2": "#d0b27b",
+    "surface": "#202936",
+    "highlight": "#4a4637"
+   },
+   "mood": "spacious, curious, contemplative",
+   "name": "Quiet Cosmos",
+   "light": {
+    "bg": "#f4f1e9",
+    "text": "#262b32",
+    "muted": "#636b75",
+    "accent": "#426f82",
+    "border": "#d9d4c8",
+    "accent2": "#92764e",
+    "surface": "#fffdf8",
+    "highlight": "#e9dfbd"
+   },
+   "radius": "soft",
+   "scheme": "dark",
+   "texture": "stars",
+   "fontPair": "editorial"
+  },
+  "coverSvg": "<svg viewBox=\"0 0 800 400\" xmlns=\"http://www.w3.org/2000/svg\"><defs><radialGradient id=\"glow\"><stop stop-color=\"var(--accent)\" stop-opacity=\".18\"></stop><stop offset=\"1\" stop-color=\"var(--bg)\" stop-opacity=\"0\"></stop></radialGradient></defs><rect width=\"800\" height=\"400\" fill=\"var(--bg)\"></rect><circle cx=\"400\" cy=\"200\" r=\"180\" fill=\"url(#glow)\"></circle><g fill=\"var(--muted)\"><circle cx=\"142\" cy=\"93\" r=\"2\"></circle><circle cx=\"246\" cy=\"290\" r=\"1.6\"></circle><circle cx=\"621\" cy=\"90\" r=\"2\"></circle><circle cx=\"690\" cy=\"270\" r=\"1.5\"></circle><circle cx=\"535\" cy=\"328\" r=\"1.4\"></circle><circle cx=\"335\" cy=\"68\" r=\"1.5\"></circle></g><g fill=\"none\" stroke=\"var(--border)\" stroke-width=\"1\"><ellipse cx=\"400\" cy=\"200\" rx=\"210\" ry=\"78\" transform=\"rotate(-22 400 200)\"></ellipse><ellipse cx=\"400\" cy=\"200\" rx=\"155\" ry=\"56\" transform=\"rotate(22 400 200)\"></ellipse><path d=\"M218 200h364M400 87v226\" opacity=\".55\"></path></g><path d=\"M248 260c56-35 111-48 164-39s106 45 140 4\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"2\" stroke-linecap=\"round\" opacity=\".8\"></path><circle cx=\"400\" cy=\"200\" r=\"39\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"1.5\"></circle><circle cx=\"400\" cy=\"200\" r=\"8\" fill=\"var(--accent)\"></circle><circle cx=\"559\" cy=\"165\" r=\"6\" fill=\"var(--accent2)\"></circle><circle cx=\"295\" cy=\"143\" r=\"4\" fill=\"var(--text)\"></circle><path d=\"M384 200h32M400 184v32\" stroke=\"var(--accent)\" stroke-width=\"1\" opacity=\".55\"></path></svg>"
+ },
+ "lessons": [
+  {
+   "title": "A clock in your kitchen",
+   "summary": "Begin with familiar clocks, motion, and the idea that time is what clocks measure. You’ll see why everyday experience makes time feel universal—and why physics began to question that feeling.",
+   "plan": {
+    "sections": [
+     {
+      "goal": "Feel how naturally a clock gives shape to an ordinary morning, and notice that time reaches you through things that change.",
+      "heading": "A clock on the counter",
+      "keyPoints": [
+       "A kettle warms, a shadow shifts, and a clock’s hands move: each gives you a way to notice that one moment has followed another.",
+       "A clock makes this easier by repeating a steady event, such as a second hand moving around its face.",
+       "Different clocks can look different, but they help answer the same everyday question: how much time has passed?."
+      ],
+      "interactive": "reveal: uncover the small repeating event inside a clock, from a pendulum swing to a quartz crystal’s vibration."
+     },
+     {
+      "goal": "Understand that in physics, a clock gives a practical meaning to elapsed time: count its regular ticks.",
+      "heading": "What a clock measures",
+      "keyPoints": [
+       "Elapsed time means the duration between two events; a clock measures it by counting ticks between them.",
+       "A kitchen timer and a wristwatch may count in different ways, but each can compare how long two familiar events take.",
+       "This is a working definition, not a claim that every clock is perfect: real clocks can run fast or slow, so careful measurements compare them."
+      ],
+      "interactive": "compare: set two simple clocks to start together, then see how steady ticks let you compare the duration of a kettle boiling and a song playing."
+     },
+     {
+      "goal": "See why everyday life encourages the idea that everyone’s seconds pass in the same way.",
+      "heading": "Why time feels shared",
+      "keyPoints": [
+       "At walking and driving speeds, ordinary clocks agree so closely that differences are too small to notice in daily routines.",
+       "You can meet a friend across town and coordinate by the same clock time, without worrying that your journeys changed how many seconds passed for either of you.",
+       "This familiar agreement is powerful evidence for everyday purposes, but it does not prove that all observers, in every situation, must measure the same time."
+      ],
+      "interactive": "timeline: move two people through a short everyday trip and watch their clock readings stay practically aligned at ordinary speeds."
+     },
+     {
+      "goal": "Leave with curiosity about whether the comfortable everyday picture of time works for every kind of motion.",
+      "heading": "A quiet question",
+      "keyPoints": [
+       "For centuries, the shared-clock picture was good enough for most human experience and practical measurement.",
+       "As scientists studied motion more precisely, they found a puzzle involving light: its measured speed seemed not to change with the motion of the observer.",
+       "If light’s speed stays the same for people moving differently, their measurements of distance and time may need to fit together in a new way. The next lesson follows that beam of light."
+      ],
+      "interactive": "diagram: choose a moving observer and trace the same light pulse, setting up the question of what each person measures."
+     }
+    ]
+   },
+   "sections": [
+    {
+     "heading": "A clock on the counter",
+     "goal": "Feel how naturally a clock gives shape to an ordinary morning, and notice that time reaches you through things that change.",
+     "blocks": [
+      {
+       "id": "s0p1",
+       "md": "The kettle is warming, and morning light is creeping across the counter. You glance at the clock: its second hand has moved since the last time you looked. How do you know that one moment has followed another? You notice because something has changed.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p2",
+       "md": "A kettle’s warmth gathers slowly. A shadow slides along the wall. The clock’s hand advances in small, visible steps. These changes give the morning a shape: first the water was cool, then warmer; first the sunlight touched one place, then another.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p3",
+       "md": "You don’t need a clock to notice change. You can watch a pot come to a boil or feel the day grow brighter. But those signs are tied to what is happening around you. The kettle may warm faster on a powerful burner, and clouds can hide the sunlight.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p4",
+       "md": "A clock helps by repeating a familiar event: a hand moves around its face, a pendulum swings back and forth, or a display changes its numbers. When you look again, the repetition gives you a simple way to compare this moment with the earlier one.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0w1",
+       "type": "reveal",
+       "answer": "In a pendulum clock, a pendulum swings back and forth; in a quartz clock, a tiny piece of crystal vibrates. The mechanisms differ, but each repeats a motion that the clock can count.",
+       "prompt": "What small, repeating event might be happening inside a clock?"
+      },
+      {
+       "id": "s0p5",
+       "md": "The hidden motion gives the clock something steady to count. The face and hands make that count easy to see, while the pendulum or crystal repeats out of sight. A clock turns a continuing change into a display you can check at a glance.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p6",
+       "md": "Different clocks can look and work very differently. Still, at breakfast they help answer the same ordinary question: how much time has passed since you put the kettle on? For now, that practical answer is enough to carry you through the morning.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "What a clock measures",
+     "goal": "Understand that in physics, a clock gives a practical meaning to elapsed time: count its regular ticks.",
+     "blocks": [
+      {
+       "id": "s1p1",
+       "md": "Imagine the kettle clicks off just as a song ends. You might say the song took about as long as the water took to boil. To make that comparison, you need a way to mark when each event begins and ends, then compare what happened in between.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p2",
+       "md": "In physics, the time between two events is called *elapsed time*: the duration from one event to another. A clock gives that duration a practical meaning. It makes a series of regular changes—ticks—and you count how many happen between the events.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1w1",
+       "type": "compare",
+       "columns": [
+        {
+         "md": "Start it when the kettle goes on; stop it when the kettle clicks off.",
+         "title": "Kitchen timer",
+         "points": [
+          "Its display counts down in seconds.",
+          "The final reading tells you how much time passed."
+         ]
+        },
+        {
+         "md": "Notice the watch when a song begins and again when it ends.",
+         "title": "Wristwatch",
+         "points": [
+          "Its hands or digits keep track of passing seconds.",
+          "Compare the readings to find the song’s duration."
+         ]
+        }
+       ]
+      },
+      {
+       "id": "s1p3",
+       "md": "The timer and watch may show time in different ways, but both let you compare durations. You could start them together, then use one to follow the kettle and the other to follow the song. If each keeps a steady rhythm, their ticks give you a common way to tell whether the events took about the same time.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p4",
+       "md": "That phrase—*if each keeps a steady rhythm*—matters. A clock that ticks unevenly can mislead you: it might count too many ticks during one event and too few during another. Even familiar clocks can run a little fast or slow, so careful measurements compare clocks and check how reliably they keep time.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1c1",
+       "md": "Counting ticks is a working definition of elapsed time. It tells you how to measure a duration with a clock; it does not say that every clock is perfect, or explain why clocks tick.",
+       "type": "callout",
+       "title": "A useful definition",
+       "variant": "caution"
+      },
+      {
+       "id": "s1p5",
+       "md": "Once you have a clock you trust, “how long did it take?” becomes a question you can answer by comparing its readings at two events. This simple habit makes time measurable. It also leaves a quiet question: if clocks are how we keep track of time, what happens when different clocks do not agree?",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "Why time feels shared",
+     "goal": "See why everyday life encourages the idea that everyone’s seconds pass in the same way.",
+     "blocks": [
+      {
+       "id": "s2p1",
+       "md": "Imagine meeting a friend for lunch. You leave home, walk to the station, ride across town, and arrive a little before noon. Your friend comes by bus. When you check your phones, both clocks say nearly the same time. Nothing about the trip asks you to wonder whether your walk or ride changed the seconds you experienced.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p2",
+       "md": "That quiet agreement is part of why time feels shared. In daily life, people coordinate appointments, trains, and meals using clocks as if one second has the same length for everyone. For ordinary journeys, this works so well that you can plan your day without tracking how each person moved.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2w1",
+       "type": "timeline",
+       "events": [
+        {
+         "md": "Your watch starts the trip at 9:00. Walking is familiar motion, and your clock keeps ticking as usual.",
+         "date": "9:00",
+         "title": "You leave on foot"
+        },
+        {
+         "md": "Across town, your friend leaves at about the same clock time. The bus moves faster than a walk, but still at an everyday speed.",
+         "date": "9:20",
+         "title": "Your friend takes the bus"
+        },
+        {
+         "md": "You compare clocks. For this kind of trip, any difference in elapsed time is far too tiny to notice in your plans or conversation.",
+         "date": "9:45",
+         "title": "You meet"
+        }
+       ]
+      },
+      {
+       "id": "s2p3",
+       "md": "The timeline keeps the clocks practically aligned because the journeys are slow by the standards of physics. Their agreement is not a trick of perception: it is a dependable feature of ordinary experience. You can meet across town and reasonably treat your seconds as shared.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p4",
+       "md": "But a useful habit is not the same as a universal law. The fact that walking and bus rides leave everyday clocks in close agreement does not prove that every observer, in every situation, must measure the same elapsed time. It tells you where the familiar picture works; it leaves open how far that picture reaches.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "A quiet question",
+     "goal": "Leave with curiosity about whether the comfortable everyday picture of time works for every kind of motion.",
+     "blocks": [
+      {
+       "id": "s3p1",
+       "md": "For centuries, the shared-clock picture was good enough. You could set a meeting by the town clock, cross a room, or travel by carriage without worrying that motion changed how quickly time passed. Any differences were too small to matter in ordinary life.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p2",
+       "md": "Then scientists began measuring motion with greater precision, and light brought an unexpected puzzle. Light travels from a candle to your eye, or from the Sun across space. Its measured speed seemed not to change even when the person measuring it was moving.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p3",
+       "md": "Picture a brief pulse of light traveling along a track. One observer stands beside the track; another moves alongside it. For a ball rolling down the track, the two observers might describe its speed differently, as people on a platform and a train describe a passing cyclist from different viewpoints. Light seemed to resist that familiar expectation.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3w1",
+       "svg": "<svg viewBox=\"0 0 640 300\"><g id=\"track\"><line x1=\"70\" y1=\"150\" x2=\"570\" y2=\"150\" stroke=\"var(--border)\" stroke-width=\"4\" stroke-linecap=\"round\"></line><circle cx=\"360\" cy=\"150\" r=\"12\" fill=\"var(--accent)\"></circle><path d=\"M380 150h70m-12-10 12 10-12 10\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><text x=\"310\" y=\"115\" font-size=\"16\" fill=\"var(--text)\">light pulse</text></g><g id=\"still\"><circle cx=\"115\" cy=\"215\" r=\"10\" fill=\"var(--accent2)\"></circle><path d=\"M115 226v28m-14 16 14-16 14 16\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><text x=\"72\" y=\"285\" font-size=\"16\" fill=\"var(--text)\">beside track</text></g><g id=\"moving\"><rect x=\"195\" y=\"205\" width=\"95\" height=\"42\" rx=\"8\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></rect><circle cx=\"218\" cy=\"254\" r=\"7\" fill=\"var(--accent2)\"></circle><circle cx=\"267\" cy=\"254\" r=\"7\" fill=\"var(--accent2)\"></circle><path d=\"M210 193h70m-12-10 12 10-12 10\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><text x=\"188\" y=\"285\" font-size=\"16\" fill=\"var(--text)\">moving observer</text></g><g id=\"question\"><path d=\"M480 210h90\" stroke=\"var(--muted)\" stroke-width=\"2\" stroke-dasharray=\"6 7\"></path><text x=\"478\" y=\"245\" font-size=\"16\" fill=\"var(--muted)\">What do they measure?</text></g></svg>",
+       "type": "diagram",
+       "steps": [
+        {
+         "md": "Follow the pulse from the observer standing beside the track.",
+         "show": [
+          "track",
+          "still",
+          "question"
+         ],
+         "label": "Beside the track"
+        },
+        {
+         "md": "Now look from the moving observer. The pulse is the same, while the observer's motion differs.",
+         "show": [
+          "track",
+          "moving",
+          "question"
+         ],
+         "label": "Moving along"
+        }
+       ],
+       "caption": "Choose each observer to follow the same pulse from a different point of view."
+      },
+      {
+       "id": "s3p4",
+       "md": "The drawing shows the puzzle, but it cannot tell us what either observer's clock or ruler will read. Speed links distance traveled to time taken. If moving observers measure the same speed for light, their measurements of distance and time may have to fit together in a new way.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p5",
+       "md": "For now, the familiar kitchen clock remains a reliable guide for an ordinary morning. The puzzle asks what happens when motion and measurement are pushed beyond that everyday scale. In the next lesson, we will follow the beam of light and see where its steady speed leads.",
+       "type": "paragraph"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "The strange speed of light",
+   "summary": "Follow a beam of light and discover a puzzle: everyone measures its speed to be the same, even when they’re moving. You’ll understand why this small fact asks us to rethink how motion works.",
+   "plan": {
+    "sections": [
+     {
+      "goal": "Feel the everyday expectation that motion changes how fast something seems to move, and notice why light makes that expectation puzzling.",
+      "heading": "Chasing a flash",
+      "keyPoints": [
+       "If you walk toward a rolling ball, its speed relative to you differs from its speed relative to someone standing still.",
+       "For ordinary motion, speeds combine in a way that matches your intuition: a passenger walking forward on a moving train moves faster relative to the platform.",
+       "A beam of light seems like it should work the same way: surely a moving observer could catch up with it a little."
+      ],
+      "interactive": "diagram: move a train and a passenger walking forward; compare the passenger’s speed as seen from the train and the platform"
+     },
+     {
+      "goal": "Understand the surprising experimental finding that observers in uniform motion measure the same speed for light in empty space.",
+      "heading": "The stubborn number",
+      "keyPoints": [
+       "Light travels through empty space at about 300,000 kilometers per second; physicists use c as the symbol for this speed.",
+       "Experiments show that observers moving steadily in different directions still measure light in empty space at speed c.",
+       "This result is not about how bright the beam looks or how quickly it reaches you; it is about the measured distance the light travels divided by the measured time.",
+       "The finding is subtle: it asks us to reconsider how observers measure distance and time, rather than imagining that light secretly changes speed for each one."
+      ],
+      "interactive": "compare: choose an observer at rest or moving steadily, then see each measurement of a light beam’s speed remain c"
+     },
+     {
+      "goal": "See why the fixed speed of light challenges the familiar rule for adding speeds, without needing to solve the puzzle yet.",
+      "heading": "A ripple in the old picture",
+      "keyPoints": [
+       "In everyday life, if you throw a ball forward from a moving train, a platform observer adds the train’s speed to the ball’s speed.",
+       "Applying that same rule to a light beam predicts different measured light speeds for the train and the platform.",
+       "But careful measurements do not show those differences, so the ordinary addition rule cannot describe light and moving observers in the old way.",
+       "The speed of light is a limit for objects and signals in modern physics, though the deeper explanation belongs to later lessons."
+      ],
+      "interactive": "plot: adjust the train’s speed and compare the old speed-addition prediction for light with the constant measured value c"
+     },
+     {
+      "goal": "Leave with the central question of relativity: if light’s speed stays fixed for everyone, how must measurements of space and time fit together?",
+      "heading": "What has to give?",
+      "keyPoints": [
+       "The puzzle does not mean that light ignores motion; it means our familiar assumptions about shared distance and shared time need closer attention.",
+       "A measurement of speed uses both distance and time, so a fixed result can require observers to disagree about one or both of those measurements.",
+       "For slow everyday travel, those differences are too small to notice, which is why ordinary speed addition remains such a good approximation.",
+       "Next, a simple light clock on a moving train will make the connection between a longer light path and a slower tick visible."
+      ],
+      "interactive": "reveal: show how the same speed can be measured when observers assign different distances and times to a journey"
+     }
+    ]
+   },
+   "sections": [
+    {
+     "heading": "Chasing a flash",
+     "goal": "Feel the everyday expectation that motion changes how fast something seems to move, and notice why light makes that expectation puzzling.",
+     "blocks": [
+      {
+       "id": "s0p1",
+       "md": "Imagine standing beside a moving train as someone walks toward its front. From the platform, that person travels along with the train and also takes steps forward. It seems natural that the person moves faster past you than they do down the train’s aisle.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p2",
+       "md": "You can feel the same rule when a ball rolls across a path. If you walk toward it, it approaches you faster than it approaches someone standing still. What you measure depends on how you and the ball move relative to each other.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p3",
+       "md": "Let’s make the train picture concrete. The train moves to the right at 8 metres per second, and the passenger walks forward at 2 metres per second relative to the train. Those numbers are illustrative: they let you compare the two viewpoints, not report a measurement.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0w1",
+       "svg": "<svg viewBox=\"0 0 640 280\"><g id=\"train\"><rect x=\"80\" y=\"100\" width=\"480\" height=\"90\" rx=\"18\" fill=\"var(--surface)\" stroke=\"var(--border)\" stroke-width=\"3\"></rect><circle cx=\"180\" cy=\"205\" r=\"16\" fill=\"var(--muted)\"></circle><circle cx=\"460\" cy=\"205\" r=\"16\" fill=\"var(--muted)\"></circle><text x=\"95\" y=\"85\" font-size=\"18\" fill=\"var(--muted)\">Train moving right</text></g><g id=\"passenger\"><circle cx=\"345\" cy=\"125\" r=\"17\" fill=\"var(--accent)\"></circle><path d=\"M345 143v30m0-20-17 15m17-15 17 12m-17 8-13 20m13-20 14 20\" fill=\"none\" stroke=\"var(--text)\" stroke-width=\"4\" stroke-linecap=\"round\"></path><text x=\"370\" y=\"135\" font-size=\"16\" fill=\"var(--text)\">Passenger</text></g><g id=\"trainview\"><path d=\"M275 65h120\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"4\"></path><path d=\"m385 56 15 9-15 9\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"4\"></path><text x=\"268\" y=\"48\" font-size=\"16\" fill=\"var(--text)\">2 m/s relative to train</text></g><g id=\"platformview\"><path d=\"M160 245h270\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"4\"></path><path d=\"m420 236 15 9-15 9\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"4\"></path><text x=\"175\" y=\"270\" font-size=\"16\" fill=\"var(--text)\">10 m/s relative to platform</text></g></svg>",
+       "type": "diagram",
+       "steps": [
+        {
+         "md": "The passenger walks at 2 m/s relative to the train.",
+         "show": [
+          "train",
+          "passenger",
+          "trainview"
+         ],
+         "label": "On the train"
+        },
+        {
+         "md": "The train carries the passenger forward at 8 m/s too, so the platform sees 10 m/s.",
+         "show": [
+          "train",
+          "passenger",
+          "platformview"
+         ],
+         "label": "From the platform"
+        }
+       ],
+       "caption": "Select each view to compare how the passenger moves."
+      },
+      {
+       "id": "s0p4",
+       "md": "For everyday speeds, the platform’s 10 m/s comes from adding the train’s 8 m/s to the passenger’s 2 m/s walking speed. The phrase *relative to* just tells you which moving viewpoint you use to describe a speed. You do not need a new rule for each observer; ordinary speeds combine in a way that matches the picture.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p5",
+       "md": "Now replace the passenger with a flash of light sent forward from the train. The train is moving, so you might expect the light to pull away from it just a little faster than it would for someone on board—much like the walking passenger does.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p6",
+       "md": "That expectation is familiar and sensible. If motion works the same way for everything, a moving observer should be able to catch up with a beam a little, changing the speed they measure. But light leaves us with a puzzle: does it really follow the same rule as the train and its passenger?",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "The stubborn number",
+     "goal": "Understand the surprising experimental finding that observers in uniform motion measure the same speed for light in empty space.",
+     "blocks": [
+      {
+       "id": "s1p1",
+       "md": "Imagine two people timing a flash of light across a stretch of empty space. One waits beside the path; the other glides past at a steady speed. In everyday life, you might expect the moving observer to measure a different speed, just as a cyclist sees a passing car’s motion differently from someone standing by the road.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p2",
+       "md": "But measurements of light in empty space keep giving the same answer. Its speed is about 300,000 kilometers per second, and physicists use the letter $c$ for that speed. The number is so large that light crosses a distance the size of Earth’s circumference in a little over a tenth of a second.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1w1",
+       "type": "compare",
+       "caption": "Switch between the two observers. Each measures the light’s distance and travel time, then divides distance by time; both get $c$.",
+       "columns": [
+        {
+         "md": "You measure the light’s travel from your own position.",
+         "title": "Beside the beam",
+         "points": [
+          "Distance traveled: your measurement",
+          "Elapsed time: your measurement",
+          "Speed: $c$"
+         ]
+        },
+        {
+         "md": "You glide past the beam at a steady speed and measure its travel from your position.",
+         "title": "Moving steadily",
+         "points": [
+          "Distance traveled: your measurement",
+          "Elapsed time: your measurement",
+          "Speed: $c$"
+         ]
+        }
+       ]
+      },
+      {
+       "id": "s1p3",
+       "md": "The comparison is about a measurement, not an impression. Brightness tells you how much light reaches your eyes; arrival tells you when it gets there. Neither is the speed. To measure speed, an observer measures how far the light travels in that observer’s frame of reference—the viewpoint tied to their motion—and how much time passes there.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p4",
+       "md": "“Steady” matters: the observers move uniformly, meaning at a constant speed in a straight line, without accelerating or turning. They can travel in different directions, and their measurements of light in empty space still give $c$. This is a finding from experiments, not a trick of how the beam looks.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p5",
+       "md": "That leaves a quiet puzzle. If the observers are moving differently, they do not necessarily agree about the distance the light covers or the time it takes. Yet when each divides their measured distance by their measured time, the answer remains the same. The full story of how those measurements fit together comes later; for now, the surprising result is simply that light does not pick up or lose speed according to who is watching.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1c1",
+       "md": "Each observer uses their own rulers and clocks to measure the light. The claim is that this procedure gives the same speed $c$ for every uniformly moving observer in empty space.",
+       "type": "callout",
+       "title": "A fixed speed, measured locally",
+       "variant": "insight"
+      }
+     ]
+    },
+    {
+     "heading": "A ripple in the old picture",
+     "goal": "See why the fixed speed of light challenges the familiar rule for adding speeds, without needing to solve the puzzle yet.",
+     "blocks": [
+      {
+       "id": "s2p1",
+       "md": "Imagine standing on a platform as a train passes. Someone on board throws a ball forward. You see the ball move faster than the train because its motion combines with the train’s motion. If the ball moves at 10 metres per second relative to the train and the train moves at 20 metres per second, you measure about 30 metres per second.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p2",
+       "md": "This everyday rule is called *adding speeds*: for motion along the same line, the speed you measure is the object’s speed relative to its vehicle plus the vehicle’s speed relative to you. It works well for trains, balls, and people because their speeds are tiny compared with the speed of light.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p3",
+       "md": "Now imagine replacing the ball with a flash of light sent forward from the train. The old rule gives a startling prediction: a platform observer should measure the light moving at the speed of light plus the train’s speed. An observer on the train would measure the light at the speed of light itself, so the two observers should disagree.",
+       "type": "paragraph"
+      },
+      {
+       "x": {
+        "max": 0.8,
+        "min": 0,
+        "label": "Train speed as a fraction of c"
+       },
+       "y": {
+        "max": 2,
+        "min": 0.8,
+        "label": "Predicted light speed (multiples of c)"
+       },
+       "id": "s2w1",
+       "type": "plot",
+       "title": "The old prediction for light",
+       "curves": [
+        {
+         "expr": "1+v",
+         "color": "accent",
+         "label": "Old addition rule"
+        },
+        {
+         "expr": "1",
+         "color": "accent2",
+         "label": "Measured light speed"
+        }
+       ],
+       "params": [
+        {
+         "max": 0.8,
+         "min": 0,
+         "name": "v",
+         "step": 0.01,
+         "label": "Train speed (fraction of c)",
+         "value": 0.3
+        }
+       ]
+      },
+      {
+       "id": "s2p4",
+       "md": "Move the slider to see what the old rule predicts as the train speeds up. The gap grows: according to this picture, the platform measurement should rise above $c$, while the train’s stays at $c$. Here $c$ is the standard symbol for the speed of light in empty space.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p5",
+       "md": "But careful measurements do not show that predicted difference. Observers moving steadily relative to one another still measure the same speed for light in empty space. The ordinary rule for adding speeds, so successful for familiar objects, cannot carry over to light in the old way.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p6",
+       "md": "This is a ripple in a familiar picture of motion: the simple rule seems to say one thing, while measurement says another. Modern physics treats the speed of light as a limit for objects and signals. The deeper account of how space and time fit together is still ahead; for now, the puzzle is that light refuses to behave like a thrown ball.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "What has to give?",
+     "goal": "Leave with the central question of relativity: if light’s speed stays fixed for everyone, how must measurements of space and time fit together?",
+     "blocks": [
+      {
+       "id": "s3p1",
+       "md": "When you say a car travels at 60 kilometres per hour, you combine two measurements: how far it goes and how much time passes. Speed is distance divided by time. If two people agree on both measurements, they must agree on the speed too.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p2",
+       "md": "Light creates a puzzle because observers moving steadily relative to one another still measure the same speed for it in empty space. That does not mean light somehow ignores motion. It means we should look more closely at the assumptions hidden in our measurements: that everyone shares the same distances and the same passing time.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3w1",
+       "type": "reveal",
+       "answer": "Both calculate 300 million metres per second: distance divided by time gives the same result in each account. The example uses illustrative numbers to show how different distance and time measurements can preserve a speed; it is not a measurement of a particular light journey.",
+       "prompt": "Two observers describe the same journey. One measures 300 metres in one microsecond; another measures 600 metres in two microseconds. What speed does each assign?"
+      },
+      {
+       "id": "s3p3",
+       "md": "The reveal offers a small piece of the answer, not the whole theory. To keep light’s measured speed fixed, observers may have to disagree about distance, time, or both. Relativity works out precisely how those measurements fit together, and why the disagreements depend on how the observers move.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p4",
+       "md": "In everyday life, you rarely notice such differences. A car, a plane, or even a fast spacecraft moves slowly compared with light, so the changes in measured space and time are far too small to detect in ordinary situations. The familiar rule for adding speeds remains an excellent approximation at those speeds.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p5",
+       "md": "To make the connection more visible, imagine a clock that marks each tick with a flash of light travelling between two mirrors. On a moving train, someone watching from the platform sees that flash follow a longer path than it does for a passenger beside the clock. In the next lesson, we’ll follow that light path and see why the two observers describe the ticks differently.",
+       "type": "paragraph"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "A light clock on a moving train",
+   "summary": "Imagine light bouncing between mirrors as a train glides past. From the platform, its path looks longer, yet light keeps the same speed—so the moving clock must tick more slowly.",
+   "plan": {
+    "sections": [
+     {
+      "goal": "Picture how repeated light pulses can mark time, and see why this ideal clock helps us think about motion.",
+      "heading": "A clock made of light",
+      "keyPoints": [
+       "Imagine two small mirrors facing each other, with a flash of light bouncing between them.",
+       "One trip from one mirror to the other and back marks a tick.",
+       "This is an idealized clock: real clocks work in other ways, but light makes the role of its fixed speed easy to see."
+      ],
+      "interactive": "diagram: Step through a light pulse bouncing between two facing mirrors; see one tick appear when it returns."
+     },
+     {
+      "goal": "See why the light’s path looks different to someone on the platform than to someone riding with the clock.",
+      "heading": "Ride along with the train",
+      "keyPoints": [
+       "Inside the train, the mirrors stay above and below one another, so the pulse travels straight up and down.",
+       "As the train moves, a platform observer sees the mirrors shift sideways while the light travels.",
+       "From the platform, each leg of the pulse’s journey follows a diagonal path between the moving mirrors."
+      ],
+      "interactive": "compare: Switch between the rider’s and platform observer’s views of the same pulse, with matching points marked on the train."
+     },
+     {
+      "goal": "Connect the platform’s longer light path to more time between ticks, given that both observers measure light at the same speed.",
+      "heading": "The longer path",
+      "keyPoints": [
+       "For the platform observer, the diagonal route is longer than the straight up-and-down route seen by the rider.",
+       "As the previous lesson established, both observers measure light at the same speed.",
+       "Covering a longer path at the same speed takes more time, so the platform observer says the moving clock ticks more slowly.",
+       "The rider’s own clock still ticks normally for them; the comparison is between measured times from different viewpoints."
+      ],
+      "interactive": "custom: Show a train-mounted light clock from the platform. The reader adjusts a train-speed slider and starts the pulse; as speed rises, the light’s diagonal path lengthens and the platform tick counter takes longer to advance, while a rider’s counter marks the clock’s own regular ticks."
+     },
+     {
+      "goal": "Recognize how speed relates to the difference between the clock’s own tick interval and the interval measured from the platform.",
+      "heading": "A relationship to keep",
+      "keyPoints": [
+       "The time dilation factor, written γ (gamma), tells how much longer the platform observer’s interval is than the clock’s own interval.",
+       "For train speed v and the speed of light c, γ = 1 / √(1 − v²/c²). The symbols v and c stand for those speeds.",
+       "At everyday speeds v is tiny compared with c, so γ is nearly 1; as v approaches c, γ grows.",
+       "The light-clock picture is a simplified way to derive this relationship. The next lesson explores how it applies to real clocks and fast-moving particles."
+      ],
+      "interactive": "formula: Reveal γ, v, and c one at a time, then connect γ to the ratio of the platform’s interval to the clock’s own interval."
+     }
+    ]
+   },
+   "sections": [
+    {
+     "heading": "A clock made of light",
+     "goal": "Picture how repeated light pulses can mark time, and see why this ideal clock helps us think about motion.",
+     "blocks": [
+      {
+       "id": "s0p1",
+       "md": "Imagine a tiny clock with no hands and no gears: just two small mirrors facing each other, with a flash of light traveling between them. If you could watch it, what would count as one tick?",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p2",
+       "md": "The light starts at one mirror, crosses the gap to the other, and reflects back. When it returns to the mirror where it began, that complete there-and-back trip marks one tick. Another trip marks the next, so the clock keeps time through repetition.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0w1",
+       "svg": "<svg viewBox=\"0 0 640 300\"><g id=\"mirrors\"><line x1=\"180\" y1=\"85\" x2=\"180\" y2=\"215\" stroke=\"var(--text)\" stroke-width=\"6\" stroke-linecap=\"round\"></line><line x1=\"460\" y1=\"85\" x2=\"460\" y2=\"215\" stroke=\"var(--text)\" stroke-width=\"6\" stroke-linecap=\"round\"></line><text x=\"148\" y=\"65\" font-size=\"16\" fill=\"var(--muted)\">Mirror A</text><text x=\"428\" y=\"65\" font-size=\"16\" fill=\"var(--muted)\">Mirror B</text></g><g id=\"outbound\"><line x1=\"190\" y1=\"145\" x2=\"450\" y2=\"145\" stroke=\"var(--accent)\" stroke-width=\"4\" stroke-linecap=\"round\"></line><circle cx=\"320\" cy=\"145\" r=\"10\" fill=\"var(--accent)\"></circle></g><g id=\"return\"><line x1=\"450\" y1=\"165\" x2=\"190\" y2=\"165\" stroke=\"var(--accent2)\" stroke-width=\"4\" stroke-linecap=\"round\"></line><circle cx=\"180\" cy=\"165\" r=\"10\" fill=\"var(--accent2)\"></circle></g><g id=\"tick\"><rect x=\"245\" y=\"235\" width=\"150\" height=\"38\" rx=\"19\" fill=\"var(--highlight)\"></rect><text x=\"295\" y=\"260\" font-size=\"18\" fill=\"var(--text)\">One tick</text></g></svg>",
+       "type": "diagram",
+       "steps": [
+        {
+         "md": "The two mirrors face each other across a small gap.",
+         "show": [
+          "mirrors"
+         ],
+         "label": "Set up"
+        },
+        {
+         "md": "A flash travels from Mirror A to Mirror B.",
+         "show": [
+          "mirrors",
+          "outbound"
+         ],
+         "label": "Outward trip"
+        },
+        {
+         "md": "It reflects and comes back to Mirror A. This full round trip is one tick.",
+         "show": [
+          "mirrors",
+          "outbound",
+          "return",
+          "tick"
+         ],
+         "label": "Return trip"
+        }
+       ],
+       "caption": "Step through the light’s trip: notice when the tick appears."
+      },
+      {
+       "id": "s0p3",
+       "md": "The mirrors give the light a simple route, and the returning flash gives you a clear event to count. The clock does not need a visible hand: each completed journey is another beat. Its rhythm comes from the same repeated trip each time.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p4",
+       "md": "This is an idealized clock, a deliberately simplified model that makes one part of timekeeping easy to see. Real clocks use vibrating atoms, swinging pendulums, or electronic signals. Here, light is useful because its speed in empty space is the same for observers moving steadily relative to one another—a fact that will let us compare the clock’s rhythm from different viewpoints.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p5",
+       "md": "For now, keep your attention on the quiet repetition: across, back, tick. We have a clock whose workings are simple enough to picture, ready to ask what happens when the whole arrangement is moving.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "Ride along with the train",
+     "goal": "See why the light’s path looks different to someone on the platform than to someone riding with the clock.",
+     "blocks": [
+      {
+       "id": "s1p1",
+       "md": "Picture a small light clock mounted inside a train: two mirrors face each other, one above the other, and a pulse of light bounces between them. If you ride beside the clock, the mirrors stay still relative to you. The pulse travels straight up to the top mirror, then straight down.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p2",
+       "md": "Now imagine watching the same clock from the platform as the train glides past. While the pulse is in flight, the train carries both mirrors forward. The light meets the upper mirror farther along the track than where it started.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1w1",
+       "type": "compare",
+       "columns": [
+        {
+         "md": "You and the mirrors travel together.",
+         "title": "Riding with the clock",
+         "points": [
+          "The mirrors keep the same positions relative to you.",
+          "The pulse goes straight up, then straight down."
+         ]
+        },
+        {
+         "md": "The train moves sideways while the pulse travels.",
+         "title": "Watching from the platform",
+         "points": [
+          "Both mirrors shift along the track.",
+          "The pulse follows a diagonal path to each moving mirror."
+         ]
+        }
+       ]
+      },
+      {
+       "id": "s1p3",
+       "md": "The two views describe the same pulse and the same meetings with the mirrors. To keep track of those shared events, imagine a small mark on the train at the pulse’s starting point and another at the upper mirror where the pulse arrives. Both observers agree on which points meet; they describe the space between them differently because the train moves relative to the platform.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p4",
+       "md": "On the way back down, the platform observer also sees a diagonal leg: the lower mirror has moved forward by the time the pulse reaches it. For the rider, that same leg is vertical. Neither view is a trick of the eyes; each is a description from a different place of rest.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p5",
+       "md": "This is a simplified picture: a real train, mirror, or light pulse is more complicated. But the geometry captures the key difference. The rider sees an up-and-down route, while the platform observer sees the pulse follow the moving mirrors along a zigzag path.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "The longer path",
+     "goal": "Connect the platform’s longer light path to more time between ticks, given that both observers measure light at the same speed.",
+     "blocks": [
+      {
+       "id": "s2p1",
+       "md": "Picture a flash of light traveling between two mirrors fixed above and below each other inside a train. For the rider, the flash goes straight up, then straight down. Each round trip can mark one tick, like a pendulum swing marks time.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p2",
+       "md": "From the platform, the train moves sideways while the flash is in flight. So the light traces a slanted route between the mirrors: it starts where the lower mirror was, but by the time it reaches the upper mirror, that mirror has moved forward. The return trip slants too.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2w1",
+       "code": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style>\n:root{--bg:#101922;--surface:#17232e;--text:#edf4f4;--muted:#a6b6bf;--accent:#65d9cf;--accent2:#ffbd72;--border:#344653;--highlight:#243744;--font-body:system-ui,sans-serif}*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}body{margin:0;background:var(--surface);color:var(--text);font-family:var(--font-body)}.widget{height:440px;width:100%;display:flex;flex-direction:column;padding:14px 18px 12px;gap:8px}.top{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:30px}.title{font-size:15px;font-weight:650}.legend{display:flex;gap:12px;color:var(--muted);font-size:12px}.key{display:flex;align-items:center;gap:5px}.dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}.dash{width:15px;border-top:2px dashed var(--accent2)}canvas{display:block;width:100%;flex:1;min-height:0;border:1px solid var(--border);border-radius:12px;background:var(--bg)}.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat{background:var(--highlight);border:1px solid var(--border);border-radius:10px;padding:8px 11px;display:flex;justify-content:space-between;align-items:center;font-size:13px}.stat span{color:var(--muted)}.stat strong{font-size:14px;font-variant-numeric:tabular-nums}.controls{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}.buttons{display:flex;gap:7px}button{font:inherit;font-size:13px;font-weight:600;color:var(--text);background:var(--highlight);border:1px solid var(--border);border-radius:9px;min-width:78px;height:38px;cursor:pointer}button.primary{background:var(--accent);color:#10232a;border-color:transparent}button:focus-visible,input:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}.speed{display:flex;align-items:center;gap:9px;min-width:0}.speed label{white-space:nowrap;font-size:13px}.speed output{font-size:12px;color:var(--muted);min-width:40px;text-align:right}input[type=range]{width:100%;accent-color:var(--accent);height:28px;touch-action:pan-y}.foot{font-size:12px;text-align:center;color:var(--muted)}@media(max-width:420px){.widget{padding:10px;gap:6px}.legend{gap:7px;font-size:11px}.controls{grid-template-columns:1fr;gap:3px}.buttons{justify-content:center}.speed{grid-row:2}.stat{padding:7px}.title{font-size:14px}}\n</style></head><body><main class=\"widget\"><div class=\"top\"><div class=\"title\">One light pulse, two viewpoints</div><div class=\"legend\"><span class=\"key\"><i class=\"dot\"></i>Rider's path</span><span class=\"key\"><i class=\"dash\"></i>Platform's path</span></div></div><canvas id=\"scene\" aria-label=\"A light clock in a moving train. The rider sees a vertical pulse path; the platform observer sees a longer diagonal path.\"></canvas><div class=\"stats\"><div class=\"stat\"><span>Rider ticks</span><strong id=\"ticks\">0</strong></div><div class=\"stat\"><span>Platform time for this tick</span><strong id=\"elapsed\">—</strong></div></div><div class=\"controls\"><div class=\"buttons\"><button class=\"primary\" id=\"play\">Start</button><button id=\"reset\">Reset</button></div><div class=\"speed\"><label for=\"speed\">Train speed</label><input id=\"speed\" type=\"range\" min=\"0\" max=\"0.8\" step=\"0.01\" value=\"0.35\"><output id=\"speedout\">0.35 c</output></div><span></span></div><div class=\"foot\">Light speed stays fixed: the longer platform route takes more time.</div></main><script>\n(()=>{try{const canvas=document.getElementById('scene'),ctx=canvas.getContext('2d'),slider=document.getElementById('speed'),speedout=document.getElementById('speedout'),ticksEl=document.getElementById('ticks'),elapsedEl=document.getElementById('elapsed'),playBtn=document.getElementById('play'),resetBtn=document.getElementById('reset');let colors={},running=false,phase=0,ticks=0,last=0,raf=0;const half=1;function readColors(){const s=getComputedStyle(document.documentElement);colors={text:s.getPropertyValue('--text').trim(),muted:s.getPropertyValue('--muted').trim(),accent:s.getPropertyValue('--accent').trim(),accent2:s.getPropertyValue('--accent2').trim(),border:s.getPropertyValue('--border').trim(),highlight:s.getPropertyValue('--highlight').trim()}}function v(){return Number(slider.value)}function updateText(){speedout.value=v().toFixed(2)+' c';elapsedEl.textContent=v()===0?'1.00 light-clock units':(1/Math.sqrt(1-v()*v())).toFixed(2)+' light-clock units'}function rounded(x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r)}function draw(){const rect=canvas.getBoundingClientRect(),dpr=window.devicePixelRatio||1,w=Math.max(1,rect.width),h=Math.max(1,rect.height);if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr)}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);const trainX=w*.47,topY=h*.22,bottomY=h*.69,clockX=trainX,carW=Math.min(w*.63,410),carX=trainX-carW*.43,carY=h*.15,carH=h*.65;ctx.lineWidth=1;ctx.strokeStyle=colors.border;ctx.beginPath();ctx.moveTo(w*.06,h*.84);ctx.lineTo(w*.94,h*.84);ctx.stroke();ctx.fillStyle=colors.muted;ctx.font='12px system-ui';ctx.textAlign='left';ctx.fillText('Platform',w*.07,h*.80);rounded(carX,carY,carW,carH,12);ctx.fillStyle=colors.highlight;ctx.fill();ctx.strokeStyle=colors.border;ctx.lineWidth=1.4;ctx.stroke();ctx.beginPath();ctx.moveTo(carX+14,carY+carH);ctx.lineTo(carX+24,carY+carH+7);ctx.moveTo(carX+carW-24,carY+carH+7);ctx.lineTo(carX+carW-14,carY+carH);ctx.stroke();ctx.fillStyle=colors.muted;ctx.textAlign='center';ctx.fillText('Train',carX+carW/2,carY+18);const mirrorW=30;ctx.strokeStyle=colors.text;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(clockX-mirrorW/2,topY);ctx.lineTo(clockX+mirrorW/2,topY);ctx.moveTo(clockX-mirrorW/2,bottomY);ctx.lineTo(clockX+mirrorW/2,bottomY);ctx.stroke();ctx.lineWidth=1;ctx.fillStyle=colors.muted;ctx.font='11px system-ui';ctx.fillText('Upper mirror',clockX,topY-8);ctx.fillText('Lower mirror',clockX,bottomY+18);const midX=clockX+mirrorW/2+17;ctx.strokeStyle=colors.accent;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(midX,topY+4);ctx.lineTo(midX,bottomY-4);ctx.stroke();const cyc=phase%(4*half),goingUp=cyc<half,goingDown=cyc>=2*half&&cyc<3*half;let py=goingUp?bottomY-(cyc/half)*(bottomY-topY):goingDown?topY+((cyc-2*half)/half)*(bottomY-topY):cyc<2*half?topY:bottomY;ctx.fillStyle=colors.accent;ctx.beginPath();ctx.arc(midX,py,5,0,Math.PI*2);ctx.fill();const beta=v(),gamma=1/Math.sqrt(1-beta*beta),baseX=w*.76,baseY=h*.70,scale=Math.min(w*.17,h*.18);const dx=beta*gamma*scale,dy=gamma*scale;ctx.strokeStyle=colors.accent2;ctx.setLineDash([5,4]);ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(baseX-dx,baseY+dy);ctx.lineTo(baseX,baseY);ctx.lineTo(baseX+dx,baseY-dy);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=colors.accent2;ctx.beginPath();ctx.arc(baseX,baseY,4,0,Math.PI*2);ctx.fill();ctx.fillStyle=colors.muted;ctx.textAlign='center';ctx.font='11px system-ui';ctx.fillText('Platform view',baseX,Math.min(h-6,baseY+dy+16));ctx.fillStyle=colors.text;ctx.font='12px system-ui';ctx.fillText('same light speed',w*.76,h*.19);ctx.strokeStyle=colors.accent2;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(baseX, h*.23);ctx.lineTo(baseX,h*.29);ctx.stroke()}function frame(t){if(!running)return;if(last)phase+=(t-last)/1000;last=t;const next=Math.floor(phase/4);if(next>ticks){ticks=next;ticksEl.textContent=String(ticks)}draw();raf=requestAnimationFrame(frame)}function start(){if(running)return;running=true;last=0;playBtn.textContent='Pause';raf=requestAnimationFrame(frame)}function pause(){running=false;cancelAnimationFrame(raf);playBtn.textContent='Start'}playBtn.addEventListener('click',()=>running?pause():start());resetBtn.addEventListener('click',()=>{pause();phase=0;ticks=0;ticksEl.textContent='0';draw()});slider.addEventListener('input',()=>{updateText();draw()});window.addEventListener('resize',draw);window.addEventListener('message',e=>{if(e.data&&e.data.type==='theme'){readColors();draw()}});readColors();updateText();draw();parent.postMessage({type:'ready'},'*')}catch(err){parent.postMessage({type:'error',message:String(err)},'*')}})();\n</script></body></html>",
+       "type": "custom",
+       "brief": "Show a side-view light clock mounted inside a train, with a lower mirror, an upper mirror, and a light pulse traveling between them. Let the reader adjust the train's speed with a slider and press Start to animate a round-trip pulse. As speed increases, draw the platform observer's pulse path as longer diagonal segments while the train and mirrors move sideways. Display two counters: the rider's counter advances by one regular tick after each round trip, while the platform counter shows more elapsed time for that same tick at higher speeds. Keep the light's speed fixed in both viewpoints, and make the display clear that the platform's longer route is why its measured time between ticks is longer. Include labels for train speed, rider ticks, and platform elapsed time.",
+       "height": 440,
+       "status": "ready",
+       "fallback": {
+        "id": "s2w1fb",
+        "type": "compare",
+        "columns": [
+         {
+          "md": "The mirrors stay aligned above and below each other as the train moves.",
+          "title": "Rider’s view",
+          "points": [
+           "The light travels straight between them.",
+           "One round trip is one tick."
+          ]
+         },
+         {
+          "md": "The train moves sideways while the light travels between mirrors.",
+          "title": "Platform view",
+          "points": [
+           "The light follows a longer, diagonal route.",
+           "At the same light speed, that route takes more time."
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "id": "s2p3",
+       "md": "The slanted route is longer than the straight up-and-down route. Yet, as the previous lesson established, both the rider and the platform observer measure light traveling at the same speed. A longer journey at the same speed must take more time.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p4",
+       "md": "That extra time is the interval between ticks as measured from the platform. The moving clock ticks more slowly in that comparison: each of its ticks takes longer to arrive according to the platform observer. The rider’s clock still ticks normally for them, with each light round trip marking the same kind of steady tick.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2c1",
+       "md": "The clock does not change its own rhythm for the rider. The difference appears when you compare the time between its ticks from the platform, where the light has farther to travel.",
+       "type": "callout",
+       "title": "Two viewpoints, one clock",
+       "variant": "insight"
+      }
+     ]
+    },
+    {
+     "heading": "A relationship to keep",
+     "goal": "Recognize how speed relates to the difference between the clock’s own tick interval and the interval measured from the platform.",
+     "blocks": [
+      {
+       "id": "s3p1",
+       "md": "We can now name the difference between the two intervals. The clock’s own interval is the time between ticks measured by someone riding with it; the platform interval is the time between those same ticks measured from the platform. The factor $\\gamma$ (gamma) tells you how many times longer the platform interval is.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3w1",
+       "tex": "\\htmlClass{p1}{\\gamma} = \\frac{\\Delta t_{\\text{platform}}}{\\Delta t_{\\text{clock}}} = \\frac{1}{\\sqrt{1 - \\htmlClass{p2}{v}^2 / \\htmlClass{p3}{c}^2}}",
+       "type": "formula",
+       "parts": [
+        {
+         "id": "p1",
+         "md": "$\\gamma$ is the time dilation factor: the platform interval divided by the clock’s own interval.",
+         "label": "Gamma"
+        },
+        {
+         "id": "p2",
+         "md": "$v$ is the train’s speed relative to the platform.",
+         "label": "Train speed"
+        },
+        {
+         "id": "p3",
+         "md": "$c$ is the speed of light, which both observers measure as the same.",
+         "label": "Speed of light"
+        }
+       ]
+      },
+      {
+       "id": "s3p2",
+       "md": "The fraction makes the comparison explicit: if the train’s clock measures one interval, the platform measures $\\gamma$ times that interval. This relationship follows from the light clock’s longer zigzag path in the platform view, together with light’s fixed speed. The formula assumes the clock moves steadily and compares ticks in the simple setup we have been considering.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p3",
+       "md": "At everyday speeds, $v$ is tiny compared with $c$, so $v^2/c^2$ is close to zero and $\\gamma$ is nearly 1. The two intervals then differ too little for ordinary clocks to make the effect obvious. As the train’s speed approaches the speed of light, the square root in the denominator shrinks, and $\\gamma$ grows.",
+       "type": "paragraph"
+      },
+      {
+       "x": {
+        "max": 0.99,
+        "min": 0,
+        "label": "Speed as a fraction of light speed, v/c"
+       },
+       "y": {
+        "max": 8,
+        "min": 1,
+        "label": "Time dilation factor, γ"
+       },
+       "id": "s3w2",
+       "type": "plot",
+       "title": "How the factor grows with speed",
+       "curves": [
+        {
+         "expr": "1/sqrt(1-x^2)",
+         "color": "accent",
+         "label": "γ"
+        }
+       ],
+       "params": []
+      },
+      {
+       "id": "s3p4",
+       "md": "Move along the horizontal axis toward 1 and the curve rises: the closer the speed gets to light speed, the larger the platform interval becomes compared with the clock’s own. The curve does not say that an object reaches light speed; it shows how the ratio changes as its speed gets closer.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p5",
+       "md": "A light clock gives us a clean way to see where this relationship comes from, but it is an idealized picture. In the next lesson, we’ll look at how the same idea applies to real clocks and to fast-moving particles. For now, keep the comparison in mind: motion changes how much time separates the same pair of ticks for different observers.",
+       "type": "paragraph"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "When seconds depend on the journey",
+   "summary": "Build the idea of time dilation from the light clock, then explore why it affects every moving clock, not just imagined ones. You’ll learn why the effect is tiny in daily life but measurable in fast particles and precise clocks.",
+   "plan": {
+    "sections": [
+     {
+      "goal": "See how comparing a light clock’s ticks from the train and the platform leads to a relationship between motion and elapsed time.",
+      "heading": "A tick with a longer route",
+      "keyPoints": [
+       "In the train’s frame—the viewpoint moving with the train—light travels straight between two mirrors to make a tick.",
+       "From the platform’s frame, the train moves sideways while the light travels, so the light follows a longer diagonal path.",
+       "Both observers measure light’s speed as the same constant, c. Covering a longer path at the same speed takes more time, so the platform observer says the moving clock ticks more slowly.",
+       "The light clock is a model that makes the reasoning visible; real clocks do not need mirrors or light inside them."
+      ],
+      "interactive": "diagram: switch between the train and platform views, then adjust the train’s speed to see the light path stretch"
+     },
+     {
+      "goal": "Understand time dilation as a difference in elapsed time between observers, and meet the formula while keeping its meaning clear.",
+      "heading": "What the comparison measures",
+      "keyPoints": [
+       "A frame is a viewpoint moving at a particular speed, with clocks and rulers used to record where and when events happen.",
+       "Proper time is the time recorded by a clock present at both events being compared, such as two ticks on the moving clock.",
+       "For constant relative speed v, the relationship is Δt = γΔτ: Δτ is the moving clock’s elapsed time, and Δt is the time between those ticks measured from the platform.",
+       "The factor γ (gamma) is 1 / √(1 − v²/c²). At everyday speeds it is almost 1; as v approaches c, it grows. Objects with mass cannot reach light speed."
+      ],
+      "interactive": "formula: adjust v as a fraction of c and watch γ and the two elapsed times update"
+     },
+     {
+      "goal": "Trust that time dilation is a feature of motion in relativity, not a quirk of the imagined light clock.",
+      "heading": "Every clock makes the same journey",
+      "keyPoints": [
+       "A clock is any repeatable physical process used to count time: a swinging pendulum, vibrating atom, or decaying particle can all serve as clocks.",
+       "Relativity predicts the same time dilation for all well-behaved clocks moving at the same speed, not only for clocks built from light and mirrors.",
+       "This claim is supported by comparisons of precise clocks and by the behavior of fast-moving particles.",
+       "Real measurements can also depend on gravity and on how observers compare clocks. Here we isolate motion in flat spacetime to keep the idea clear."
+      ],
+      "interactive": "compare: view a light clock, an atomic clock, and a particle decay side by side, with the shared motion factor highlighted"
+     },
+     {
+      "goal": "Feel why time dilation hides in daily life yet matters in experiments and precise timekeeping.",
+      "heading": "Small here, clear in the sky",
+      "keyPoints": [
+       "At 30 m/s, roughly highway speed, γ differs from 1 by only about five parts in a trillion, too little to notice in ordinary life.",
+       "A muon is an unstable particle that decays after a characteristic time. More muons made high in Earth’s atmosphere reach the ground than a no-dilation estimate predicts because, from our frame, their moving clocks run slow.",
+       "Atomic clocks flown on aircraft and carried in satellites can accumulate measurable differences. Satellite navigation accounts for both motion and gravity-related timing effects.",
+       "Next, two travelers will separate and meet again. Their different journeys through spacetime will help explain why they can have different elapsed times."
+      ],
+      "interactive": "plot: move from everyday speeds toward c to see γ rise, then compare the tiny daily-life change with a fast particle’s journey"
+     }
+    ]
+   },
+   "sections": [
+    {
+     "heading": "A tick with a longer route",
+     "goal": "See how comparing a light clock’s ticks from the train and the platform leads to a relationship between motion and elapsed time.",
+     "blocks": [
+      {
+       "id": "s0p1",
+       "md": "Imagine a flash of light bouncing between two mirrors inside a smoothly moving train. Each trip from one mirror to the other marks one tick. A passenger and someone standing on the platform watch the same clock. Do they agree about how long a tick takes?",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p2",
+       "md": "First, take the train’s point of view, or *frame*: the viewpoint from which the train is at rest. The mirrors stay one above the other, so the light travels straight up and down. One complete trip—up and back—makes a tick.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p3",
+       "md": "Now picture the same flash from the platform. While the light travels, the train moves sideways. The light still reaches the moving mirrors, but its path looks diagonal: it covers both the mirrors’ separation and the train’s sideways motion. That route is longer than the straight up-and-down route.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0w1",
+       "svg": "<svg viewBox=\"0 0 640 360\"><g id=\"trainView\"><text x=\"32\" y=\"40\" font-size=\"20\" fill=\"var(--text)\">Train view</text><line x1=\"250\" y1=\"115\" x2=\"390\" y2=\"115\" stroke=\"var(--text)\" stroke-width=\"6\" stroke-linecap=\"round\"></line><line x1=\"250\" y1=\"245\" x2=\"390\" y2=\"245\" stroke=\"var(--text)\" stroke-width=\"6\" stroke-linecap=\"round\"></line><line x1=\"320\" y1=\"120\" x2=\"320\" y2=\"240\" stroke=\"var(--accent)\" stroke-width=\"4\" stroke-linecap=\"round\"></line><circle cx=\"320\" cy=\"120\" r=\"7\" fill=\"var(--accent)\"></circle><circle cx=\"320\" cy=\"240\" r=\"7\" fill=\"var(--accent)\"></circle><text x=\"338\" y=\"186\" font-size=\"16\" fill=\"var(--muted)\">light</text></g><g id=\"platformView\"><text x=\"32\" y=\"40\" font-size=\"20\" fill=\"var(--text)\">Platform view</text><line x1=\"205\" y1=\"115\" x2=\"345\" y2=\"115\" stroke=\"var(--text)\" stroke-width=\"6\" stroke-linecap=\"round\"></line><line x1=\"295\" y1=\"245\" x2=\"435\" y2=\"245\" stroke=\"var(--text)\" stroke-width=\"6\" stroke-linecap=\"round\"></line><line x1=\"270\" y1=\"115\" x2=\"370\" y2=\"245\" stroke=\"var(--accent)\" stroke-width=\"4\" stroke-linecap=\"round\"></line><line x1=\"370\" y1=\"245\" x2=\"470\" y2=\"115\" stroke=\"var(--accent2)\" stroke-width=\"4\" stroke-linecap=\"round\"></line><circle cx=\"270\" cy=\"115\" r=\"7\" fill=\"var(--accent)\"></circle><circle cx=\"370\" cy=\"245\" r=\"7\" fill=\"var(--accent2)\"></circle><text x=\"395\" y=\"182\" font-size=\"16\" fill=\"var(--muted)\">light</text><line x1=\"250\" y1=\"285\" x2=\"390\" y2=\"285\" stroke=\"var(--muted)\" stroke-width=\"2\"></line><path d=\"M250 285l10 -6v12zM390 285l-10 -6v12z\" fill=\"var(--muted)\"></path><text x=\"275\" y=\"318\" font-size=\"16\" fill=\"var(--muted)\">train motion</text></g></svg>",
+       "type": "diagram",
+       "steps": [
+        {
+         "md": "With the train at rest in this view, the flash goes straight between the mirrors.",
+         "show": [
+          "trainView"
+         ],
+         "label": "Train"
+        },
+        {
+         "md": "From the platform, the train moves as the light travels, making the path diagonal and longer.",
+         "show": [
+          "platformView"
+         ],
+         "label": "Platform"
+        }
+       ],
+       "caption": "Switch viewpoints and increase the train’s speed to see how its sideways motion changes the light’s route."
+      },
+      {
+       "id": "s0p4",
+       "md": "The platform observer also measures light’s speed as the same constant, $c$, as the passenger does. Since covering a longer path at the same speed takes more time, the platform observer concludes that a tick of the moving light clock takes longer. The drawing makes the comparison visible; it does not mean the light changes speed to keep up with the train.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p5",
+       "md": "This is a model: a simple clock imagined so you can follow what happens to its parts. Real clocks do not need mirrors or light bouncing inside them. The light clock lets us see the key idea clearly: when a clock moves relative to you, the time between its ticks can look longer from your viewpoint.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "What the comparison measures",
+     "goal": "Understand time dilation as a difference in elapsed time between observers, and meet the formula while keeping its meaning clear.",
+     "blocks": [
+      {
+       "id": "s1p1",
+       "md": "Imagine a clock on a train flashing twice as it passes the platform. You can measure the time between those flashes with a platform clock. A passenger beside the train clock can read the interval directly from that clock. Both are timing the same pair of events: the two flashes.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p2",
+       "md": "In relativity, a *frame* is a viewpoint moving at a particular speed, with clocks and rulers used to record when and where events happen. The train and the platform are two frames. The platform clocks measure the interval between the flashes from the platform’s viewpoint; the train clock records the interval from the train’s viewpoint.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p3",
+       "md": "The time recorded by a clock present at both events is called *proper time*. The train clock is at both of its own flashes, so the time it records between them is the proper time, written $\\Delta\\tau$. For constant relative speed $v$, the platform measures a longer interval, $\\Delta t$, related by $\\Delta t = \\gamma\\Delta\\tau$.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p4",
+       "md": "The factor $\\gamma$, pronounced “gamma,” tells you how much longer the platform interval is. It depends on the train’s speed compared with the speed of light, $c$. Move the slider to see how the factor changes; the intervals shown assume the train clock records one second between flashes.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1w1",
+       "tex": "\\Delta t = \\htmlClass{s1pt}{\\gamma}\\,\\htmlClass{s1proper}{\\Delta\\tau}",
+       "type": "formula",
+       "parts": [
+        {
+         "id": "s1pt",
+         "md": "$\\gamma$ is the factor that multiplies the moving clock’s elapsed time to give the platform’s measured interval.",
+         "label": "Gamma"
+        },
+        {
+         "id": "s1proper",
+         "md": "$\\Delta\\tau$ is the elapsed time recorded by a clock present at both events—in this example, the train clock.",
+         "label": "Proper time"
+        }
+       ]
+      },
+      {
+       "x": {
+        "max": 0.99,
+        "min": 0,
+        "label": "Speed as a fraction of light speed, v/c"
+       },
+       "y": {
+        "max": 8,
+        "min": 0,
+        "label": "Elapsed time (seconds)"
+       },
+       "id": "s1w2",
+       "type": "plot",
+       "title": "Elapsed time between two flashes",
+       "curves": [
+        {
+         "expr": "1/sqrt(1-x^2)",
+         "color": "accent",
+         "label": "Platform interval Δt (γ seconds)"
+        }
+       ],
+       "params": []
+      },
+      {
+       "id": "s1p5",
+       "md": "The plot shows the platform interval for a one-second train interval: its height is also the value of $\\gamma$. At zero relative speed, the two intervals match. As the speed approaches light speed, $\\gamma$ grows, so the platform interval becomes longer.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p6",
+       "md": "At everyday speeds, $v$ is tiny compared with $c$, making $\\gamma$ almost exactly one; the difference is too small to notice in ordinary life. Objects with mass cannot reach light speed, so the formula’s growth without limit as $v$ approaches $c$ describes a boundary they cannot cross.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "Every clock makes the same journey",
+     "goal": "Trust that time dilation is a feature of motion in relativity, not a quirk of the imagined light clock.",
+     "blocks": [
+      {
+       "id": "s2p1",
+       "md": "A clock does not have to have hands. It is any repeatable physical process you can use to count time: a pendulum’s regular swings, an atom’s steady vibrations, or an unstable particle’s gradual decay. Each gives you a way to mark one interval after another.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p2",
+       "md": "The light clock from the earlier comparison was useful because its ticks made a simple route you could picture. But the key idea is not about light taking that route. It is about what happens to elapsed time when a clock travels from one place to another.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p3",
+       "md": "Imagine three clocks traveling together at the same speed: one made of light bouncing between mirrors, one counting an atom’s vibrations, and one counting the decay of a particle. Relativity predicts that each accumulates the same motion-related change in elapsed time. Their inner workings differ, but none gets a private version of time just because of its construction.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2w1",
+       "type": "compare",
+       "columns": [
+        {
+         "md": "A light pulse bounces between mirrors. Each round trip marks a tick.",
+         "title": "Light clock",
+         "points": [
+          "The moving clock’s light follows a longer path in the platform view."
+         ]
+        },
+        {
+         "md": "An atom repeats a very regular vibration. Each vibration can mark a tick.",
+         "title": "Atomic clock",
+         "points": [
+          "Its internal process also accumulates less elapsed time along the same journey."
+         ]
+        },
+        {
+         "md": "An unstable particle changes into other particles. Its typical lifetime can mark an interval.",
+         "title": "Particle decay",
+         "points": [
+          "Fast particles are observed to last longer in the laboratory than they do at rest."
+         ]
+        }
+       ]
+      },
+      {
+       "id": "s2p4",
+       "md": "The shared comparison can be summarized by the motion factor from the previous section: for clocks moving at the same speed, the elapsed time along their journeys is reduced by the same factor relative to the platform’s elapsed time. The factor describes their motion, not the mechanism inside the clock.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p5",
+       "md": "This universality is supported by real comparisons. Precise clocks carried on different journeys can accumulate different elapsed times, and fast-moving particles reach us from the upper atmosphere in numbers that make sense only when their longer laboratory lifetimes are taken into account. Those results involve careful measurement, but they point to the same lesson as the light clock.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2c1",
+       "md": "Actual clock comparisons can also be affected by gravity, and observers must account for how they bring readings together. Here we isolate motion in flat spacetime, where gravity is absent, so the shared effect of motion is easier to see.",
+       "type": "callout",
+       "title": "What we are setting aside",
+       "variant": "caution"
+      },
+      {
+       "id": "s2p6",
+       "md": "So the light clock is a clear guide, not a special exception. Whether a clock counts swings, vibrations, decays, or light trips, a well-behaved clock in the same motion experiences the same relativistic change in elapsed time.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "Small here, clear in the sky",
+     "goal": "Feel why time dilation hides in daily life yet matters in experiments and precise timekeeping.",
+     "blocks": [
+      {
+       "id": "s3p1",
+       "md": "At 30 meters per second—roughly highway speed—the relativistic factor $\\gamma$ differs from 1 by only about five parts in a trillion. That means a moving clock accumulates just a tiny fraction less time than a clock at rest beside it. The difference is real, but everyday clocks and human senses are far too coarse to reveal it.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p2",
+       "md": "You can watch that small change grow as speed approaches the speed of light. The plot uses $v/c$ for speed as a fraction of light speed, and shows how much $\\gamma$ rises above 1. The inset marks highway speed on the same scale; it sits almost on the baseline.",
+       "type": "paragraph"
+      },
+      {
+       "x": {
+        "max": 0.999,
+        "min": 0,
+        "label": "Speed as a fraction of light speed, v/c"
+       },
+       "y": {
+        "max": 25,
+        "min": 0,
+        "label": "γ − 1"
+       },
+       "id": "s3w1",
+       "type": "plot",
+       "title": "How much does γ rise?",
+       "curves": [
+        {
+         "expr": "1/sqrt(1-x^2)-1",
+         "color": "accent",
+         "label": "γ − 1"
+        }
+       ],
+       "params": [],
+       "caption": "Move toward the right edge to see the increase near light speed. Highway speed, about 0.0000001 c, is too close to zero to see on this scale."
+      },
+      {
+       "id": "s3p3",
+       "md": "The effect becomes clear in the sky. A muon is an unstable particle: after a characteristic time, it decays into other particles. Muons made high in Earth’s atmosphere are moving so fast that, from our frame, their clocks run slow. More of them reach the ground than a simple estimate using their short characteristic lifetime alone would predict.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p4",
+       "md": "The same principle matters in carefully built clocks. Atomic clocks flown on aircraft can accumulate measurable differences from clocks that stay on the ground. Navigation satellites also need timing corrections: their motion changes clock rates, and gravity changes them too. Both effects matter when a system relies on precise signals to locate you.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3c1",
+       "md": "A tiny change per second can become important when clocks are precise, distances are large, or signals must arrive at exactly the right time.",
+       "type": "callout",
+       "title": "Small differences add up",
+       "variant": "insight"
+      },
+      {
+       "id": "s3p5",
+       "md": "So time dilation is usually hidden in ordinary life, yet it leaves clear traces in particles, aircraft clocks, and satellites. The size of the difference depends on the journey through space and time. In the next lesson, two travelers will separate and meet again, and their different journeys will help explain why they can have different elapsed times.",
+       "type": "paragraph"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Two paths to the reunion",
+   "summary": "Send one twin on a fast journey and bring them home to compare ages. You’ll see how changing paths through spacetime explains the difference without suggesting that anyone’s time merely feels slower.",
+   "plan": null,
+   "sections": []
+  },
+  {
+   "title": "Space and time, woven together",
+   "summary": "Gather the lessons into a beginner’s map of spacetime, where measurements of distance and duration depend on motion while the speed of light remains fixed. You’ll leave with a clear sense of what relativity says—and what it doesn’t.",
+   "plan": null,
+   "sections": []
+  }
+ ]
+}

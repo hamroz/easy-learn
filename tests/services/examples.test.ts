@@ -43,3 +43,18 @@ describe("importExamples", () => {
     expect(await importExamples(userId, "/nonexistent/examples")).toBe(0);
   });
 });
+
+describe("shipped examples", () => {
+  it("every file in examples/ is valid and loses no blocks on import", async () => {
+    const { readdir, readFile } = await import("node:fs/promises");
+    const { exampleFileSchema } = await import("@/server/services/examples");
+    const { parseBlocksLenient } = await import("@/content/blocks");
+    const dir = fileURLToPath(new URL("../../examples", import.meta.url));
+    const files = (await readdir(dir)).filter((f) => f.endsWith(".json"));
+    expect(files.length).toBeGreaterThanOrEqual(3);
+    for (const f of files) {
+      const ex = exampleFileSchema.parse(JSON.parse(await readFile(`${dir}/${f}`, "utf8")));
+      for (const l of ex.lessons) for (const s of l.sections) expect(parseBlocksLenient(s.blocks).length, `${f}: ${s.heading}`).toBe(s.blocks.length);
+    }
+  });
+});

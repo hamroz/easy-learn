@@ -1,0 +1,684 @@
+{
+ "version": 1,
+ "course": {
+  "title": "Along the Silk Roads",
+  "subtitle": "A beginner’s journey through the people, goods, and ideas that connected distant worlds across centuries.",
+  "topicPrompt": "The history of the Silk Road: the people, goods and ideas that travelled along it",
+  "language": "en",
+  "level": "beginner",
+  "theme": {
+   "dark": {
+    "bg": "#1f2423",
+    "text": "#eee9dc",
+    "muted": "#b5b0a3",
+    "accent": "#d39570",
+    "border": "#3b4440",
+    "accent2": "#8eb4aa",
+    "surface": "#292f2d",
+    "highlight": "#514433"
+   },
+   "mood": "warm, spacious, quietly adventurous",
+   "name": "Caravan Dusk",
+   "light": {
+    "bg": "#f7f3eb",
+    "text": "#292820",
+    "muted": "#726e62",
+    "accent": "#9a5b3c",
+    "border": "#e3dccd",
+    "accent2": "#47716d",
+    "surface": "#fffdf8",
+    "highlight": "#eee0bd"
+   },
+   "radius": "soft",
+   "scheme": "light",
+   "texture": "paper",
+   "fontPair": "editorial"
+  },
+  "coverSvg": "<svg viewBox=\"0 0 800 400\" xmlns=\"http://www.w3.org/2000/svg\"><defs><linearGradient id=\"sky\" x1=\"0\" y1=\"0\" x2=\"0.9\" y2=\"1\"><stop stop-color=\"var(--bg)\"></stop><stop offset=\"1\" stop-color=\"var(--surface)\"></stop></linearGradient><linearGradient id=\"dune\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop stop-color=\"var(--accent2)\" stop-opacity=\".42\"></stop><stop offset=\"1\" stop-color=\"var(--accent)\" stop-opacity=\".22\"></stop></linearGradient></defs><path fill=\"url(#sky)\" d=\"M0 0h800v400H0z\"></path><circle cx=\"625\" cy=\"94\" r=\"35\" fill=\"var(--accent)\" opacity=\".72\"></circle><circle cx=\"625\" cy=\"94\" r=\"53\" fill=\"none\" stroke=\"var(--accent)\" stroke-opacity=\".2\"></circle><path d=\"M0 284c102-48 187-48 275-2s163 40 252-8 170-52 273-10v136H0z\" fill=\"var(--surface)\"></path><path d=\"M0 324c102-46 181-31 277 4s181 25 275-13 162-46 248-25v110H0z\" fill=\"url(#dune)\"></path><path d=\"M0 367c151-34 229 4 358 8s242-39 442-18v43H0z\" fill=\"var(--accent2)\" opacity=\".28\"></path><path d=\"M104 278c79-48 149-59 217-49 74 10 128 44 196 41 44-2 91-22 138-41\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"2\" stroke-dasharray=\"2 10\" stroke-linecap=\"round\" opacity=\".75\"></path><path d=\"M183 251l8-21 8 21m-17-5h18\" fill=\"none\" stroke=\"var(--muted)\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M190 227v-13m0 0-8 8m8-8 8 8\" fill=\"none\" stroke=\"var(--muted)\" stroke-width=\"1.5\"></path><g fill=\"var(--text)\" opacity=\".78\"><path d=\"M385 261c-9 0-15 5-18 14h36c-3-9-9-14-18-14zm-7-5c0-5 3-8 7-8s7 3 7 8h-14zm-20 19h54l-4 7h-45z\"></path><path d=\"M367 276l-8 10h11l5-10zm20 0 4 10h12l-8-10z\"></path><path d=\"M376 260l-5-8m17 8 5-8\" fill=\"none\" stroke=\"var(--text)\" stroke-width=\"2\"></path></g><path d=\"M487 236c15-11 28-11 42 0m-36-9c11-8 21-8 31 0\" fill=\"none\" stroke=\"var(--border)\" stroke-width=\"2\" stroke-linecap=\"round\"></path><path d=\"M545 215c18-12 32-12 48 0m-41-10c12-9 23-9 35 0\" fill=\"none\" stroke=\"var(--border)\" stroke-width=\"2\" stroke-linecap=\"round\"></path><circle cx=\"150\" cy=\"113\" r=\"2\" fill=\"var(--text)\" opacity=\".55\"></circle><circle cx=\"268\" cy=\"87\" r=\"1.5\" fill=\"var(--text)\" opacity=\".5\"></circle><circle cx=\"430\" cy=\"128\" r=\"2\" fill=\"var(--text)\" opacity=\".45\"></circle><circle cx=\"729\" cy=\"173\" r=\"1.5\" fill=\"var(--text)\" opacity=\".5\"></circle><path d=\"M72 186c19-13 34-13 52 0m-43-10c12-8 22-8 34 0\" fill=\"none\" stroke=\"var(--border)\" stroke-width=\"2\" stroke-linecap=\"round\"></path></svg>"
+ },
+ "lessons": [
+  {
+   "title": "A road made of many roads",
+   "summary": "Meet the Silk Roads as a changing web of routes, not a single track across a blank map. See how mountains, deserts, seas, and oases shaped the journeys between them.",
+   "plan": {
+    "sections": [
+     {
+      "goal": "Feel why the Silk Roads are easier to imagine as a web than as one road crossing a blank map.",
+      "heading": "A line on a map?",
+      "keyPoints": [
+       "Picture setting out for a distant place. Your journey still depends on where you can find water, shelter, safe passage, and other people.",
+       "“Silk Roads” is a modern name for many changing routes that connected parts of Asia, Africa, and Europe over centuries.",
+       "Silk was one traded good among many, and no single traveler or road connected every place."
+      ],
+      "interactive": "reveal: Pause and imagine crossing an unfamiliar landscape. Then reveal how water, sheltered valleys, markets, and safer passages can shape the route."
+     },
+     {
+      "goal": "Understand how terrain shaped journeys and why travelers gathered at particular stopping places.",
+      "heading": "Land that guides and slows",
+      "keyPoints": [
+       "Mountains can make a direct path difficult, while passes and valleys offer ways through.",
+       "Deserts make water precious. An oasis—a place where water supports life—can become a welcome stop and meeting point.",
+       "Rivers, grasslands, and sheltered basins offer different paths. Weather and seasons can change how practical each one is.",
+       "A long journey often becomes a chain of manageable stretches between places to rest, trade, and find help."
+      ],
+      "interactive": "diagram: Explore a labelled landscape with mountains, a pass, desert, oasis, river valley, and caravan town. Trace two possible paths and notice where water and terrain make each easier or harder."
+     },
+     {
+      "goal": "See how exchange could link faraway places even when most travelers went only part of the way.",
+      "heading": "A web of local journeys",
+      "keyPoints": [
+       "A merchant might carry goods to a nearby market, where another trader buys them and continues the journey.",
+       "Caravan towns connect shorter journeys. People exchange goods there, along with news, languages, and practical knowledge.",
+       "The same place can be a useful crossroads in one period and less important in another as safety, rulers, and trade needs change."
+      ],
+      "interactive": "custom: A route-map simulation shows towns, mountain passes, an oasis, and a market. Drag a traveler along connected stretches, or close a pass with a button to see paths and handoff points change. Notice how goods can travel far through many short journeys."
+     },
+     {
+      "goal": "Leave with a picture of the Silk Roads as connections continually made and remade by geography and human choices.",
+      "heading": "Routes change with people",
+      "keyPoints": [
+       "Terrain set constraints, while guides, traders, local communities, and rulers helped determine which paths people could use.",
+       "Trade routes could branch, shift, or grow quiet as political conditions, seasons, or demand changed.",
+       "Any single map simplifies a vast history of routes and communities that changed over time.",
+       "Next, we will meet some of the communities and rulers who helped make long-distance exchange possible."
+      ],
+      "interactive": "compare: View a single fixed line beside a changing web of branches and local handoffs. Notice how each picture suggests a different kind of journey."
+     }
+    ]
+   },
+   "sections": [
+    {
+     "heading": "A line on a map?",
+     "goal": "Feel why the Silk Roads are easier to imagine as a web than as one road crossing a blank map.",
+     "blocks": [
+      {
+       "id": "s0p1",
+       "md": "Imagine you are setting out for a city far beyond the horizon. You have a destination, but no straight line on a map can tell you where to sleep, where to find water, or which pass is safe to cross. The journey begins to take shape around those needs.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p2",
+       "md": "Now picture other travelers leaving from nearby towns, each following paths that suit their own circumstances. Some meet at a market; others share a stretch of road before turning toward different valleys. A distant connection can grow from many such small journeys.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0w1",
+       "type": "reveal",
+       "answer": "Water can make a dry stretch crossable; a sheltered valley can offer rest; a market can bring supplies and news; and a safer passage can be worth a longer detour. Routes tend to gather around useful places and split again when travelers head toward different needs.",
+       "prompt": "Pause and imagine crossing an unfamiliar landscape. What might pull your route toward one place and away from another?"
+      },
+      {
+       "id": "s0p3",
+       "md": "That is a better starting picture for the Silk Roads: a web, not one track drawn across empty space. The name is modern, and it refers to many routes that connected parts of Asia, Africa, and Europe over centuries. Those connections shifted as conditions and choices changed.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p4",
+       "md": "The word “silk” can make it sound as if one precious fabric gave these routes their purpose. Silk was indeed traded, but it traveled alongside many other goods, as well as skills, beliefs, stories, and news. Different journeys carried different things.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p5",
+       "md": "No single traveler needed to cross the whole distance for goods to move between faraway places. A merchant might carry something to the next market, where another person took it onward. Like a message passed from hand to hand, exchange could span a great distance through a chain of shorter trips.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p6",
+       "md": "Even the idea of a network is a simplification: the routes were not a fixed map of links that stayed open all the time. A passage might be useful to one traveler and difficult for another, and a town’s importance could rise or fade. For now, hold on to the web: many people making local choices, whose paths sometimes joined.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "Land that guides and slows",
+     "goal": "Understand how terrain shaped journeys and why travelers gathered at particular stopping places.",
+     "blocks": [
+      {
+       "id": "s1p1",
+       "md": "Imagine carrying your belongings across unfamiliar country. A straight line on a map might point toward your destination, but on the ground it could run into a steep ridge, a dry stretch with no water, or a river that is difficult to cross. The shape of the land turns distance into a practical question: where can you go, and where can you pause?",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p2",
+       "md": "Mountains often slow travel because climbing is hard and weather can make high ground dangerous. Yet a *pass*—a lower gap through a mountain range—can offer a way across. Valleys can guide people along gentler ground, sometimes beside a river that provides water and a natural route through the landscape.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1w1",
+       "svg": "<svg viewBox=\"0 0 640 360\"><g id=\"terrain\"><path d=\"M20 160 L95 78 L145 145 L205 65 L275 160 L330 190 L380 145 L430 195 L490 205 L545 230 L620 235\" fill=\"none\" stroke=\"var(--muted)\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><path d=\"M145 145 L180 118 L205 132 L235 118 L275 160\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"4\"></path><path d=\"M275 160 C320 190 335 240 370 275 C400 300 440 295 470 320\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"5\"></path><path d=\"M20 300 C90 275 110 320 170 295 C220 275 240 310 285 288\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"4\"></path><ellipse cx=\"520\" cy=\"275\" rx=\"43\" ry=\"23\" fill=\"var(--highlight)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></ellipse><rect x=\"482\" y=\"182\" width=\"90\" height=\"32\" rx=\"7\" fill=\"var(--surface)\" stroke=\"var(--border)\" stroke-width=\"2\"></rect><path d=\"M492 182 l13 -18 13 18 M521 182 l13 -18 13 18 M550 182 l13 -18 13 18\" fill=\"none\" stroke=\"var(--text)\" stroke-width=\"2\"></path></g><g id=\"labels\" fill=\"var(--text)\" font-size=\"16\"><text x=\"46\" y=\"95\">Mountains</text><text x=\"166\" y=\"108\">Pass</text><text x=\"335\" y=\"224\">River valley</text><text x=\"43\" y=\"340\">Desert</text><text x=\"490\" y=\"314\">Oasis</text><text x=\"480\" y=\"175\">Caravan town</text></g><g id=\"path_pass\"><path d=\"M35 215 C90 205 130 175 170 155 C220 130 250 150 310 202 C380 255 440 270 505 275\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"4\" stroke-dasharray=\"8 7\"></path></g><g id=\"path_river\"><path d=\"M35 275 C110 280 150 300 200 285 C260 265 300 240 350 250 C410 260 445 275 505 275\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"4\" stroke-dasharray=\"8 7\"></path></g></svg>",
+       "type": "diagram",
+       "steps": [
+        {
+         "md": "The pass gives a way through the mountains; the valley follows water. The oasis and town offer places to pause.",
+         "show": [
+          "terrain",
+          "labels"
+         ],
+         "label": "Read the land"
+        },
+        {
+         "md": "This route crosses the mountain range at its lower gap, then descends toward the oasis and town.",
+         "show": [
+          "terrain",
+          "labels",
+          "path_pass"
+         ],
+         "label": "Try the pass"
+        },
+        {
+         "md": "This route bends along the river valley. It avoids the high ridge, though it takes a different course to reach the same stop.",
+         "show": [
+          "terrain",
+          "labels",
+          "path_river"
+         ],
+         "label": "Follow the valley"
+        }
+       ]
+      },
+      {
+       "id": "s1p3",
+       "md": "An *oasis* is a place where water supports life in an otherwise dry region. In a desert, finding water can matter more than taking the shortest route, so an oasis may become a welcome stopping place. People can rest, exchange goods, learn about conditions ahead, and find help for the next stretch.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p4",
+       "md": "Other landscapes offer other possibilities. Grasslands may allow travel with animals and herds; rivers can make valleys easier to follow, but crossings may be tricky. A sheltered basin can offer protection from wind, while rain, snow, heat, and seasonal water levels change which routes are practical at different times of year.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p5",
+       "md": "So a long journey was often more like a chain of shorter ones: from one place to rest, trade, or get help, then onward to the next. Travelers could adjust their route to the land and season. A stopping place mattered not only because it was near the path, but because it made the next stretch possible.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "A web of local journeys",
+     "goal": "See how exchange could link faraway places even when most travelers went only part of the way.",
+     "blocks": [
+      {
+       "id": "s2p1",
+       "md": "Imagine a merchant leaving home with a bundle of cloth. The next town is familiar; the mountains beyond it are not. So the merchant sells the cloth at a nearby market, where another trader buys it and carries it onward. Neither needs to travel the whole distance for the cloth to travel far.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p2",
+       "md": "This kind of handoff was ordinary in long-distance trade. A journey could be made of many shorter journeys, each shaped by who had animals, local contacts, useful knowledge, or a reason to go farther. The people who handled a good along the way might never meet the people who made it, or the people who eventually used it.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2w1",
+       "code": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style>\n:root{--bg:#f3eee2;--surface:#f8f5ed;--text:#302d28;--muted:#776f63;--accent:#b45e3e;--accent2:#52796c;--border:#d8d0c2;--highlight:#ead9ae;--font-body:system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--surface);color:var(--text);font-family:var(--font-body);height:430px;overflow:hidden}.app{height:100%;max-width:760px;margin:auto;padding:12px 16px 10px;display:flex;flex-direction:column;gap:8px}.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.title{font-size:16px;font-weight:650}.hint{font-size:13px;color:var(--muted);margin-top:2px}.controls{display:flex;gap:8px;flex:none}button{font:inherit;font-size:13px;font-weight:600;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:9px;min-height:40px;padding:0 12px;cursor:pointer;touch-action:manipulation}button:hover{border-color:var(--accent)}button[aria-pressed=\"true\"]{background:var(--highlight);border-color:var(--accent)}.map{position:relative;flex:1;min-height:0;border:1px solid var(--border);border-radius:12px;background:var(--bg);overflow:hidden}canvas{width:100%;height:100%;display:block;touch-action:none}.foot{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:48px}.status{font-size:13px;color:var(--muted);line-height:1.35}.legend{font-size:12px;color:var(--muted);white-space:nowrap}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:middle;margin:0 4px 0 8px;background:var(--accent)}.dot.good{background:var(--highlight);border:1px solid var(--accent)}@media(max-width:460px){.app{padding:10px;gap:6px}.top{align-items:center}.title{font-size:15px}.hint{max-width:185px}.legend{white-space:normal;text-align:right;font-size:11px}.foot{min-height:54px}button{padding:0 9px}}\n</style></head><body><main class=\"app\"><header class=\"top\"><div><div class=\"title\">A road made of many roads</div><div class=\"hint\">Drag the traveler along a route. Each leg has its own trader.</div></div><div class=\"controls\"><button id=\"close\" aria-pressed=\"false\">Close the pass</button><button id=\"reset\">Reset</button></div></header><div class=\"map\"><canvas id=\"map\" aria-label=\"Route map connecting Home, Market, Oasis, Pass, and Far Town\"></canvas></div><footer class=\"foot\"><div class=\"status\" id=\"status\" aria-live=\"polite\">The good is traveling from Home toward Far Town.</div><div class=\"legend\"><span class=\"dot\"></span>traveler <span class=\"dot good\"></span>good <span class=\"dot\" style=\"background:var(--accent2)\"></span>handoff</div></footer></main><script>\n(()=>{try{const canvas=document.getElementById('map'),ctx=canvas.getContext('2d'),closeBtn=document.getElementById('close'),resetBtn=document.getElementById('reset'),status=document.getElementById('status');let closed=false,traveler=.10,dragging=false,colors={},w=0,h=0,dpr=1;const names=['Home','Market','Oasis','Pass','Far Town'];let pts=[],edges=[];function readColors(){const s=getComputedStyle(document.documentElement);colors={bg:s.getPropertyValue('--bg').trim(),surface:s.getPropertyValue('--surface').trim(),text:s.getPropertyValue('--text').trim(),muted:s.getPropertyValue('--muted').trim(),accent:s.getPropertyValue('--accent').trim(),accent2:s.getPropertyValue('--accent2').trim(),border:s.getPropertyValue('--border').trim(),highlight:s.getPropertyValue('--highlight').trim()}}function layout(){const r=canvas.getBoundingClientRect();w=r.width;h=r.height;dpr=Math.max(1,devicePixelRatio||1);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);const margin=Math.min(52,w*.095), yy=h*.52;pts=[{x:margin,y:yy+20},{x:w*.27,y:yy-30},{x:w*.49,y:yy+18},{x:w*.70,y:yy-36},{x:w-margin,y:yy+10}];edges=[{a:0,b:1,bend:-32,label:'1'},{a:1,b:2,bend:30,label:'2'},{a:2,b:3,bend:-34,label:'3'},{a:3,b:4,bend:28,label:'4'},{a:1,b:4,bend:-95,label:'alternate'}];draw()}function curve(e){const a=pts[e.a],b=pts[e.b];return {a,b,c:{x:(a.x+b.x)/2,y:(a.y+b.y)/2+e.bend}}}function at(e,t){const q=curve(e),u=1-t;return{x:u*u*q.a.x+2*u*t*q.c.x+t*t*q.b.x,y:u*u*q.a.y+2*u*t*q.c.y+t*t*q.b.y}}function path(e){const q=curve(e);ctx.beginPath();ctx.moveTo(q.a.x,q.a.y);ctx.quadraticCurveTo(q.c.x,q.c.y,q.b.x,q.b.y)}function draw(){if(!w)return;ctx.clearRect(0,0,w,h);ctx.lineCap='round';const visible=closed?[edges[0],edges[1],edges[4]]:edges.slice(0,4);for(const e of visible){path(e);ctx.strokeStyle=colors.accent2;ctx.lineWidth=e.label==='alternate'?3:4;ctx.setLineDash(e.label==='alternate'?[8,6]:[]);ctx.stroke();ctx.setLineDash([]);const p=at(e,.5);ctx.fillStyle=colors.muted;ctx.font='12px system-ui';ctx.textAlign='center';ctx.fillText(e.label==='alternate'?'alternate route':'leg '+e.label,p.x,p.y-9)}if(closed){path(edges[2]);ctx.strokeStyle=colors.muted;ctx.lineWidth=3;ctx.setLineDash([4,6]);ctx.stroke();ctx.setLineDash([]);const p=pts[3];ctx.strokeStyle=colors.accent;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(p.x-10,p.y-10);ctx.lineTo(p.x+10,p.y+10);ctx.moveTo(p.x+10,p.y-10);ctx.lineTo(p.x-10,p.y+10);ctx.stroke();ctx.fillStyle=colors.accent;ctx.font='600 12px system-ui';ctx.fillText('closed',p.x,p.y+28)}const route=closed?[0,1,4]:[0,1,2,3];const handoffs=route.slice(1,-0||undefined); // towns where the good changes hands\n// Draw handoff marks at every intermediate town on the active route.\nfor(let i=1;i<route.length-1;i++){const p=pts[edges[route[i-1]].b];ctx.beginPath();ctx.arc(p.x,p.y,7,0,Math.PI*2);ctx.fillStyle=colors.accent2;ctx.fill();ctx.strokeStyle=colors.surface;ctx.lineWidth=2;ctx.stroke();ctx.fillStyle=colors.accent2;ctx.font='12px system-ui';ctx.textAlign='center';ctx.fillText('handoff',p.x,p.y+25)}const tpos=positionAlong(route,traveler),gpos=positionAlong(route,Math.min(1,traveler+.22));marker(tpos,colors.accent,8);marker(gpos,colors.highlight,7,colors.accent);for(let i=0;i<pts.length;i++){const p=pts[i];ctx.beginPath();ctx.arc(p.x,p.y,5,0,Math.PI*2);ctx.fillStyle=colors.text;ctx.fill();ctx.fillStyle=colors.text;ctx.font='600 13px system-ui';ctx.textAlign='center';const dy=p.y>h*.58?-13:22;ctx.fillText(names[i],p.x,p.y+dy)}status.textContent=closed?'Pass is closed. The good goes Market → Oasis → Far Town, with handoffs at Market and Oasis.':'The good takes four local legs, with handoffs at Market, Oasis, and Pass.'}function marker(p,fill,r,stroke){ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.lineWidth=2;ctx.strokeStyle=stroke;ctx.stroke()} }function positionAlong(route,t){const scaled=t*route.length,idx=Math.min(route.length-1,Math.floor(scaled)),local=scaled-idx;return at(edges[route[idx]],local)}function nearestT(x,y){const route=closed?[0,1,4]:[0,1,2,3];let best={d:Infinity,t:0};for(let i=0;i<route.length;i++){for(let k=0;k<=30;k++){const local=k/30,p=at(edges[route[i]],local),d=(p.x-x)**2+(p.y-y)**2;if(d<best.d)best={d,t:(i+local)/route.length}}}return best}function pointer(e){const r=canvas.getBoundingClientRect(),p=nearestT(e.clientX-r.left,e.clientY-r.top);if(dragging||p.d<30**2){traveler=Math.max(0,Math.min(1,p.t));draw()}}canvas.addEventListener('pointerdown',e=>{dragging=true;canvas.setPointerCapture(e.pointerId);pointer(e)});canvas.addEventListener('pointermove',e=>{if(dragging)pointer(e)});canvas.addEventListener('pointerup',()=>dragging=false);canvas.addEventListener('pointercancel',()=>dragging=false);closeBtn.addEventListener('click',()=>{closed=!closed;closeBtn.setAttribute('aria-pressed',String(closed));closeBtn.textContent=closed?'Open the pass':'Close the pass';traveler=Math.min(traveler,.72);draw()});resetBtn.addEventListener('click',()=>{closed=false;traveler=.1;closeBtn.textContent='Close the pass';closeBtn.setAttribute('aria-pressed','false');draw()});window.addEventListener('resize',layout);window.addEventListener('message',e=>{if(e.data&&e.data.type==='theme'){readColors();draw()}});readColors();layout();parent.postMessage({type:'ready'},'*')}catch(err){parent.postMessage({type:'error',message:String(err)},'*')}})();\n</script></body></html>",
+       "type": "custom",
+       "brief": "Show a simple route map with five labeled places: Home, Market, Oasis, Pass, and Far Town. Connect them with curved, visibly distinct stretches: Home–Market, Market–Oasis, Oasis–Pass, and Pass–Far Town. Draw a traveler marker that the reader can drag along the connected stretches; when released at a town, show a small handoff marker there and move the good one stretch onward to the next trader. Add a button labeled “Close the pass.” When activated, visibly block the Pass connection and recalculate the onward path through an alternate Market–Oasis–Far Town link; move the handoff markers to the towns on that route. Keep place names, route lines, traveler, goods, handoffs, and the pass button visible and legible. Let the reader compare how one good reaches Far Town through several local legs, and how closing a pass changes the path and handoff points.",
+       "height": 430,
+       "status": "ready",
+       "fallback": {
+        "id": "s2w1fallback",
+        "svg": "<svg viewBox=\"0 0 640 300\"><path d=\"M90 160 Q170 80 250 160 T410 160 Q490 90 560 160\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"4\"></path><path d=\"M250 160 Q330 240 410 160\" fill=\"none\" stroke=\"var(--muted)\" stroke-width=\"3\" stroke-dasharray=\"8 7\"></path><circle cx=\"90\" cy=\"160\" r=\"10\" fill=\"var(--accent2)\"></circle><circle cx=\"250\" cy=\"160\" r=\"10\" fill=\"var(--accent2)\"></circle><circle cx=\"410\" cy=\"160\" r=\"10\" fill=\"var(--accent2)\"></circle><circle cx=\"560\" cy=\"160\" r=\"10\" fill=\"var(--accent2)\"></circle><text x=\"62\" y=\"198\" font-size=\"16\" fill=\"var(--text)\">Home</text><text x=\"218\" y=\"198\" font-size=\"16\" fill=\"var(--text)\">Market</text><text x=\"378\" y=\"198\" font-size=\"16\" fill=\"var(--text)\">Oasis</text><text x=\"527\" y=\"198\" font-size=\"16\" fill=\"var(--text)\">Far Town</text><text x=\"315\" y=\"90\" font-size=\"16\" fill=\"var(--muted)\">Pass</text><circle cx=\"250\" cy=\"145\" r=\"6\" fill=\"var(--highlight)\"></circle><text x=\"210\" y=\"125\" font-size=\"14\" fill=\"var(--muted)\">handoff</text></svg>",
+        "type": "diagram"
+       }
+      },
+      {
+       "id": "s2p3",
+       "md": "The map makes the route look like a chain of local decisions. A market or oasis could be a *caravan town*: a place where traveling groups stopped, exchanged goods, found supplies, and learned which route seemed safe. News and practical knowledge moved there too—how to cross a pass, what language a buyer spoke, or what was scarce farther on.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p4",
+       "md": "A place could matter greatly without being the destination of every traveler. One trader might know only the next stretch, while repeated exchanges connected that stretch to others. In this way, goods, stories, and skills could link distant communities through people whose own journeys were relatively short.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p5",
+       "md": "The handoff points were not fixed forever. A pass might become dangerous, a ruler might protect one route, or traders might seek a different market. When those conditions changed, travelers could gather elsewhere and an old crossroads could grow quieter. The network stayed connected by being remade, one journey at a time.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "Routes change with people",
+     "goal": "Leave with a picture of the Silk Roads as connections continually made and remade by geography and human choices.",
+     "blocks": [
+      {
+       "id": "s3p1",
+       "md": "Imagine arriving at a mountain pass just as snow begins to close it. The mountains have set a limit, but people decide what happens next: a guide may know another route, a trader may wait, or a local community may offer shelter along the way.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p2",
+       "md": "A route, then, was never only a mark on the ground. It depended on knowledge, agreements, and the choices of people who lived along it. A ruler might make travel safer by protecting a road, while conflict could make the same stretch risky or unusable.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3w1",
+       "type": "compare",
+       "columns": [
+        {
+         "md": "A single stroke joins two distant places.",
+         "title": "One fixed line",
+         "points": [
+          "It makes distance easy to see.",
+          "It can suggest one continuous journey."
+         ]
+        },
+        {
+         "md": "Branches connect nearby places, with goods and travelers changing hands along the way.",
+         "title": "A changing web",
+         "points": [
+          "Different paths can serve different seasons or needs.",
+          "A route can grow busy, shift, or fall quiet."
+         ]
+        }
+       ]
+      },
+      {
+       "id": "s3p3",
+       "md": "The two pictures leave you with different impressions. The line makes a long journey seem like one person traveling from end to end; the web makes room for many shorter journeys, local knowledge, and handoffs between communities.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p4",
+       "md": "These connections could change with the season, political conditions, or demand for particular goods. A pass might be open only part of the year; a safer road might attract more travelers; a market's fortunes could make an old branch worth using again. The geography remained, but the practical paths through it were continually made and remade.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p5",
+       "md": "Any map of the Silk Roads freezes this movement into a picture. It has to leave things out: paths that mattered only briefly, local journeys too small to draw, and communities whose choices shaped where exchange could happen. Think of a map as a useful glimpse of connections at a moment in time, not the whole story.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p6",
+       "md": "The routes endured because people kept connecting places across the barriers and opportunities of the landscape. Next, we will meet some of the communities and rulers whose knowledge, labor, and decisions helped make long-distance exchange possible.",
+       "type": "paragraph"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Where the routes began",
+   "summary": "Discover the early communities and empires that made long-distance exchange possible. Follow the growth of caravan towns and understand why rulers sometimes opened routes and sometimes closed them.",
+   "plan": {
+    "sections": [
+     {
+      "goal": "Understand how nearby journeys and familiar meeting places could connect distant communities over time.",
+      "heading": "Before there were long roads",
+      "keyPoints": [
+       "Imagine carrying a basket to a neighboring village: you can trade without knowing where an object first came from.",
+       "Repeated local exchanges can pass goods and news farther than any one person travels.",
+       "Communities near rivers, mountain passes, and reliable water became natural meeting places. As you saw in the previous lesson, the landscape helped shape where these connections formed."
+      ],
+      "interactive": "reveal: Pause and picture a basket changing hands from village to village. Reveal how a chain of local choices can connect distant communities without a single planned route."
+     },
+     {
+      "goal": "See how dependable water and repeated exchange could turn a stopping place into a lasting community.",
+      "heading": "An oasis becomes a town",
+      "keyPoints": [
+       "In dry country, an oasis—a place where water is available—could let travelers, animals, and crops rest and recover.",
+       "When journeys regularly brought people together, residents could provide food, shelter, repairs, and news.",
+       "Over time, a stop might grow into a market town, where visitors and local people meet to trade. Its importance depended on both its useful location and the people who kept it welcoming."
+      ],
+      "interactive": "diagram: Follow four steps as a spring draws people and animals, travelers pause to exchange goods and news, residents offer supplies and services, and repeated visits support a market town."
+     },
+     {
+      "goal": "Understand how a ruler’s interests could help make distant connections safer and more regular.",
+      "heading": "The Han court looks west",
+      "keyPoints": [
+       "In the second century BCE, the Han dynasty ruled much of what is now China. Its court sought strong horses and allies in the west, partly amid conflict with the Xiongnu, a powerful confederation to the north.",
+       "The envoy Zhang Qian traveled west on the Han court’s behalf. His reports helped the court learn about distant states and possibilities for exchange.",
+       "A ruler could send envoys, support guarded routes, or negotiate with neighboring powers. These actions encouraged movement, but they did not create or control every local connection."
+      ],
+      "interactive": "timeline: Trace Zhang Qian’s westward mission in the second century BCE, his return and reports, and the later growth of diplomatic and trade connections."
+     },
+     {
+      "goal": "Notice that rulers could make travel easier while also shaping who benefited from it.",
+      "heading": "When protection has a price",
+      "keyPoints": [
+       "A state might protect a pass or road because merchants brought useful goods, taxes, or diplomatic ties.",
+       "Travelers still faced costs: tolls, delays, changing rules, and the risk that conflict would close a route.",
+       "Political boundaries were not walls everywhere. Their effects varied with time, place, and a ruler’s ability to enforce decisions."
+      ],
+      "interactive": "compare: Explore two choices at a pass. Keeping it open can help goods and news move while bringing tolls and alliances; closing or restricting it can shift travel elsewhere and reduce business for nearby towns."
+     },
+     {
+      "goal": "Leave with a picture of routes emerging from communities, practical needs, and changing political choices—and a sense of how their people shaped what came next.",
+      "heading": "Many beginnings, many futures",
+      "keyPoints": [
+       "There was no single moment when the Silk Roads began; connected routes developed gradually across different regions.",
+       "Caravan towns grew because travelers needed water, shelter, supplies, and trustworthy exchange, while local residents made those services possible.",
+       "Rulers sometimes supported movement and sometimes restricted it, but the connections depended on many people beyond the court.",
+       "Next, follow a caravan through the practical rhythms of a journey and see how merchants, guides, translators, and animals carried exchange from one stop to another."
+      ],
+      "interactive": "cards: Turn over cards about a useful place, welcoming residents, and changing political choices to see how each could help keep a route alive."
+     }
+    ]
+   },
+   "sections": [
+    {
+     "heading": "Before there were long roads",
+     "goal": "Understand how nearby journeys and familiar meeting places could connect distant communities over time.",
+     "blocks": [
+      {
+       "id": "s0p1",
+       "md": "Imagine you carry a basket of dried fruit to a neighboring village. You trade it for a length of cloth, then walk home. You may know who wove the cloth, but you probably don’t know where the thread—or its dyes—first came from.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p2",
+       "md": "That small exchange can still connect you to people far away. The cloth might pass to another household, travel with a visitor, or be traded again at a nearby gathering. Each person makes a local choice, with no need to plan a journey across a continent.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p3",
+       "md": "Over time, goods and news can move farther than any one traveler goes. A potter hears that a river valley has good clay; a trader carries the story to the next settlement. The path grows through familiar trips repeated by people who know only the next stop.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0w1",
+       "type": "reveal",
+       "answer": "A chain of local exchanges. One person trades with a neighbor, who trades with someone else, and so on. The basket—or something traded for it—can reach a distant community without anyone setting out to follow a single planned route.",
+       "prompt": "Pause and picture the basket changing hands from village to village. What might carry it farther than its first owner travels?"
+      },
+      {
+       "id": "s0p4",
+       "md": "Some places made these meetings easier. Rivers offered water and a way to travel; mountain passes gave people a practicable crossing; dependable springs and wells could make a dry stretch safer. These were natural meeting places because travelers and nearby communities had reasons to gather there.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p5",
+       "md": "A meeting place did not have to begin as a grand market or a walled town. People might stop to water animals, exchange food, share news, or wait for a safe moment to cross. If journeys brought people back again and again, a temporary stop could become familiar—and familiar places could draw more exchange.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p6",
+       "md": "As you saw in the previous lesson, the landscape helped shape where connections formed. But geography did not lay out one fixed road for everyone to follow. People built connections through repeated journeys, practical needs, and the places where meeting made sense.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "An oasis becomes a town",
+     "goal": "See how dependable water and repeated exchange could turn a stopping place into a lasting community.",
+     "blocks": [
+      {
+       "id": "s1p1",
+       "md": "Imagine crossing a stretch of dry country with a tired animal and a little water left. Then you reach a place where water rises from a spring or gathers in a pool. An *oasis* is simply a place in dry country where water is available. Here, you can stop, and your animal can drink and rest.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p2",
+       "md": "Water can support more than a brief pause. With dependable water, people may grow crops, tend animals, and build homes nearby. What begins as a useful stopping place can become a place where some people stay, while others arrive only for a night or two.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p3",
+       "md": "As journeys bring visitors back again and again, residents have reasons to prepare for them. They might offer food, a place to sleep, or help repairing a worn strap or wheel. Travelers carry more than goods: they also bring news of distant places, which residents can pass along to the next arrivals.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1w1",
+       "svg": "<svg viewBox=\"0 0 640 360\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"spring\"><path d=\"M58 232 Q140 208 222 232 T390 232\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"5\"></path><path d=\"M120 214 Q144 194 168 214 Q144 234 120 214Z\" fill=\"var(--accent)\"></path><text x=\"72\" y=\"278\" font-size=\"16\" fill=\"var(--text)\">Spring and shade</text><circle cx=\"278\" cy=\"214\" r=\"16\" fill=\"var(--muted)\"></circle><path d=\"M268 230 L262 260 M288 230 L294 260\" stroke=\"var(--text)\" stroke-width=\"4\"></path><text x=\"244\" y=\"290\" font-size=\"16\" fill=\"var(--text)\">Travelers rest</text></g><g id=\"exchange\"><path d=\"M346 218 L382 218 L382 246 L346 246Z\" fill=\"var(--highlight)\" stroke=\"var(--border)\" stroke-width=\"2\"></path><path d=\"M340 212 L388 212\" stroke=\"var(--text)\" stroke-width=\"3\"></path><path d=\"M321 202 Q342 187 363 202 M366 202 Q388 187 409 202\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"3\"></path><text x=\"326\" y=\"280\" font-size=\"16\" fill=\"var(--text)\">Goods and news</text></g><g id=\"services\"><path d=\"M438 209 L480 209 L480 248 L438 248Z\" fill=\"var(--surface)\" stroke=\"var(--text)\" stroke-width=\"3\"></path><path d=\"M432 209 L459 190 L486 209\" fill=\"none\" stroke=\"var(--text)\" stroke-width=\"3\"></path><path d=\"M505 222 L532 222 M518 208 L518 236\" stroke=\"var(--accent2)\" stroke-width=\"4\"></path><text x=\"428\" y=\"280\" font-size=\"16\" fill=\"var(--text)\">Food and repairs</text></g><g id=\"town\"><path d=\"M540 213 L576 213 L576 248 L540 248Z\" fill=\"var(--surface)\" stroke=\"var(--text)\" stroke-width=\"3\"></path><path d=\"M535 213 L558 195 L581 213\" fill=\"none\" stroke=\"var(--text)\" stroke-width=\"3\"></path><path d=\"M584 213 L620 213 L620 248 L584 248Z\" fill=\"var(--surface)\" stroke=\"var(--text)\" stroke-width=\"3\"></path><path d=\"M579 213 L602 195 L625 213\" fill=\"none\" stroke=\"var(--text)\" stroke-width=\"3\"></path><text x=\"538\" y=\"280\" font-size=\"16\" fill=\"var(--text)\">Market town</text></g><path d=\"M176 154 C270 106 350 106 430 154 M430 154 C480 132 525 132 557 154\" fill=\"none\" stroke=\"var(--muted)\" stroke-width=\"3\" stroke-dasharray=\"8 8\"></path><text x=\"210\" y=\"112\" font-size=\"16\" fill=\"var(--muted)\">Repeated visits</text></svg>",
+       "type": "diagram",
+       "steps": [
+        {
+         "md": "Water gives travelers and animals a place to recover.",
+         "show": [
+          "spring"
+         ],
+         "label": "A dependable stop"
+        },
+        {
+         "md": "Travelers pause together, sharing goods and news.",
+         "show": [
+          "spring",
+          "exchange"
+         ],
+         "label": "A meeting place"
+        },
+        {
+         "md": "People nearby offer supplies and practical services.",
+         "show": [
+          "spring",
+          "exchange",
+          "services"
+         ],
+         "label": "Residents help"
+        },
+        {
+         "md": "Repeated visits can support a market and a lasting community.",
+         "show": [
+          "spring",
+          "exchange",
+          "services",
+          "town"
+         ],
+         "label": "A town takes shape"
+        }
+       ],
+       "caption": "Follow the spring from a resting place to a town shaped by repeated visits."
+      },
+      {
+       "id": "s1p4",
+       "md": "The diagram follows one possible path from water to a market town. Each visit can make the next one easier: travelers know where to find help, and residents know what visitors may need. Still, a useful spring alone does not build a town. People do that by staying, preparing, and welcoming those who pass through.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p5",
+       "md": "A market town is a settled place where local people and visitors meet to trade. Its goods might include food grown nearby as well as items carried from farther away. The town’s position matters, but so do its residents: their choices and work help determine whether travelers return.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p6",
+       "md": "So an oasis could be both a pause in a journey and the beginning of a community. When water, repeated exchange, and residents’ efforts came together, a stopping place could grow into a reliable link between people living far apart.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "The Han court looks west",
+     "goal": "Understand how a ruler’s interests could help make distant connections safer and more regular.",
+     "blocks": [
+      {
+       "id": "s2p1",
+       "md": "Imagine hearing that far beyond the places you know, there are communities with useful goods, powerful neighbors, and perhaps allies. In the second century BCE, the Han dynasty ruled much of what is now China, and its court had reasons to look west. It wanted access to strong horses, and it faced conflict with the Xiongnu, a powerful confederation of peoples to the north.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p2",
+       "md": "The court sent an envoy named Zhang Qian westward to seek allies and learn about the lands beyond Han territory. An *envoy* is a person sent by a ruler to carry messages and build relations with other powers. Zhang Qian’s journey was dangerous: he was captured by the Xiongnu and held for years before escaping and continuing west.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2w1",
+       "type": "timeline",
+       "events": [
+        {
+         "md": "The Han court sends him west to seek allies against the Xiongnu and learn about distant peoples.",
+         "date": "c. 138 BCE",
+         "title": "Zhang Qian sets out"
+        },
+        {
+         "md": "Zhang Qian makes it back to the court with reports about states and possibilities for exchange farther west.",
+         "date": "After years away",
+         "title": "He returns to Han"
+        },
+        {
+         "md": "The court pursues further diplomacy and supports movement along routes linking communities across Central Asia.",
+         "date": "Later Han decades",
+         "title": "Connections grow"
+        }
+       ]
+      },
+      {
+       "id": "s2p3",
+       "md": "His reports gave the court a wider picture of the region, including its states, goods, and political relationships. They helped Han rulers imagine possibilities for diplomacy and exchange. A report could open a door in the mind before anyone had made the journey that would follow.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p4",
+       "md": "The court could act on what it learned: send more envoys, negotiate with neighboring powers, and support guarded routes where Han interests were at stake. These steps could make some journeys safer and more regular, much as a maintained bridge makes it easier for travelers to cross a river. But they could not make every path safe or decide what every community traded.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p5",
+       "md": "The routes took shape through many local choices: people carried goods between nearby towns, welcomed visitors, and passed news along. Han diplomacy added new links to this web, but it did not create the whole network or control every connection. The court’s interests helped distant movement grow; the people who lived along the way kept it alive.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "When protection has a price",
+     "goal": "Notice that rulers could make travel easier while also shaping who benefited from it.",
+     "blocks": [
+      {
+       "id": "s3p1",
+       "md": "Picture a mountain pass as a narrow doorway between two valleys. A ruler who could guard that doorway might make a journey feel more predictable: travelers could expect patrols, a place to ask about the road, or help when trouble came. Protection took people and resources, though, so rulers often wanted something in return.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p2",
+       "md": "Merchants carried goods that a ruler’s court could use, from fine cloth to horses. Their journeys could also bring taxes, payments collected on trade, and diplomatic ties: relationships between rulers built through gifts, agreements, and messages. Protecting a route could therefore serve a state’s interests as well as travelers’ needs.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3w1",
+       "type": "compare",
+       "columns": [
+        {
+         "md": "Travel continues under the ruler’s protection.",
+         "title": "Keep the pass open",
+         "points": [
+          "Goods and news can move through the pass.",
+          "Tolls can bring income to the state.",
+          "Nearby towns may gain customers and new connections."
+         ]
+        },
+        {
+         "md": "Travel slows, stops, or shifts to another route.",
+         "title": "Restrict the pass",
+         "points": [
+          "The state may limit who crosses or when.",
+          "Nearby trade may shrink, while another town or route gains traffic.",
+          "The restriction may answer a danger, a dispute, or a change in policy."
+         ]
+        }
+       ]
+      },
+      {
+       "id": "s3p3",
+       "md": "As you compare the choices, notice how one decision reaches beyond the pass. An open route can bring business to nearby towns, but travelers may pay tolls or wait while officials inspect goods. A restriction can reduce those costs for a time by preventing passage, yet leave local sellers with fewer customers.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p4",
+       "md": "A boundary did not always act like a wall. In some places and periods, officials could closely control who crossed; elsewhere, their reach was weaker, or local agreements mattered more than distant orders. Even along one route, rules could change with a new ruler, a conflict, or a shift in what the state wanted.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p5",
+       "md": "Travelers had to live with that uncertainty. A road that was safe last season might now involve delays, new fees, or a detour. When conflict threatened a pass, merchants could seek another way—if one was known and practical—and towns along the old route might lose trade.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p6",
+       "md": "So protection was never simply a gift. Rulers could help make exchange more regular while steering its benefits toward their courts, favored partners, or chosen crossings. The people who carried goods and messages still made choices within those shifting rules, adapting when a route opened, narrowed, or closed.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "Many beginnings, many futures",
+     "goal": "Leave with a picture of routes emerging from communities, practical needs, and changing political choices—and a sense of how their people shaped what came next.",
+     "blocks": [
+      {
+       "id": "s4p1",
+       "md": "It can be tempting to look for a single beginning: one ruler’s decision, one famous journey, one line drawn across a map. But long-distance connections rarely start so neatly. Nearby journeys and familiar meeting places linked communities bit by bit, in different regions and at different times.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s4p2",
+       "md": "A route became useful where people could meet the needs of a journey. Travelers needed water, shelter, food, animals, and ways to trade with confidence. An oasis or settlement might become a regular stop, but the place mattered because local residents kept it working: tending wells, preparing supplies, sharing knowledge, and making agreements possible.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s4w1",
+       "type": "cards",
+       "cards": [
+        {
+         "back": "Dependable water, shelter, and supplies gave travelers a reason to return. A familiar stop could help connect journeys that began far apart.",
+         "front": "A useful place"
+        },
+        {
+         "back": "Local people made exchange possible through work and trust: offering food and services, sharing knowledge, and negotiating fair terms.",
+         "front": "Welcoming residents"
+        },
+        {
+         "back": "A ruler might protect a route or make travel harder. Those choices mattered, but a connection also relied on travelers, residents, and the people who served them.",
+         "front": "Changing political choices"
+        }
+       ]
+      },
+      {
+       "id": "s4p3",
+       "md": "Each card shows one part of the picture. A useful place could draw travelers in, and the people who lived there could turn a brief stop into a dependable one. Political support might help movement feel safer; a new restriction or conflict could change the journey. These forces met, and their balance kept shifting.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s4p4",
+       "md": "Courts and empires could shape conditions over wide areas, but they did not create every connection by themselves. Merchants chose what to carry and where to go; guides knew the terrain; translators helped people bargain across languages. Residents and craftspeople supplied goods and skills, while animals carried loads through places where carts or roads could not.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s4p5",
+       "md": "So the Silk Roads did not appear fully formed. They grew from many local paths, practical needs, and political choices, then changed as people found new partners or faced new obstacles. The routes had no single future, either: each journey could bring people, ideas, and ways of living into contact, with results that depended on those who met.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s4p6",
+       "md": "Next, follow a caravan from one stop to another. You’ll see exchange in its everyday rhythm: finding water, caring for animals, choosing a guide, and making yourself understood in a place that is not yet familiar.",
+       "type": "paragraph"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "A caravan’s long day",
+   "summary": "Travel with merchants, guides, translators, and animals through the practical rhythms of a journey. Learn how goods changed hands at busy markets without any one traveler crossing the whole distance.",
+   "plan": null,
+   "sections": []
+  },
+  {
+   "title": "Silk, horses, and precious things",
+   "summary": "Trace the movement of silk alongside horses, spices, glass, paper, and other prized goods. Understand how demand, scarcity, and craft gave these objects value far from where they were made.",
+   "plan": null,
+   "sections": []
+  },
+  {
+   "title": "Beliefs on the move",
+   "summary": "Follow Buddhism, Christianity, Islam, and other traditions as travelers carried them between communities. See how ideas changed as they met local languages, customs, and works of art.",
+   "plan": null,
+   "sections": []
+  },
+  {
+   "title": "More than merchants",
+   "summary": "Meet the diplomats, pilgrims, soldiers, artisans, and families whose lives connected the routes. Explore the exchanges of stories, skills, foods, and knowledge that ordinary objects rarely record.",
+   "plan": null,
+   "sections": []
+  },
+  {
+   "title": "When the routes changed",
+   "summary": "See how empires, maritime trade, disease, and shifting political fortunes reshaped long-distance travel. The Silk Roads did not simply vanish; their routes and importance changed over time.",
+   "plan": null,
+   "sections": []
+  },
+  {
+   "title": "A connected world, in perspective",
+   "summary": "Gather the strands of the journey and consider what connection meant for people living along the routes. Leave with a clearer picture of a shared history built through many local encounters.",
+   "plan": null,
+   "sections": []
+  }
+ ]
+}

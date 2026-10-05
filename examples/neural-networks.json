@@ -1,0 +1,785 @@
+{
+ "version": 1,
+ "course": {
+  "title": "How a Network Learns",
+  "subtitle": "A beginner’s path from simple examples to deep learning: see how a network makes guesses, learns from mistakes, and gradually finds useful patterns.",
+  "topicPrompt": "How neural networks learn — I can code a little but the math behind deep learning feels like magic",
+  "language": "en",
+  "level": "beginner",
+  "theme": {
+   "dark": {
+    "bg": "#171e22",
+    "text": "#e8eeeb",
+    "muted": "#a5b3b2",
+    "accent": "#79b9ad",
+    "border": "#344147",
+    "accent2": "#a5add5",
+    "surface": "#202a2f",
+    "highlight": "#39483c"
+   },
+   "mood": "clear, curious, gently illuminating",
+   "name": "Quiet Signals",
+   "light": {
+    "bg": "#f5f6f3",
+    "text": "#202b30",
+    "muted": "#5f6e74",
+    "accent": "#327b78",
+    "border": "#dce3df",
+    "accent2": "#6575a1",
+    "surface": "#ffffff",
+    "highlight": "#e6efca"
+   },
+   "radius": "soft",
+   "scheme": "light",
+   "texture": "dots",
+   "fontPair": "technical"
+  },
+  "coverSvg": "<svg viewBox=\"0 0 800 400\" xmlns=\"http://www.w3.org/2000/svg\"><defs><radialGradient id=\"glow\"><stop stop-color=\"var(--accent)\" stop-opacity=\".16\"></stop><stop offset=\"1\" stop-color=\"var(--bg)\" stop-opacity=\"0\"></stop></radialGradient></defs><path fill=\"var(--bg)\" d=\"M0 0h800v400H0z\"></path><ellipse cx=\"404\" cy=\"198\" rx=\"238\" ry=\"174\" fill=\"url(#glow)\"></ellipse><g fill=\"none\" stroke=\"var(--border)\" stroke-width=\"2\"><path d=\"M177 125 323 89l151 42 149-17M177 125l146 151 151-145 149 141M177 125l-8 155 154-4 151-24 151 24M323 89l-8 187M474 131l5 121M623 114l0 165\"></path></g><g fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"2.5\" stroke-linecap=\"round\" opacity=\".8\"><path d=\"m177 125 146 151 151-145 149 141\"></path><path d=\"m323 89 151 42 149-17\"></path></g><g fill=\"var(--surface)\" stroke=\"var(--border)\" stroke-width=\"2\"><circle cx=\"177\" cy=\"125\" r=\"13\"></circle><circle cx=\"169\" cy=\"280\" r=\"13\"></circle><circle cx=\"323\" cy=\"89\" r=\"13\"></circle><circle cx=\"315\" cy=\"276\" r=\"13\"></circle><circle cx=\"474\" cy=\"131\" r=\"13\"></circle><circle cx=\"479\" cy=\"252\" r=\"13\"></circle><circle cx=\"623\" cy=\"114\" r=\"13\"></circle><circle cx=\"623\" cy=\"279\" r=\"13\"></circle></g><g fill=\"var(--accent)\"><circle cx=\"177\" cy=\"125\" r=\"5\"></circle><circle cx=\"323\" cy=\"89\" r=\"5\"></circle><circle cx=\"474\" cy=\"131\" r=\"5\"></circle><circle cx=\"623\" cy=\"114\" r=\"5\"></circle></g><path d=\"M224 335c47-20 75-16 117-32s68-28 109-47 78-23 126-58\" fill=\"none\" stroke=\"var(--muted)\" stroke-width=\"2\" stroke-dasharray=\"4 8\" opacity=\".65\"></path><circle cx=\"576\" cy=\"198\" r=\"5\" fill=\"var(--accent2)\"></circle><circle cx=\"576\" cy=\"198\" r=\"15\" fill=\"none\" stroke=\"var(--accent2)\" stroke-opacity=\".35\"></circle></svg>"
+ },
+ "lessons": [
+  {
+   "title": "A guess, then a nudge",
+   "summary": "Start with an everyday example of learning from feedback, then meet a tiny network as a machine that turns inputs into a guess. You’ll see why its adjustable numbers can represent what it has learned.",
+   "plan": {
+    "sections": [
+     {
+      "goal": "Feel how feedback can make an everyday guess more useful over time.",
+      "heading": "A first cup, a small correction",
+      "keyPoints": [
+       "Imagine making tea for a friend. You guess how much honey they like, then hear that the first cup was too sweet.",
+       "For the next cup, you use a little less. You have used what happened to adjust your next guess.",
+       "This small loop—guess, notice, adjust—is a familiar starting point for learning."
+      ]
+     },
+     {
+      "goal": "Understand a tiny network as a machine that turns clues into an estimate.",
+      "heading": "A machine that makes guesses",
+      "keyPoints": [
+       "Imagine estimating how much honey someone will want from two clues: how sweet they usually like drinks and what kind of tea they chose.",
+       "A network is a set of simple steps that combine information and pass it along to produce an answer. The clues it receives are called inputs; its answer is called an output.",
+       "The network’s output might be a number, such as a guessed amount of honey. At first, that guess may be off."
+      ],
+      "interactive": "diagram: follow two clues—usual sweetness and tea type—as they enter a tiny network and become a guessed amount of honey."
+     },
+     {
+      "goal": "See that adjustable numbers shape how a network uses clues and can carry what it has learned.",
+      "heading": "The settings behind the guess",
+      "keyPoints": [
+       "A network has adjustable numbers called weights. A weight controls how strongly a clue affects the guess.",
+       "If the network gives more weight to usual sweetness, that clue has more influence than the tea type. Change a weight and the same clues can lead to a different guess.",
+       "After feedback, changing weights can make later guesses more useful. The network’s learned behavior is held in these settings, rather than in a list of every cup it has encountered.",
+       "This is a small, simplified example. Real networks can have many inputs and settings, but the basic idea is that settings shape how clues become a guess."
+      ],
+      "interactive": "custom: show a cup with sliders for how much usual sweetness and tea type matter; adjust the sliders and watch the guessed honey amount change while the clues stay the same."
+     },
+     {
+      "goal": "Connect feedback and changing settings, and feel ready to follow signals through a network next.",
+      "heading": "A nudge, then another",
+      "keyPoints": [
+       "If the tea was too sweet, the feedback suggests making the next guess smaller. For a network, learning also means using feedback to adjust its settings.",
+       "A single adjustment may not be perfect. You can make another guess, notice what happened, and nudge the settings again.",
+       "In the next lesson, you’ll follow clues through a network and see how its small steps combine to make an answer."
+      ],
+      "interactive": "steps: trace the loop from clues, to a guess, to feedback, to a small settings change, and then to another guess."
+     }
+    ]
+   },
+   "sections": [
+    {
+     "heading": "A first cup, a small correction",
+     "goal": "Feel how feedback can make an everyday guess more useful over time.",
+     "blocks": [
+      {
+       "id": "s0p1",
+       "md": "You’re making tea for a friend who hasn’t told you how sweet they like it. You add a spoonful of honey, stir, and hand them the cup. Their first sip gives you a clue: “A little too sweet.”",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p2",
+       "md": "So the next time, you add a bit less. You don’t need a perfect measurement or a plan for every possible cup. You simply let what happened to the first cup guide the next one.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p3",
+       "md": "That small change matters because your first guess was not wasted. It gave you something to learn from: this friend prefers less honey than you put in. The feedback is useful because it points in a direction, even if it doesn’t tell you the exact right amount.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p4",
+       "md": "You can picture the process as a loop. You make a guess, notice how it turns out, then adjust your next guess. Each cup gives you another chance to get closer to what your friend enjoys.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0w1",
+       "svg": "<svg viewBox=\"0 0 640 240\"><g id=\"first\"><path d=\"M100 74h110l-12 90h-86z\" fill=\"var(--surface)\" stroke=\"var(--text)\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><path d=\"M210 92c45 0 45 54 0 54\" fill=\"none\" stroke=\"var(--text)\" stroke-width=\"3\"></path><path d=\"M110 112h90\" stroke=\"var(--accent)\" stroke-width=\"8\"></path><text x=\"90\" y=\"205\" font-size=\"16\" fill=\"var(--text)\">First cup</text><text x=\"116\" y=\"100\" font-size=\"14\" fill=\"var(--muted)\">honey</text></g><g id=\"feedback\"><path d=\"M258 118h106\" stroke=\"var(--muted)\" stroke-width=\"3\" stroke-linecap=\"round\"></path><path d=\"m352 108 12 10-12 10\" fill=\"none\" stroke=\"var(--muted)\" stroke-width=\"3\"></path><text x=\"265\" y=\"92\" font-size=\"16\" fill=\"var(--text)\">Too sweet</text><text x=\"272\" y=\"155\" font-size=\"14\" fill=\"var(--muted)\">notice</text></g><g id=\"second\"><path d=\"M420 74h110l-12 90h-86z\" fill=\"var(--surface)\" stroke=\"var(--text)\" stroke-width=\"3\" stroke-linejoin=\"round\"></path><path d=\"M530 92c45 0 45 54 0 54\" fill=\"none\" stroke=\"var(--text)\" stroke-width=\"3\"></path><path d=\"M430 132h90\" stroke=\"var(--accent2)\" stroke-width=\"8\"></path><text x=\"410\" y=\"205\" font-size=\"16\" fill=\"var(--text)\">Next cup</text><text x=\"433\" y=\"120\" font-size=\"14\" fill=\"var(--muted)\">less honey</text></g></svg>",
+       "type": "diagram",
+       "steps": [
+        {
+         "md": "You choose an amount before you know your friend’s preference.",
+         "show": [
+          "first"
+         ],
+         "label": "Make a first guess"
+        },
+        {
+         "md": "The first sip tells you the tea was too sweet.",
+         "show": [
+          "first",
+          "feedback"
+         ],
+         "label": "Hear the feedback"
+        },
+        {
+         "md": "You carry that clue into your next guess and use less honey.",
+         "show": [
+          "first",
+          "feedback",
+          "second"
+         ],
+         "label": "Adjust the next cup"
+        }
+       ],
+       "caption": "Follow the cups from a first guess to a gentler second one."
+      },
+      {
+       "id": "s0p5",
+       "md": "The second cup may still need a little adjusting. Your friend’s taste could be subtler than “more” or “less,” and other things—like the tea itself—can affect the flavor. This is a simple example, but the basic rhythm is easy to recognize: guess, notice, adjust.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p6",
+       "md": "A learning network follows a related rhythm. It makes a guess from the information it has, and feedback helps guide what it should change for a later guess. We’ll begin with this everyday loop, then look at how a small machine can carry a clue from one example into the next.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "A machine that makes guesses",
+     "goal": "Understand a tiny network as a machine that turns clues into an estimate.",
+     "blocks": [
+      {
+       "id": "s1p1",
+       "md": "Imagine pouring tea for a friend. You know two useful clues: how sweet they usually like drinks, and whether they chose a strong black tea or a lighter green tea. Before you reach for the honey, you can combine those clues into a rough guess.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p2",
+       "md": "A tiny network works in a similar way. It is a set of simple steps that takes in information, combines it, and passes it along to produce an answer. The clues that go in are called *inputs*; the answer that comes out is the *output*.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1w1",
+       "svg": "<svg viewBox=\"0 0 640 300\" xmlns=\"http://www.w3.org/2000/svg\"><g id=\"clues\"><rect x=\"20\" y=\"55\" width=\"190\" height=\"66\" rx=\"14\" fill=\"var(--surface)\" stroke=\"var(--border)\" stroke-width=\"2\"></rect><text x=\"38\" y=\"83\" font-size=\"16\" fill=\"var(--text)\">Usual sweetness</text><text x=\"38\" y=\"105\" font-size=\"14\" fill=\"var(--muted)\">A little or a lot?</text><rect x=\"20\" y=\"177\" width=\"190\" height=\"66\" rx=\"14\" fill=\"var(--surface)\" stroke=\"var(--border)\" stroke-width=\"2\"></rect><text x=\"38\" y=\"205\" font-size=\"16\" fill=\"var(--text)\">Tea choice</text><text x=\"38\" y=\"227\" font-size=\"14\" fill=\"var(--muted)\">Black or green?</text><path d=\"M210 88 C260 88 260 125 306 145 M210 210 C260 210 260 173 306 155\" fill=\"none\" stroke=\"var(--muted)\" stroke-width=\"3\" stroke-linecap=\"round\"></path></g><g id=\"combine\"><rect x=\"306\" y=\"112\" width=\"142\" height=\"76\" rx=\"18\" fill=\"var(--highlight)\" stroke=\"var(--accent)\" stroke-width=\"3\"></rect><text x=\"377\" y=\"145\" text-anchor=\"middle\" font-size=\"16\" fill=\"var(--text)\">Tiny network</text><text x=\"377\" y=\"168\" text-anchor=\"middle\" font-size=\"14\" fill=\"var(--muted)\">Combines clues</text><path d=\"M448 150 H512\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"3\" stroke-linecap=\"round\"></path></g><g id=\"answer\"><rect x=\"512\" y=\"112\" width=\"116\" height=\"76\" rx=\"18\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></rect><text x=\"570\" y=\"143\" text-anchor=\"middle\" font-size=\"15\" fill=\"var(--text)\">Honey</text><text x=\"570\" y=\"166\" text-anchor=\"middle\" font-size=\"14\" fill=\"var(--muted)\">Estimate</text></g></svg>",
+       "type": "diagram",
+       "steps": [
+        {
+         "md": "Start with the person's usual sweetness and the tea they chose.",
+         "show": [
+          "clues"
+         ],
+         "label": "Two clues"
+        },
+        {
+         "md": "The network takes in both clues and combines them.",
+         "show": [
+          "clues",
+          "combine"
+         ],
+         "label": "Combine"
+        },
+        {
+         "md": "An estimate of the honey amount comes out as the output.",
+         "show": [
+          "clues",
+          "combine",
+          "answer"
+         ],
+         "label": "Make a guess"
+        }
+       ],
+       "caption": "Follow each clue into the network, then trace the estimate it produces."
+      },
+      {
+       "id": "s1p3",
+       "md": "The drawing keeps the machine small on purpose. Inside, there could be several little operations, each passing a result to the next; for now, you can treat them as one place where the clues meet.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p4",
+       "md": "The output can be a number: perhaps a fraction of a teaspoon, or a full spoonful. It is only a guess. The same tea can taste different to different people, and a network may not yet know how much this friend prefers.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p5",
+       "md": "That uncertainty is useful to keep in view. The network does not understand tea as a person does; it turns the inputs into an output according to the steps inside it. In the next part, we’ll look at how changing those steps can change the guess.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "The settings behind the guess",
+     "goal": "See that adjustable numbers shape how a network uses clues and can carry what it has learned.",
+     "blocks": [
+      {
+       "id": "s2p1",
+       "md": "Imagine two clues about a cup of tea: how sweet you usually like it, and what kind of tea is in the cup. You can keep both clues the same but let one matter more when deciding how much honey to add.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p2",
+       "md": "A network does something similar with adjustable numbers called **weights**. Each weight controls how strongly one clue influences the guess. A larger weight gives that clue more say; a smaller one lets it matter less.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2w1",
+       "code": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style>\n:root{color-scheme:light dark}*{box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}body{margin:0;background:var(--surface);color:var(--text);font-family:var(--font-body);font-size:14px}.widget{height:420px;width:100%;max-width:760px;margin:auto;padding:18px 20px;display:grid;grid-template-columns:minmax(160px, .9fr) minmax(220px,1.1fr);gap:20px;align-items:center}.scene{height:100%;border:1px solid var(--border);border-radius:16px;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}.cup-art{width:140px;height:116px;position:relative}.tea{position:absolute;left:22px;top:21px;width:82px;height:58px;border-radius:7px 7px 35px 35px;background:var(--accent);opacity:.72;border:3px solid var(--text)}.rim{position:absolute;left:17px;top:15px;width:92px;height:19px;border:3px solid var(--text);border-radius:50%;background:var(--highlight)}.handle{position:absolute;left:99px;top:33px;width:34px;height:34px;border:5px solid var(--text);border-left:0;border-radius:0 20px 20px 0}.saucer{position:absolute;left:11px;top:84px;width:112px;height:17px;border:3px solid var(--text);border-radius:50%}.steam{position:absolute;top:0;left:47px;color:var(--muted);font-size:22px;letter-spacing:8px}.amount-box{width:80%;max-width:210px}.amount-title{text-align:center;font-weight:650;margin-bottom:8px}.bar-track{height:13px;border:1px solid var(--border);border-radius:99px;overflow:hidden;background:var(--surface)}.bar{height:100%;width:50%;background:var(--accent2);border-radius:99px;transition:width .15s ease}.scale{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:4px}.readout{font-size:13px;color:var(--muted);text-align:center;margin-top:8px}.controls{display:flex;flex-direction:column;gap:14px;min-width:0}.heading{margin:0;font-size:18px;line-height:1.2}.sub{margin:0;color:var(--muted);line-height:1.4}.clues{display:grid;grid-template-columns:1fr 1fr;gap:8px}.clue{padding:10px 11px;border:1px solid var(--border);border-radius:10px;background:var(--bg);line-height:1.35}.clue strong{display:block;font-size:15px}.slider-card{padding:10px 12px;border:1px solid var(--border);border-radius:11px}.slider-label{display:flex;justify-content:space-between;gap:8px;align-items:baseline;margin-bottom:7px;font-weight:600}.slider-label output{color:var(--accent);font-variant-numeric:tabular-nums}.range{width:100%;height:24px;margin:0;accent-color:var(--accent);cursor:pointer}.contrib{color:var(--muted);font-size:13px;margin-top:4px;font-variant-numeric:tabular-nums}.note{color:var(--muted);font-size:12px;line-height:1.35;margin:0}@media(max-width:500px){.widget{padding:12px;gap:12px;grid-template-columns:minmax(125px,.8fr) minmax(180px,1.2fr)}.cup-art{transform:scale(.82)}.scene{gap:8px}.controls{gap:9px}.heading{font-size:16px}.clue{padding:8px;font-size:12px}.slider-card{padding:8px}.note{font-size:11px}}\n</style></head><body><main class=\"widget\"><section class=\"scene\" aria-label=\"Illustration and guessed amount\"><div class=\"cup-art\" aria-hidden=\"true\"><div class=\"steam\">﹏</div><div class=\"tea\"></div><div class=\"rim\"></div><div class=\"handle\"></div><div class=\"saucer\"></div></div><div class=\"amount-box\"><div class=\"amount-title\">Guessed honey: <span id=\"guess\">2.5</span></div><div class=\"bar-track\" role=\"img\" aria-label=\"Guessed honey amount from 0 to 10\"><div class=\"bar\" id=\"bar\"></div></div><div class=\"scale\"><span>0</span><span>10</span></div><div class=\"readout\">A simple model, not a recipe</div></div></section><section class=\"controls\"><h1 class=\"heading\">A guess, then a nudge</h1><p class=\"sub\">Fixed clues, adjustable influence.</p><div class=\"clues\"><div class=\"clue\">Usual sweetness<strong>3 <span style=\"font-weight:400;color:var(--muted)\">on a 0–5 scale</span></strong></div><div class=\"clue\">Tea type<strong>2 <span style=\"font-weight:400;color:var(--muted)\">on a 0–5 scale</span></strong></div></div><div class=\"slider-card\"><label class=\"slider-label\" for=\"sweet\">Weight: usual sweetness <output id=\"sweetOut\">1.0</output></label><input class=\"range\" id=\"sweet\" type=\"range\" min=\"0\" max=\"2\" step=\"0.1\" value=\"1\" aria-label=\"Weight: usual sweetness\"><div class=\"contrib\">Contribution: 3 × <span id=\"sweetW\">1.0</span> = <span id=\"sweetC\">3.0</span></div></div><div class=\"slider-card\"><label class=\"slider-label\" for=\"tea\">Weight: tea type <output id=\"teaOut\">1.0</output></label><input class=\"range\" id=\"tea\" type=\"range\" min=\"0\" max=\"2\" step=\"0.1\" value=\"1\" aria-label=\"Weight: tea type\"><div class=\"contrib\">Contribution: 2 × <span id=\"teaW\">1.0</span> = <span id=\"teaC\">2.0</span></div></div><p class=\"note\">The guess is half the two contributions added together. The amount is illustrative, not a real recipe or calibrated prediction.</p></section></main><script>\n(function(){try{const sweet=document.getElementById('sweet'),tea=document.getElementById('tea');function update(){const sw=Number(sweet.value),tw=Number(tea.value),sc=3*sw,tc=2*tw,g=(sc+tc)*.5;document.getElementById('sweetOut').textContent=sw.toFixed(1);document.getElementById('sweetW').textContent=sw.toFixed(1);document.getElementById('sweetC').textContent=sc.toFixed(1);document.getElementById('teaOut').textContent=tw.toFixed(1);document.getElementById('teaW').textContent=tw.toFixed(1);document.getElementById('teaC').textContent=tc.toFixed(1);document.getElementById('guess').textContent=g.toFixed(2).replace(/0$/,'').replace(/\\.$/,'');document.getElementById('bar').style.width=(g*10)+'%'}sweet.addEventListener('input',update);tea.addEventListener('input',update);window.addEventListener('message',function(e){if(e.data&&e.data.type==='theme'){/* Theme colours are CSS-driven. */}});update();parent.postMessage({type:'ready'},'*')}catch(err){parent.postMessage({type:'error',message:String(err)},'*')}})();\n</script></body></html>",
+       "type": "custom",
+       "brief": "Show one illustrated cup of tea and two fixed clue readouts: “Usual sweetness: 3” and “Tea type: 2” on a simple 0–5 scale. Provide two sliders labeled “Weight: usual sweetness” and “Weight: tea type,” each ranging from 0 to 2 with a default of 1. Keep the clue values fixed while the reader moves either slider. Display a clearly labeled “Guessed honey” amount from 0 to 10, calculated as the weighted sum of the two clue values, scaled by 10/20: (3 × sweetness weight + 2 × tea type weight) × 0.5. Update the amount immediately and show the two weighted contributions so the reader can see which clue is influencing the guess. Use a simple visual amount indicator beside the cup; avoid implying this is a real recipe or a calibrated prediction.",
+       "height": 420,
+       "status": "ready",
+       "fallback": {
+        "x": {
+         "max": 2,
+         "min": 0,
+         "label": "Weight on usual sweetness"
+        },
+        "y": {
+         "max": 10,
+         "min": 0,
+         "label": "Guessed honey (scaled)"
+        },
+        "id": "s2w1fallback",
+        "type": "plot",
+        "title": "How clue weights shape a guess",
+        "curves": [
+         {
+          "expr": "(3*x+2*teaWeight)*0.5",
+          "label": "Honey guess"
+         }
+        ],
+        "params": [
+         {
+          "max": 2,
+          "min": 0,
+          "name": "teaWeight",
+          "step": 0.1,
+          "label": "Weight on tea type",
+          "value": 1
+         }
+        ]
+       }
+      },
+      {
+       "id": "s2p3",
+       "md": "With the clue values held steady, moving a slider changes the guess. Give usual sweetness more weight and the guess rises more; give tea type more weight and it contributes more instead. The numbers are deliberately simple, but they make the relationship visible: weights decide how the same clues are combined.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p4",
+       "md": "After you taste a cup and get feedback, you might adjust a weight so the next guess fits better. The network can carry what it has learned in these settings, rather than keeping a separate memory of every cup it has seen. Its behavior comes from how its weights shape the clues into an answer.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p5",
+       "md": "This tea example is a small simplification. Real networks can use many clues and contain many adjustable settings, but the basic idea stays approachable: change the settings, and the same clues can lead to a different guess.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "A nudge, then another",
+     "goal": "Connect feedback and changing settings, and feel ready to follow signals through a network next.",
+     "blocks": [
+      {
+       "id": "s3p1",
+       "md": "Imagine you tasted your tea and found it too sweet. That small piece of feedback points in a direction: next time, use a little less sugar. You do not need a perfect recipe all at once; you can make a guess, notice the result, and adjust.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p2",
+       "md": "A tiny network can learn in a similar way. Its *settings* are adjustable numbers that control how it uses clues to make a guess. When the guess misses the mark, feedback can suggest how to change those numbers so the next guess moves closer.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3w1",
+       "type": "steps",
+       "steps": [
+        {
+         "md": "The network receives clues about the situation. They are the ingredients it has to work with.",
+         "svg": "<svg viewBox=\"0 0 640 220\"><g id=\"clues\"><rect x=\"70\" y=\"78\" width=\"150\" height=\"64\" rx=\"14\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"3\"></rect><text x=\"145\" y=\"117\" text-anchor=\"middle\" font-size=\"20\" fill=\"var(--text)\">Clues</text></g></svg>",
+         "title": "Start with clues"
+        },
+        {
+         "md": "Its current settings turn those clues into an estimate. The guess is an answer, not a promise that the settings are already right.",
+         "svg": "<svg viewBox=\"0 0 640 220\"><g id=\"clues\"><rect x=\"70\" y=\"78\" width=\"150\" height=\"64\" rx=\"14\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"3\"></rect><text x=\"145\" y=\"117\" text-anchor=\"middle\" font-size=\"20\" fill=\"var(--text)\">Clues</text></g><path id=\"toGuess\" d=\"M220 110 H380\" stroke=\"var(--muted)\" stroke-width=\"3\"></path><g id=\"guess\"><rect x=\"380\" y=\"78\" width=\"180\" height=\"64\" rx=\"14\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></rect><text x=\"470\" y=\"117\" text-anchor=\"middle\" font-size=\"20\" fill=\"var(--text)\">Guess</text></g></svg>",
+         "title": "Make a guess"
+        },
+        {
+         "md": "Compare the guess with what happened. If the tea came out too sweet, the feedback says the next estimate should be smaller.",
+         "svg": "<svg viewBox=\"0 0 640 220\"><g id=\"clues\"><rect x=\"70\" y=\"78\" width=\"150\" height=\"64\" rx=\"14\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"3\"></rect><text x=\"145\" y=\"117\" text-anchor=\"middle\" font-size=\"20\" fill=\"var(--text)\">Clues</text></g><path id=\"toGuess\" d=\"M220 110 H380\" stroke=\"var(--muted)\" stroke-width=\"3\"></path><g id=\"guess\"><rect x=\"380\" y=\"78\" width=\"180\" height=\"64\" rx=\"14\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></rect><text x=\"470\" y=\"117\" text-anchor=\"middle\" font-size=\"20\" fill=\"var(--text)\">Guess</text></g><g id=\"feedback\"><path d=\"M470 145 V180 H145 V145\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"3\" stroke-linecap=\"round\"></path><text x=\"305\" y=\"207\" text-anchor=\"middle\" font-size=\"18\" fill=\"var(--text)\">Feedback</text></g></svg>",
+         "title": "Notice the feedback"
+        },
+        {
+         "md": "Use that direction to make a small adjustment. A *nudge* is simply a modest change, such as turning a number down a little rather than starting over.",
+         "svg": "<svg viewBox=\"0 0 640 220\"><g id=\"clues\"><rect x=\"70\" y=\"78\" width=\"150\" height=\"64\" rx=\"14\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"3\"></rect><text x=\"145\" y=\"117\" text-anchor=\"middle\" font-size=\"20\" fill=\"var(--text)\">Clues</text></g><path id=\"toGuess\" d=\"M220 110 H380\" stroke=\"var(--muted)\" stroke-width=\"3\"></path><g id=\"guess\"><rect x=\"380\" y=\"78\" width=\"180\" height=\"64\" rx=\"14\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></rect><text x=\"470\" y=\"117\" text-anchor=\"middle\" font-size=\"20\" fill=\"var(--text)\">Guess</text></g><g id=\"feedback\"><path d=\"M470 145 V180 H145 V145\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"3\" stroke-linecap=\"round\"></path><text x=\"305\" y=\"207\" text-anchor=\"middle\" font-size=\"18\" fill=\"var(--text)\">Feedback</text></g><g id=\"settings\"><rect x=\"250\" y=\"20\" width=\"170\" height=\"48\" rx=\"12\" fill=\"var(--surface)\" stroke=\"var(--border)\" stroke-width=\"3\"></rect><text x=\"335\" y=\"51\" text-anchor=\"middle\" font-size=\"18\" fill=\"var(--text)\">Settings: a little lower</text><path d=\"M335 68 V78\" stroke=\"var(--accent)\" stroke-width=\"3\"></path></g></svg>",
+         "title": "Nudge the settings"
+        },
+        {
+         "md": "With the updated settings, the network makes another guess. It may still be off, so the cycle can continue: observe, adjust, and try again.",
+         "svg": "<svg viewBox=\"0 0 640 220\"><g id=\"clues\"><rect x=\"70\" y=\"78\" width=\"150\" height=\"64\" rx=\"14\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"3\"></rect><text x=\"145\" y=\"117\" text-anchor=\"middle\" font-size=\"20\" fill=\"var(--text)\">Clues</text></g><path id=\"toGuess\" d=\"M220 110 H380\" stroke=\"var(--muted)\" stroke-width=\"3\"></path><g id=\"guess\"><rect x=\"380\" y=\"78\" width=\"180\" height=\"64\" rx=\"14\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></rect><text x=\"470\" y=\"117\" text-anchor=\"middle\" font-size=\"20\" fill=\"var(--text)\">Another guess</text></g><g id=\"feedback\"><path d=\"M470 145 V180 H145 V145\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"3\" stroke-linecap=\"round\"></path><text x=\"305\" y=\"207\" text-anchor=\"middle\" font-size=\"18\" fill=\"var(--text)\">Feedback</text></g><g id=\"settings\"><rect x=\"250\" y=\"20\" width=\"170\" height=\"48\" rx=\"12\" fill=\"var(--surface)\" stroke=\"var(--border)\" stroke-width=\"3\"></rect><text x=\"335\" y=\"51\" text-anchor=\"middle\" font-size=\"18\" fill=\"var(--text)\">Settings nudged</text><path d=\"M335 68 V78\" stroke=\"var(--accent)\" stroke-width=\"3\"></path></g></svg>",
+         "title": "Guess again"
+        }
+       ]
+      },
+      {
+       "id": "s3p3",
+       "md": "One adjustment may help without solving everything. Perhaps the next cup is a little closer to what you like; perhaps you need another small correction. Learning grows through these repeated attempts, with each result giving you information about which way to move.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p4",
+       "md": "For a network, many such adjustments can gradually make its guesses more useful. The numbers do not store a list of answers; they shape how clues combine, carrying forward what earlier feedback has taught. The exact way each number changes can be worked out step by step.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p5",
+       "md": "Next, you’ll follow clues as they travel through a network and see how its small steps combine into one answer. For now, hold on to the simple loop: clues lead to a guess, feedback points the way, and a nudge changes what happens next.",
+       "type": "paragraph"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "From signals to a decision",
+   "summary": "Follow a signal through a network: inputs combine, pass through simple transformations, and become an output. You’ll understand what a neuron does and why layers let a network build richer patterns.",
+   "plan": {
+    "sections": [
+     {
+      "goal": "See how a network turns a few clues into one answer, building on the previous lesson’s idea of adjustable settings.",
+      "heading": "From clues to a guess",
+      "keyPoints": [
+       "Imagine guessing whether a room feels warm from two clues: a temperature reading and sunlight through the window.",
+       "A network receives numbers as inputs and combines them to produce an output, such as a guess of “warm” or “cool.”",
+       "Its adjustable settings determine how strongly each clue affects that guess."
+      ]
+     },
+     {
+      "goal": "Understand a neuron as a small calculation that combines incoming signals and passes the result along.",
+      "heading": "A neuron mixes signals",
+      "keyPoints": [
+       "A neuron is a simple unit that receives signals, multiplies each by a weight, then adds the results.",
+       "A weight is a setting that controls how much an input matters. A bias is an extra amount added to the total, like adjusting a scale before weighing.",
+       "For example, a network might give sunlight more influence than a small change in temperature. The numbers here are a simplified illustration."
+      ],
+      "interactive": "formula: Follow output = (input 1 × weight 1) + (input 2 × weight 2) + bias. Reveal each symbol in plain language and trace two example signals into one combined number."
+     },
+     {
+      "goal": "Understand why a neuron may transform its combined signal before passing it on.",
+      "heading": "When a signal bends",
+      "keyPoints": [
+       "A raw total can be negative or very large, so a neuron may transform it before sending it onward.",
+       "An activation function is a rule that transforms a neuron’s total. One common example, the sigmoid function, turns any number into a value between 0 and 1.",
+       "This is a simplified picture: networks use several kinds of activation functions, each shaping signals in a different way."
+      ],
+      "interactive": "plot: Move a slider to change the combined signal and watch it pass through an S-shaped sigmoid curve. The axes read “Combined signal” and “Signal passed on.”"
+     },
+     {
+      "goal": "See how stages of simple calculations can combine into a more useful decision.",
+      "heading": "Layers build richer clues",
+      "keyPoints": [
+       "A layer is a group of neurons that each combine signals and pass their results onward.",
+       "One layer might respond to warmth and another to sunlight; a later layer can combine those responses into a clue about the room.",
+       "Connecting layers lets a network build patterns from patterns. The room example is a sketch of the idea, not a literal model of how people judge temperature."
+      ],
+      "interactive": "diagram: Step through a labeled network: two inputs feed a hidden layer of two neurons, then one output. Select a connection to trace how a signal contributes to the final guess."
+     },
+     {
+      "goal": "Bring the pieces together by tracing signals from inputs, through layers, to an answer.",
+      "heading": "Follow one decision",
+      "keyPoints": [
+       "The network receives input numbers, combines them using weights and biases, and transforms the results.",
+       "Each layer passes its signals to the next until the output gives a guess.",
+       "Changing an input or a setting can change the guess. In the next lesson, you’ll see how a network measures the gap between its guess and the answer it wanted."
+      ],
+      "interactive": "custom: Show a small network judging whether a room seems warm. The reader adjusts temperature and sunlight sliders, drags connection weights, and presses “Send signals” to watch values flow through two hidden neurons to a warm-or-cool output. They should notice how one changed weight shifts the final guess."
+     }
+    ]
+   },
+   "sections": [
+    {
+     "heading": "From clues to a guess",
+     "goal": "See how a network turns a few clues into one answer, building on the previous lesson’s idea of adjustable settings.",
+     "blocks": [
+      {
+       "id": "s0p1",
+       "md": "You step into a room and wonder whether it will feel warm. A thermometer gives you one clue, but sunlight spilling through the window gives you another. How could a network turn those two hints into a single guess?",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p2",
+       "md": "A network starts with *inputs*: numbers that describe what it is looking at. For this room, one input might be the temperature reading, and another might represent how much sunlight is coming in. The network combines them to produce an *output*—perhaps a number that stands for how warm the room seems.",
+       "type": "paragraph"
+      },
+      {
+       "x": {
+        "max": 10,
+        "min": 0,
+        "label": "Sunlight clue"
+       },
+       "y": {
+        "max": 10,
+        "min": 0,
+        "label": "Warmth score"
+       },
+       "id": "s0w1",
+       "type": "plot",
+       "title": "Two clues, one warmth score",
+       "curves": [
+        {
+         "expr": "temperature+sunlight_weight*x",
+         "color": "accent",
+         "label": "Warmth score"
+        }
+       ],
+       "params": [
+        {
+         "max": 10,
+         "min": 0,
+         "name": "temperature",
+         "step": 1,
+         "label": "Temperature clue",
+         "value": 4
+        },
+        {
+         "max": 1,
+         "min": 0,
+         "name": "sunlight_weight",
+         "step": 0.1,
+         "label": "Sunlight influence",
+         "value": 0.5
+        }
+       ]
+      },
+      {
+       "id": "s0p3",
+       "md": "Try changing the temperature clue and the sunlight influence. The horizontal position is the sunlight clue; the curve shows the score the network would produce for each amount of sunlight. Here, the score is just a made-up scale to make the relationship easy to see, not a real measurement of comfort.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p4",
+       "md": "The settings that control how strongly each clue matters are called *weights*. A larger weight gives its clue more influence on the output; a weight near zero makes that clue count very little. In the plot, the sunlight weight controls how steeply the score rises as sunlight increases.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p5",
+       "md": "The network can also have an adjustable starting point, called a *bias*. It shifts the score up or down even when the clues stay the same. Together, the weights and bias are the adjustable settings you met in the previous lesson: they shape how the network turns clues into a guess.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s0p6",
+       "md": "A score alone is not yet the everyday answer “warm” or “cool.” The network could treat scores above some boundary as warm and scores below it as cool. For now, the important idea is the path: clues enter as numbers, adjustable settings determine how they combine, and an output comes out.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "A neuron mixes signals",
+     "goal": "Understand a neuron as a small calculation that combines incoming signals and passes the result along.",
+     "blocks": [
+      {
+       "id": "s1p1",
+       "md": "Imagine estimating whether a plant will grow well tomorrow. You might notice two clues: how much sunlight it received and whether the temperature changed. A neuron is a small calculation that gathers signals like these and combines them into one number.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p2",
+       "md": "Each incoming signal is multiplied by a *weight*: a setting that controls how much that signal matters. A large weight gives a clue more influence; a small one gives it less. The network can adjust these settings as it learns, much like changing the importance you give different clues.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1w1",
+       "tex": "\\htmlClass{p1}{y} = (\\htmlClass{p2}{x_1} \\times \\htmlClass{p3}{w_1}) + (\\htmlClass{p4}{x_2} \\times \\htmlClass{p5}{w_2}) + \\htmlClass{p6}{b}",
+       "type": "formula",
+       "parts": [
+        {
+         "id": "p1",
+         "md": "The number this neuron passes along after combining its inputs.",
+         "label": "Combined signal"
+        },
+        {
+         "id": "p2",
+         "md": "One incoming signal, such as the amount of sunlight.",
+         "label": "First input"
+        },
+        {
+         "id": "p3",
+         "md": "How strongly the neuron lets the first input influence the total.",
+         "label": "First weight"
+        },
+        {
+         "id": "p4",
+         "md": "Another incoming signal, such as a change in temperature.",
+         "label": "Second input"
+        },
+        {
+         "id": "p5",
+         "md": "How strongly the neuron lets the second input influence the total.",
+         "label": "Second weight"
+        },
+        {
+         "id": "p6",
+         "md": "An extra amount added to the total. It is like shifting a scale before weighing anything.",
+         "label": "Bias"
+        }
+       ]
+      },
+      {
+       "id": "s1p3",
+       "md": "The formula says: multiply each input by its weight, then add those products together with a *bias*. The bias is a separate setting that nudges the result up or down, even when the inputs are zero. It gives the neuron another way to tune its answer.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p4",
+       "md": "Here is a simplified illustration. Suppose sunlight has a value of 3 and temperature change a value of 1. Give sunlight a weight of 2, temperature a weight of 0.5, and set the bias to 1. The neuron combines them as $(3 \\times 2) + (1 \\times 0.5) + 1 = 7.5$.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p5",
+       "md": "In this example, sunlight contributes 6 of the total, while temperature contributes 0.5. That reflects the larger sunlight weight: a change in sunlight has more influence on the result than the same-sized change in temperature. The values are invented for illustration; real networks learn useful weights from examples.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s1p6",
+       "md": "The combined number is the neuron's output signal. For now, think of it as a result passed onward; a later step may transform it before another neuron receives it. One neuron performs a modest calculation, but its adjustable weights and bias let it respond differently to different clues.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "When a signal bends",
+     "goal": "Understand why a neuron may transform its combined signal before passing it on.",
+     "blocks": [
+      {
+       "id": "s2p1",
+       "md": "A neuron has just added up its incoming signals, perhaps with each signal given a different weight. That raw total can be less than zero, or so large that passing it along unchanged would make later calculations unwieldy. Before sending the total onward, the neuron can apply a rule that reshapes it.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p2",
+       "md": "That rule is called an *activation function*: a calculation that transforms a neuron's total into the signal it passes to the next stage. Think of it like a dimmer on a lamp. The total is the setting you turn, and the activation function decides how brightly the lamp responds.",
+       "type": "paragraph"
+      },
+      {
+       "x": {
+        "max": 8,
+        "min": -8,
+        "label": "Combined signal"
+       },
+       "y": {
+        "max": 1,
+        "min": 0,
+        "label": "Signal passed on"
+       },
+       "id": "s2w1",
+       "type": "plot",
+       "title": "A sigmoid bends the signal",
+       "curves": [
+        {
+         "expr": "1/(1+exp(-x))",
+         "color": "accent",
+         "label": "Sigmoid"
+        },
+        {
+         "expr": "1/(1+exp(-z))",
+         "color": "accent2",
+         "label": "Chosen signal"
+        }
+       ],
+       "params": [
+        {
+         "max": 8,
+         "min": -8,
+         "name": "z",
+         "step": 0.1,
+         "label": "Combined signal",
+         "value": 0
+        }
+       ]
+      },
+      {
+       "id": "s2p3",
+       "md": "Move the slider and follow the second marker along the curve. When the combined signal is far below zero, the output sits close to 0; near zero, a small change moves it noticeably; far above zero, it approaches 1. The curve is the *sigmoid* function, one common activation function. It squeezes any real-valued total into the range from 0 to 1.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p4",
+       "md": "That middle region is where the sigmoid is most responsive: nearby totals lead to noticeably different outputs. At the ends, the curve flattens, so even a much larger or smaller total barely changes what gets passed on. This can be useful when you want a smooth signal that behaves like a degree of confidence, though a value near 1 is not automatically a well-calibrated probability.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s2p5",
+       "md": "The sigmoid is one way to bend a signal, not a rule every neuron must use. Networks also use other activation functions that shape the total differently—for example, some pass positive values through while suppressing negative ones. This picture is simplified: which function works well depends on the network's task and design.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "Layers build richer clues",
+     "goal": "See how stages of simple calculations can combine into a more useful decision.",
+     "blocks": [
+      {
+       "id": "s3p1",
+       "md": "Imagine guessing whether a room will feel warm. You notice two clues: sunlight falls across the floor, and the air near the window feels mild. Neither clue settles the question alone, but together they may shape your guess.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p2",
+       "md": "A network can handle clues in stages. The first stage takes the inputs and sends signals onward; a later stage combines those signals into another clue, and eventually a final stage produces an answer. Each stage is called a *layer*: a group of neurons that each mix incoming signals and pass a result along.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3w1",
+       "svg": "<svg viewBox=\"0 0 640 360\"><g id=\"inputs\"><text x=\"26\" y=\"137\" font-size=\"16\" fill=\"var(--text)\">Warm air</text><text x=\"26\" y=\"237\" font-size=\"16\" fill=\"var(--text)\">Sunlight</text></g><g id=\"layer1\"><circle cx=\"255\" cy=\"140\" r=\"28\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"3\"></circle><circle cx=\"255\" cy=\"235\" r=\"28\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"3\"></circle><text x=\"247\" y=\"146\" font-size=\"16\" fill=\"var(--text)\">A</text><text x=\"247\" y=\"241\" font-size=\"16\" fill=\"var(--text)\">B</text><text x=\"205\" y=\"68\" font-size=\"15\" fill=\"var(--muted)\">First layer</text></g><g id=\"layer2\"><circle cx=\"455\" cy=\"187\" r=\"30\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></circle><text x=\"447\" y=\"193\" font-size=\"16\" fill=\"var(--text)\">C</text><text x=\"403\" y=\"68\" font-size=\"15\" fill=\"var(--muted)\">Later layer</text></g><g id=\"output\"><text x=\"525\" y=\"179\" font-size=\"15\" fill=\"var(--muted)\">Guess</text><text x=\"525\" y=\"202\" font-size=\"16\" fill=\"var(--text)\">Warm?</text></g><g id=\"edges\" fill=\"none\" stroke=\"var(--border)\" stroke-width=\"3\" stroke-linecap=\"round\"><path d=\"M106 135 L227 140\"></path><path d=\"M106 235 L227 235\"></path><path d=\"M283 140 L427 177\"></path><path d=\"M283 235 L427 197\"></path><path d=\"M485 187 L515 187\"></path></g><g id=\"trace_warm_a\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"4\" stroke-linecap=\"round\"><path d=\"M106 135 L227 140\"></path><path d=\"M283 140 L427 177\"></path></g><g id=\"trace_sun_b\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"4\" stroke-linecap=\"round\"><path d=\"M106 235 L227 235\"></path><path d=\"M283 235 L427 197\"></path></g></svg>",
+       "type": "diagram",
+       "steps": [
+        {
+         "show": [
+          "inputs",
+          "layer1",
+          "layer2",
+          "output",
+          "edges",
+          "trace_warm_a"
+         ],
+         "label": "Warm air"
+        },
+        {
+         "show": [
+          "inputs",
+          "layer1",
+          "layer2",
+          "output",
+          "edges",
+          "trace_sun_b"
+         ],
+         "label": "Sunlight"
+        },
+        {
+         "show": [
+          "inputs",
+          "layer1",
+          "layer2",
+          "output",
+          "edges"
+         ],
+         "label": "Combined clue"
+        }
+       ],
+       "caption": "Select a connection to trace one route from a clue to the final guess."
+      },
+      {
+       "id": "s3p3",
+       "md": "In this sketch, neuron A responds to the warm-air input, while B responds to sunlight. Their results travel to C, which combines them into a clue that can influence the final guess. The highlighted routes show how a signal can contribute through more than one stage; the network’s actual calculations also depend on adjustable settings.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p4",
+       "md": "A useful way to think about the later layer is as a detector for a pattern in earlier clues. Perhaps warmth in the air matters more when sunlight is also present; C can respond to that combination, rather than treating each input as a separate, final verdict. In a larger network, several neurons in one layer can notice different combinations, giving the next layer more kinds of clues to work with.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s3p5",
+       "md": "This is a sketch of the idea, not a literal model of how people judge temperature. Real rooms and human perception are more complicated, and a trained network does not necessarily assign human meanings like “sunlight detector” to its neurons. Still, the central idea holds: connecting layers lets simple calculations build patterns from patterns, so a later decision can draw on richer clues than the raw inputs provided.",
+       "type": "paragraph"
+      }
+     ]
+    },
+    {
+     "heading": "Follow one decision",
+     "goal": "Bring the pieces together by tracing signals from inputs, through layers, to an answer.",
+     "blocks": [
+      {
+       "id": "s4p1",
+       "md": "Imagine stepping into a room and deciding whether it feels warm. You might notice the air temperature and how much sunlight reaches the room. A network can take those clues as numbers and use them to make a guess.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s4p2",
+       "md": "Each connection has a *weight*: a setting that controls how strongly one number influences the next. A *bias* is another setting, like a small starting nudge added as signals combine. A neuron then transforms its combined signal before passing a number onward. Together, the weights and biases shape how the network responds.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s4w1",
+       "code": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style>\n:root{--bg:#f4f1ea;--surface:#fbfaf7;--text:#263238;--muted:#68777c;--accent:#258c83;--accent2:#e4a34b;--border:#d8ded9;--highlight:#e8f3ee;--font-body:system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--surface);color:var(--text);font-family:var(--font-body);height:440px;overflow:hidden}.app{height:100%;max-width:760px;margin:auto;padding:12px 16px;display:flex;flex-direction:column;gap:7px}.top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.title{font-size:16px;font-weight:700}.hint{font-size:13px;color:var(--muted)}.diagram{width:100%;height:190px;display:block;overflow:visible}.node{fill:var(--surface);stroke:var(--border);stroke-width:2}.node.done{stroke:var(--accent);fill:var(--highlight)}.edge{stroke:var(--border);stroke-width:2}.edge.active{stroke:var(--accent);stroke-width:3}.pulse{fill:var(--accent2);stroke:var(--surface);stroke-width:2}.node-label{fill:var(--text);font:600 13px var(--font-body);text-anchor:middle}.value{fill:var(--accent);font:700 13px var(--font-body);text-anchor:middle}.controls{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:6px 14px;align-items:center}.control{display:grid;grid-template-columns:1fr auto;gap:0 6px;align-items:center;min-width:0}.control label{font-size:13px;color:var(--muted);white-space:nowrap}.control output{font-size:13px;font-variant-numeric:tabular-nums}.control input{grid-column:1/3;width:100%;height:22px;margin:0;accent-color:var(--accent);cursor:pointer}.actions{display:flex;gap:8px;grid-column:3;grid-row:1/3;align-self:center}.actions button{min-height:42px;padding:0 13px;border:1px solid var(--border);border-radius:9px;background:var(--surface);color:var(--text);font:600 13px var(--font-body);cursor:pointer}.actions button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}button:focus-visible,input:focus-visible{outline:3px solid var(--accent2);outline-offset:2px}.result{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;padding:7px 11px;border:1px solid var(--border);border-radius:10px;background:var(--highlight)}.guess{font-size:15px;font-weight:700}.guess.warm{color:var(--accent)}.guess.cool{color:var(--muted)}.detail{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}.note{font-size:13px;color:var(--muted);line-height:1.25}.edge-label{fill:var(--muted);font:12px var(--font-body);text-anchor:middle}.bias{fill:var(--muted);font:12px var(--font-body);text-anchor:middle}\n@media(max-width:500px){.app{padding:9px 10px;gap:5px}.hint{font-size:12px}.diagram{height:166px}.controls{gap:4px 8px}.control label,.control output{font-size:12px}.actions{gap:5px}.actions button{padding:0 8px;min-height:40px;font-size:12px}.result{min-height:44px}.note{font-size:12px}}\n</style></head><body><main class=\"app\"><div class=\"top\"><div class=\"title\">From signals to a decision</div><div class=\"hint\">A simplified example · real networks can have many more neurons and layers.</div></div><svg class=\"diagram\" viewBox=\"0 0 700 190\" role=\"img\" aria-label=\"Two inputs connect to two hidden neurons, which connect to a warm or cool output\"><g id=\"edges\"></g><g id=\"edgeLabels\"></g><g id=\"nodes\"></g><g id=\"pulses\"></g></svg><section class=\"controls\" id=\"controls\" aria-label=\"Network settings\"></section><div class=\"result\" aria-live=\"polite\"><div class=\"guess\" id=\"guess\">Ready when you are</div><div class=\"detail\" id=\"detail\">Set the sliders, then send signals.</div></div><div class=\"note\">Each neuron combines its incoming signals and bias, then passes the result through a gentle threshold.</div></main><script>\n(()=>{try{const svg=document.querySelector('svg'),edgesG=document.getElementById('edges'),labelsG=document.getElementById('edgeLabels'),nodesG=document.getElementById('nodes'),pulsesG=document.getElementById('pulses'),controls=document.getElementById('controls');let colors={};function readTheme(){const s=getComputedStyle(document.documentElement);colors={accent:s.getPropertyValue('--accent').trim(),accent2:s.getPropertyValue('--accent2').trim(),border:s.getPropertyValue('--border').trim(),text:s.getPropertyValue('--text').trim(),muted:s.getPropertyValue('--muted').trim(),surface:s.getPropertyValue('--surface').trim(),highlight:s.getPropertyValue('--highlight').trim()}}readTheme();const points={temp:[105,62],sun:[105,139],h1:[350,62],h2:[350,139],out:[590,100]},names={temp:'Temperature',sun:'Sunlight',h1:'Hidden 1',h2:'Hidden 2',out:'Warm or cool?'};const connections=[['temp','h1','w1'],['sun','h1','w2'],['temp','h2','w3'],['sun','h2','w4'],['h1','out','w5'],['h2','out','w6']];const state={temp:.55,sun:.5,w1:.8,w2:.6,w3:-.5,w4:.9,w5:1,w6:.8,b1:-.55,b2:-.45,bo:-.9};let latest=null,running=false,raf=0;function el(tag,attrs={},parent=svg){const n=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const[k,v]of Object.entries(attrs))n.setAttribute(k,v);parent.appendChild(n);return n}connections.forEach(([a,b,k],i)=>{const p=points[a],q=points[b];el('line',{id:'edge'+i,x1:p[0]+30,y1:p[1],x2:q[0]-30,y2:q[1],class:'edge'},edgesG);el('text',{id:'edgeLabel'+i,x:(p[0]+q[0])/2,y:(p[1]+q[1])/2-7,class:'edge-label'},labelsG).textContent=state[k].toFixed(2);el('circle',{id:'pulse'+i,r:6,cx:-20,cy:-20,class:'pulse',opacity:0},pulsesG)});Object.entries(points).forEach(([key,p])=>{el('circle',{id:'node-'+key,cx:p[0],cy:p[1],r:30,class:'node'},nodesG);el('text',{x:p[0],y:p[1]-3,class:'node-label'}).textContent=names[key];el('text',{id:'value-'+key,x:p[0],y:p[1]+15,class:'value'}).textContent='—'});function addControl(key,label,min,max,step,value){const wrap=document.createElement('div');wrap.className='control';const lab=document.createElement('label');lab.htmlFor='c-'+key;lab.textContent=label;const out=document.createElement('output');out.id='o-'+key;out.value=Number(value).toFixed(2);out.textContent=out.value;const input=document.createElement('input');input.type='range';input.id='c-'+key;input.min=min;input.max=max;input.step=step;input.value=value;input.setAttribute('aria-label',label);input.addEventListener('input',()=>{state[key]=Number(input.value);out.value=state[key].toFixed(2);out.textContent=out.value;const ix=connections.findIndex(c=>c[2]===key);if(ix>=0)document.getElementById('edgeLabel'+ix).textContent=out.value});wrap.append(lab,out,input);controls.append(wrap)}addControl('temp','Temperature input',0,1,.01,state.temp);addControl('sun','Sunlight input',0,1,.01,state.sun);connections.forEach((c,i)=>addControl(c[2],`Weight ${i+1}`, -1,1,.05,state[c[2]]));addControl('b1','Hidden 1 bias',-1,1,.05,state.b1);addControl('b2','Hidden 2 bias',-1,1,.05,state.b2);addControl('bo','Output bias',-1,1,.05,state.bo);const actions=document.createElement('div');actions.className='actions';actions.innerHTML='<button class=\"primary\" id=\"send\">Send signals</button><button id=\"reset\">Reset</button>';controls.append(actions);function sigmoid(x){return 1/(1+Math.exp(-x))}function calculate(){const h1=sigmoid(state.temp*state.w1+state.sun*state.w2+state.b1),h2=sigmoid(state.temp*state.w3+state.sun*state.w4+state.b2),out=sigmoid(h1*state.w5+h2*state.w6+state.bo);return{h1,h2,out}}function send(){cancelAnimationFrame(raf);running=true;latest=calculate();document.getElementById('guess').textContent=latest.out>=.5?'Warm':'Cool';document.getElementById('guess').className='guess '+(latest.out>=.5?'warm':'cool');document.getElementById('detail').textContent=`Output signal ${latest.out.toFixed(2)} · threshold 0.50`;Object.entries({temp:state.temp,sun:state.sun,h1:latest.h1,h2:latest.h2,out:latest.out}).forEach(([k,v])=>{document.getElementById('value-'+k).textContent=v.toFixed(2);document.getElementById('node-'+k).classList.add('done')});const start=performance.now(),duration=1500;function frame(now){const t=Math.min(1,(now-start)/duration);connections.forEach((c,i)=>{const line=document.getElementById('edge'+i),pulse=document.getElementById('pulse'+i),x1=+line.getAttribute('x1'),y1=+line.getAttribute('y1'),x2=+line.getAttribute('x2'),y2=+line.getAttribute('y2'),phase=(t*1.65-i*.09+1)%1;pulse.setAttribute('cx',x1+(x2-x1)*phase);pulse.setAttribute('cy',y1+(y2-y1)*phase);pulse.setAttribute('opacity',phase<.88&&t<1?1:0);line.classList.toggle('active',phase<.88&&t<1)});if(t<1)raf=requestAnimationFrame(frame);else{running=false;connections.forEach((_,i)=>{document.getElementById('pulse'+i).setAttribute('opacity',0);document.getElementById('edge'+i).classList.remove('active')})}}requestAnimationFrame(frame)}document.getElementById('send').addEventListener('click',send);document.getElementById('reset').addEventListener('click',()=>{cancelAnimationFrame(raf);running=false;latest=null;Object.entries({temp:.55,sun:.5,w1:.8,w2:.6,w3:-.5,w4:.9,w5:1,w6:.8,b1:-.55,b2:-.45,bo:-.9}).forEach(([k,v])=>{state[k]=v;const input=document.getElementById('c-'+k);input.value=v;const out=document.getElementById('o-'+k);out.value=v.toFixed(2);out.textContent=out.value});connections.forEach((c,i)=>{document.getElementById('edgeLabel'+i).textContent=state[c[2]].toFixed(2);document.getElementById('edge'+i).classList.remove('active');document.getElementById('pulse'+i).setAttribute('opacity',0)});Object.keys(points).forEach(k=>{document.getElementById('value-'+k).textContent='—';document.getElementById('node-'+k).classList.remove('done')});document.getElementById('guess').textContent='Ready when you are';document.getElementById('guess').className='guess';document.getElementById('detail').textContent='Set the sliders, then send signals.'});window.addEventListener('message',e=>{if(e.data&&e.data.type==='theme'){readTheme();svg.style.color=colors.text}});window.addEventListener('resize',()=>{svg.setAttribute('preserveAspectRatio','xMidYMid meet')});parent.postMessage({type:'ready'},'*')}catch(err){parent.postMessage({type:'error',message:String(err)},'*')}})();\n</script></body></html>",
+       "type": "custom",
+       "brief": "Show a compact, clearly labelled network for judging whether a room seems warm: Temperature and Sunlight input sliders feed two hidden neurons, which feed one output labelled Warm or cool? Display each node’s numeric signal. Let the reader drag every connection weight and adjust the visible biases for both hidden neurons and the output. When the reader presses “Send signals,” calculate the signals using those inputs and settings, then animate a pulse along each connection as values flow through the network. Show a clear warm-versus-cool guess at the output. After a run, changing an input or setting changes the displayed result only after “Send signals” is pressed again, making it easy to change one weight and compare the final guess. Keep controls uncluttered and usable by keyboard and pointer. Label the example as simplified; real networks can have many more neurons and layers.",
+       "height": 440,
+       "status": "ready",
+       "fallback": {
+        "id": "s4w1fallback",
+        "type": "steps",
+        "steps": [
+         {
+          "md": "Temperature and sunlight enter as numbers. Each connection’s weight controls how strongly a clue influences the next calculation.",
+          "svg": "<svg viewBox=\"0 0 640 240\"><g id=\"inputs\"><circle cx=\"100\" cy=\"75\" r=\"28\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"3\"></circle><circle cx=\"100\" cy=\"165\" r=\"28\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"3\"></circle><text x=\"145\" y=\"81\" font-size=\"18\" fill=\"var(--text)\">Temperature</text><text x=\"145\" y=\"171\" font-size=\"18\" fill=\"var(--text)\">Sunlight</text></g><g><path d=\"M245 75 L390 95 M245 75 L390 155 M245 165 L390 95 M245 165 L390 155\" fill=\"none\" stroke=\"var(--muted)\" stroke-width=\"3\"></path><circle cx=\"420\" cy=\"95\" r=\"27\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></circle><circle cx=\"420\" cy=\"155\" r=\"27\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></circle><text x=\"410\" y=\"101\" font-size=\"18\" fill=\"var(--text)\">1</text><text x=\"410\" y=\"161\" font-size=\"18\" fill=\"var(--text)\">2</text></g><g id=\"output\"><path d=\"M447 95 L520 120 M447 155 L520 120\" fill=\"none\" stroke=\"var(--muted)\" stroke-width=\"3\"></path><circle cx=\"548\" cy=\"120\" r=\"28\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"3\"></circle><text x=\"526\" y=\"126\" font-size=\"16\" fill=\"var(--text)\">Guess</text><text x=\"490\" y=\"205\" font-size=\"16\" fill=\"var(--muted)\">Warm or cool?</text></g></svg>",
+          "title": "Room clues"
+         },
+         {
+          "md": "The hidden neurons combine the incoming numbers with weights and biases, transform the results, and pass them onward.",
+          "svg": "<svg viewBox=\"0 0 640 240\"><g><path d=\"M245 75 L390 95 M245 75 L390 155 M245 165 L390 95 M245 165 L390 155\" fill=\"none\" stroke=\"var(--accent2)\" stroke-width=\"4\"></path><circle cx=\"420\" cy=\"95\" r=\"27\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></circle><circle cx=\"420\" cy=\"155\" r=\"27\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></circle><text x=\"410\" y=\"101\" font-size=\"18\" fill=\"var(--text)\">1</text><text x=\"410\" y=\"161\" font-size=\"18\" fill=\"var(--text)\">2</text></g><g id=\"output\"><path d=\"M447 95 L520 120 M447 155 L520 120\" fill=\"none\" stroke=\"var(--muted)\" stroke-width=\"3\"></path><circle cx=\"548\" cy=\"120\" r=\"28\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"3\"></circle><text x=\"526\" y=\"126\" font-size=\"16\" fill=\"var(--text)\">Guess</text><text x=\"490\" y=\"205\" font-size=\"16\" fill=\"var(--muted)\">Warm or cool?</text></g></svg>",
+          "title": "Signals combine"
+         },
+         {
+          "md": "The output combines the hidden signals into a warm-or-cool guess. Change a clue or a connection weight and the values flowing through the network can change.",
+          "svg": "<svg viewBox=\"0 0 640 240\"><g id=\"output\"><path d=\"M245 75 L390 95 M245 75 L390 155 M245 165 L390 95 M245 165 L390 155 M447 95 L520 120 M447 155 L520 120\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"4\"></path><circle cx=\"420\" cy=\"95\" r=\"27\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></circle><circle cx=\"420\" cy=\"155\" r=\"27\" fill=\"var(--surface)\" stroke=\"var(--accent2)\" stroke-width=\"3\"></circle><circle cx=\"548\" cy=\"120\" r=\"28\" fill=\"var(--surface)\" stroke=\"var(--accent)\" stroke-width=\"3\"></circle><text x=\"410\" y=\"101\" font-size=\"18\" fill=\"var(--text)\">1</text><text x=\"410\" y=\"161\" font-size=\"18\" fill=\"var(--text)\">2</text><text x=\"526\" y=\"126\" font-size=\"16\" fill=\"var(--text)\">Guess</text><text x=\"490\" y=\"205\" font-size=\"16\" fill=\"var(--muted)\">Warm or cool?</text></g></svg>",
+          "title": "A guess emerges"
+         }
+        ]
+       }
+      },
+      {
+       "id": "s4p3",
+       "md": "In the example, the two hidden neurons each notice a different mixture of the room’s clues. Their signals reach the output, where another small calculation turns them into a warm-or-cool guess. This drawing is a simplification; real networks may have many more neurons and layers, but signals still travel from one stage to the next.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s4p4",
+       "md": "If you change the temperature or sunlight, the input numbers change. If you change a weight, you change how much one signal matters. Either change can shift the output, even though the network’s basic steps stay the same.",
+       "type": "paragraph"
+      },
+      {
+       "id": "s4p5",
+       "md": "A decision is a chain of simple calculations, each passing its result onward. A guess can be useful and still miss the answer. In the next lesson, you’ll see how a network measures the gap between its guess and the answer it wanted.",
+       "type": "paragraph"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "How wrong was the guess?",
+   "summary": "Compare a network’s answer with the answer you wanted and turn the difference into a measure of error. You’ll see how a loss function gives learning a clear direction.",
+   "plan": null,
+   "sections": []
+  },
+  {
+   "title": "Finding the useful nudge",
+   "summary": "Imagine changing one setting at a time to see which change makes the error smaller. You’ll meet gradients and backpropagation as an efficient way to work out how each setting contributed to the mistake.",
+   "plan": null,
+   "sections": []
+  },
+  {
+   "title": "Learning without overshooting",
+   "summary": "Watch a network update its settings in small steps, using examples again and again. You’ll understand the learning rate, why training can wobble, and how a model gradually settles on better guesses.",
+   "plan": null,
+   "sections": []
+  },
+  {
+   "title": "Patterns it hasn’t seen",
+   "summary": "Put the trained network to work on new examples and see why memorizing practice answers is not the same as learning a useful pattern. You’ll leave with a grounded picture of what deep learning can do—and what its apparent magic is made of.",
+   "plan": null,
+   "sections": []
+  }
+ ]
+}
