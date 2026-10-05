@@ -30,17 +30,19 @@ export type BlockViewProps = {
   paragraphMd?: string;
   /** Rendered after a paragraph (e.g. its variant switcher). */
   paragraphAside?: React.ReactNode;
+  /** Which variant the paragraph is showing (threads anchor to it). */
+  variantId?: string | null;
 };
 
 /** Text blocks carry data-block-id + data-selectable so ask-about-selection can anchor to them. */
-export function BlockView({ block, sectionId, paragraphMd, paragraphAside }: BlockViewProps) {
+export function BlockView({ block, sectionId, paragraphMd, paragraphAside, variantId }: BlockViewProps) {
   const sel = { "data-block-id": block.id, "data-section-id": sectionId, "data-selectable": "" };
   switch (block.type) {
     case "paragraph":
       return (
         <div className="group/para relative">
-          <p {...sel} className="reader-text my-6">
-            <Markdown md={paragraphMd ?? block.md} />
+          <p {...sel} data-variant-id={variantId ?? undefined} className="reader-text my-6">
+            <Markdown key={variantId ?? "original"} md={paragraphMd ?? block.md} />
           </p>
           {paragraphAside}
         </div>

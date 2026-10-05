@@ -16,7 +16,7 @@ export function SectionView({
   section: SectionJson;
   index: number;
   onRetried: () => void;
-  paragraphProps?: (blockId: string) => Pick<BlockViewProps, "paragraphMd" | "paragraphAside">;
+  paragraphProps?: (sectionId: string, blockId: string) => Pick<BlockViewProps, "paragraphMd" | "paragraphAside" | "variantId">;
 }) {
   const [retrying, setRetrying] = useState(false);
   const retry = async () => {
@@ -34,7 +34,7 @@ export function SectionView({
       {section.status === "ready" && (
         <div className="animate-fade-up">
           {section.blocks.map((b) => (
-            <BlockView key={b.id} block={b} sectionId={section.id} {...(b.type === "paragraph" ? paragraphProps?.(b.id) : {})} />
+            <BlockView key={b.id} block={b} sectionId={section.id} {...(b.type === "paragraph" ? paragraphProps?.(section.id, b.id) : {})} />
           ))}
         </div>
       )}

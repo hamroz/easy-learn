@@ -13,10 +13,61 @@ import { Toc } from "./Toc";
 import { useLessonData } from "./useLessonData";
 import { useReadingProgress } from "./useReadingProgress";
 import { WhatNext } from "./WhatNext";
+import { AskLayer } from "./ask/AskLayer";
+import { ParagraphTools } from "./ParagraphTools";
+import type { VariantJson } from "@/lib/types";
 
 export function Reader({ initial }: { initial: LessonViewJson }) {
-  const { view, refresh } = useLessonData(initial);
+  const { view, setView, refresh } = useLessonData(initial);
   const { course, lesson, sections, nav } = view;
+  const [activeVariant, setActiveVariant] = useState<Record<string, string | null>>({});
+  const [loadingVariant, setLoadingVariant] = useState<Record<string, "simpler" | "deeper" | null>>({});
+  const [variantError, setVariantError] = useState<string>();
+  const vkey = (sectionId: string, blockId: string) => `${sectionId}:${blockId}`;
+
+  const requestVariant = useCallback(
+    async (sectionId: string, blockId: string, kind: "simpler" | "deeper") => {
+      const key = vkey(sectionId, blockId);
+      const existing = view.variants.find((v) => v.sectionId === sectionId && v.blockId === blockId && v.kind === kind);
+      if (existing) return setActiveVariant((a) => ({ ...a, [key]: existing.id }));
+      setLoadingVariant((l) => ({ ...l, [key]: kind }));
+      setVariantError(undefined);
+      try {
+        const { variant } = await api<{ variant: VariantJson }>("/api/variants", { body: { sectionId, blockId, kind } });
+        setView((v) => ({ ...v, variants: [...v.variants.filter((x) => x.id !== variant.id), variant] }));
+        setActiveVariant((a) => ({ ...a, [key]: variant.id }));
+      } catch (e) {
+        setVariantError((e as Error).message);
+      } finally {
+        setLoadingVariant((l) => ({ ...l, [key]: null }));
+      }
+    },
+    [view.variants, setView],
+  );
+
+  const showVariant = useCallback((sectionId: string, blockId: string, variantId: string | null) => {
+    setActiveVariant((a) => ({ ...a, [vkey(sectionId, blockId)]: variantId }));
+  }, []);
+
+  const paragraphProps = (sectionId: string, blockId: string) => {
+    const key = vkey(sectionId, blockId);
+    const available = view.variants.filter((v) => v.sectionId === sectionId && v.blockId === blockId);
+    const active = activeVariant[key] ?? null;
+    const shown = available.find((v) => v.id === active);
+    return {
+      paragraphMd: shown?.md,
+      variantId: shown?.id ?? null,
+      paragraphAside: (
+        <ParagraphTools
+          available={available}
+          active={shown?.id ?? null}
+          loading={loadingVariant[key] ?? null}
+          onRequest={(kind) => requestVariant(sectionId, blockId, kind)}
+          onShow={(id) => showVariant(sectionId, blockId, id)}
+        />
+      ),
+    };
+  };
   const articleRef = useRef<HTMLElement>(null);
   const progress = useReadingProgress(lesson.id, articleRef, lesson.progress);
   const [retrying, setRetrying] = useState(false);
@@ -59,6 +110,14 @@ export function Reader({ initial }: { initial: LessonViewJson }) {
       </header>
 
       <Toc sections={sections} />
+      <AskLayer
+        lessonId={lesson.id}
+        articleRef={articleRef}
+        threads={view.threads}
+        onChanged={refresh}
+        showVariant={showVariant}
+        onRewrite={requestVariant}
+      />
 
       <main className="mx-auto w-full max-w-[700px] px-5 pb-40 sm:px-8">
         <article ref={articleRef}>
@@ -94,9 +153,15 @@ export function Reader({ initial }: { initial: LessonViewJson }) {
           )}
 
           {sections.map((s, i) => (
-            <SectionView key={s.id} section={s} index={i} onRetried={refresh} />
+            <SectionView key={s.id} section={s} index={i} onRetried={refresh} paragraphProps={paragraphProps} />
           ))}
         </article>
+
+        {variantError && (
+          <p role="alert" className="fixed bottom-20 left-1/2 z-40 -translate-x-1/2 rounded-full bg-text px-4 py-2 font-ui text-[13px] text-bg shadow-lg">
+            {variantError}
+          </p>
+        )}
 
         {allReady && <WhatNext view={view} onChanged={refresh} onReached={markComplete} />}
 
