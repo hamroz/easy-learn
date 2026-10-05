@@ -62,7 +62,7 @@ export async function requireUser(req: Request): Promise<User> {
  * (HttpError → its status, ZodError → 400, anything else → 500).
  */
 export function route<Ctx = unknown>(fn: (req: Request, ctx: Ctx) => Promise<Response>) {
-  return async (req: Request, ctx: Ctx): Promise<Response> => {
+  return async (req: Request, ctx: Ctx = {} as Ctx): Promise<Response> => {
     try {
       if (!isSameOrigin(req)) throw new HttpError(403, "Cross-origin request blocked");
       return await fn(req, ctx);
