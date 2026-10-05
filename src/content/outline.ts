@@ -21,19 +21,14 @@ export type Outline = z.infer<typeof outlineSchema>;
 /** Reshape / steer responses: the new list of not-yet-generated lessons. */
 export const lessonsListSchema = z.object({ lessons: z.array(outlineLessonSchema).min(1).max(12) });
 
-export const lessonPlanSchema = z.object({
-  sections: z
-    .array(
-      z.object({
-        heading: z.string().min(1).max(160),
-        goal: z.string().min(1),
-        keyPoints: z.array(z.string()).default([]),
-        interactive: z.string().optional(),
-      }),
-    )
-    .min(3)
-    .max(8),
+const planSectionSchema = z.object({
+  heading: z.string().min(1).max(160),
+  goal: z.string().min(1),
+  keyPoints: z.array(z.string()).default([]),
+  interactive: z.string().optional(),
 });
+
+export const lessonPlanSchema = z.object({ sections: z.array(planSectionSchema).min(1).max(8) });
 export type LessonPlan = z.infer<typeof lessonPlanSchema>;
 
 export const quizSchema = z.object({
@@ -56,3 +51,12 @@ export type Quiz = z.infer<typeof quizSchema>;
 export const coverSchema = z.object({ svg: z.string().min(20) });
 export const widgetCodeSchema = z.object({ html: z.string().min(20) });
 export const variantSchema = z.object({ md: z.string().min(1) });
+
+/** Outline / plan schemas constrained to a format's shape. */
+export function outlineSchemaFor(single: boolean) {
+  return single ? outlineSchema.extend({ lessons: z.array(outlineLessonSchema).length(1) }) : outlineSchema;
+}
+
+export function lessonPlanSchemaFor([min, max]: [number, number]) {
+  return z.object({ sections: z.array(planSectionSchema).min(min).max(max) });
+}

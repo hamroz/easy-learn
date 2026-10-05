@@ -28,8 +28,9 @@ export const sectionHandler: JobHandler = {
           plan: lesson.plan,
           sectionIndex: section.position,
           lessonCount: all.length,
+          format: course.format,
         }),
-        meta: { position: section.position },
+        meta: { position: section.position, format: course.format },
       },
       {
         lenient: (raw) => {

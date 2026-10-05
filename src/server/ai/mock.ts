@@ -107,6 +107,65 @@ function section(position: number) {
   return { blocks: sets[position % sets.length] };
 }
 
+const MAP_BLOCK = {
+  type: "conceptMap",
+  id: "s0w1",
+  nodes: [
+    { id: "atom", label: "Atom", summary: "The smallest piece of an element.", x: 50, y: 10 },
+    { id: "nucleus", label: "Nucleus", summary: "The heavy centre: protons and neutrons.", x: 20, y: 40, group: 1 },
+    { id: "electron", label: "Electrons", summary: "Light particles around the nucleus; they do the chemistry.", x: 80, y: 40, group: 1 },
+    { id: "bond", label: "Bonds", summary: "How atoms hold on to each other.", x: 70, y: 75, group: 2 },
+    { id: "molecule", label: "Molecules", summary: "Groups of atoms joined by bonds.", x: 40, y: 92, group: 2 },
+    { id: "element", label: "Elements", summary: "Kinds of atom, set by the number of protons.", x: 15, y: 80 },
+  ],
+  edges: [
+    { from: "atom", to: "nucleus", label: "has a" },
+    { from: "atom", to: "electron", label: "has" },
+    { from: "nucleus", to: "element", label: "decides" },
+    { from: "electron", to: "bond", label: "form" },
+    { from: "bond", to: "molecule", label: "make" },
+  ],
+  caption: "Tap an idea to read about it.",
+};
+
+/** Plans and sections for single-page formats (minimum section counts, recognisable shapes). */
+function formatPlan(format: string) {
+  const s = (heading: string, interactive?: string) => ({ heading, goal: heading, keyPoints: [], ...(interactive ? { interactive } : {}) });
+  switch (format) {
+    case "bite":
+      return { sections: [s("The short answer", "reveal: guess first")] };
+    case "playground":
+      return { sections: [s("Play with it", "custom: a ball you can throw"), s("What is going on")] };
+    case "map":
+      return { sections: [s("The map", "conceptMap: the main ideas")] };
+    case "explainer":
+      return { sections: [s("The question", "plot"), s("The answer"), s("Why it matters")] };
+    case "story":
+      return { sections: [s("The beginning"), s("The turning point", "timeline"), s("The race"), s("What it left us")] };
+    case "cheatsheet":
+      return { sections: [s("Key terms"), s("Rules of thumb")] };
+    default:
+      return null;
+  }
+}
+
+function formatSection(format: string, position: number) {
+  const p = (id: string, md: string) => ({ type: "paragraph", id, md });
+  if (format === "map" && position === 0) return { blocks: [p("s0p1", "Here is how the main ideas fit together."), MAP_BLOCK] };
+  if (format === "playground" && position === 0)
+    return {
+      blocks: [
+        p("s0p1", "Throw the ball and watch its path."),
+        { type: "custom", id: "s0w1", height: 560, brief: "A ball you can throw.", fallback: { type: "reveal", id: "s0w1fb", prompt: "Where will it land?", answer: "Further than you think." } },
+        { type: "list", id: "s0l1", ordered: false, items: ["Throw it gently.", "Throw it hard.", "Throw it straight up."] },
+      ],
+    };
+  if (format === "bite") return { blocks: [p("s0p1", "A short, friendly answer."), { type: "reveal", id: "s0w1", prompt: "Guess first.", answer: "Here it is." }] };
+  if (format === "cheatsheet") return { blocks: [{ type: "list", id: `s${position}l1`, ordered: false, items: ["**Atom** — the smallest piece of an element.", "**Ion** — a charged atom."] }] };
+  if (format === "playground" || format === "story" || format === "explainer") return null;
+  return null;
+}
+
 const WIDGET_HTML = `<!doctype html><html><body style="margin:0;font-family:system-ui;background:var(--surface);color:var(--text)">
 <canvas id="c" width="600" height="300" style="width:100%;height:auto"></canvas>
 <script>
@@ -121,16 +180,19 @@ const COVER = `<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg"><re
 function respond(req: CompleteRequest): string {
   const meta = req.meta ?? {};
   switch (req.task) {
-    case "outline":
-      return JSON.stringify(outline(String(meta.topic ?? "A new topic")));
+    case "outline": {
+      const o = outline(String(meta.topic ?? "A new topic"));
+      if (meta.format && meta.format !== "course") o.lessons = [{ title: o.title, summary: `A ${meta.format} about ${o.title.toLowerCase()}.` }];
+      return JSON.stringify(o);
+    }
     case "reshape":
       return JSON.stringify(lessons("Reshaped"));
     case "steer":
       return JSON.stringify(lessons("Steered"));
     case "lesson_plan":
-      return JSON.stringify(lessonPlan());
+      return JSON.stringify(formatPlan(String(meta.format ?? "course")) ?? lessonPlan());
     case "section":
-      return JSON.stringify(section(Number(meta.position ?? 0)));
+      return JSON.stringify(formatSection(String(meta.format ?? "course"), Number(meta.position ?? 0)) ?? section(Number(meta.position ?? 0)));
     case "widget":
       return JSON.stringify({ html: WIDGET_HTML });
     case "cover":

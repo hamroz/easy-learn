@@ -1,3 +1,5 @@
+import type { FormatId } from "@/content/formats";
+import { planGuidance, sectionBounds } from "./formats";
 import { AUTHOR, courseContext, type CourseCtx, JSON_ONLY, languageRule, type LessonCtx, type Prompt, WRITING_STYLE } from "./style";
 
 export function buildLessonPlanPrompt(input: {
@@ -6,10 +8,13 @@ export function buildLessonPlanPrompt(input: {
   lessons: LessonCtx[];
   /** Short recap of the previous lesson's plan, for continuity. */
   previous: string | null;
+  format?: FormatId;
 }): Prompt {
+  const single = !!input.format && input.format !== "course";
+  const [min, max] = sectionBounds(input.format);
   const system = `${AUTHOR}
 
-Plan one lesson of the course as 4–6 sections (3 minimum, 8 maximum). The whole lesson is a 10–15 minute calm, long-form read with interactive widgets woven into the prose.
+${single ? `Plan this page as ${min}–${max} sections.\n${planGuidance(input.format)}` : "Plan one lesson of the course as 4–6 sections (3 minimum, 8 maximum). The whole lesson is a 10–15 minute calm, long-form read with interactive widgets woven into the prose."}
 
 For each section give:
 - "heading": short and inviting.

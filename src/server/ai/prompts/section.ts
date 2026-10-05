@@ -1,4 +1,6 @@
 import type { LessonPlan } from "@/content/outline";
+import type { FormatId } from "@/content/formats";
+import { writingGuidance } from "./formats";
 import {
   AUTHOR,
   BLOCK_CATALOGUE,
@@ -19,7 +21,9 @@ export function buildSectionPrompt(input: {
   plan: LessonPlan;
   sectionIndex: number;
   lessonCount: number;
+  format?: FormatId;
 }): Prompt {
+  const formatNote = writingGuidance(input.format, input.sectionIndex);
   const section = input.plan.sections[input.sectionIndex];
   const interactive = section.interactive?.trim();
   const customIdea = interactive?.toLowerCase().startsWith("custom") ? interactive.replace(/^custom\s*:?\s*/i, "") : null;
@@ -28,7 +32,7 @@ export function buildSectionPrompt(input: {
 
 Write ONE section of a lesson as a list of content blocks. Other sections are written separately, so do not repeat their content and do not write the lesson title. The section's heading is shown above your blocks — do not repeat it.
 
-Length: about 300–650 words of prose, in 4–10 paragraphs, plus 1–2 widgets placed exactly where they help (usually right after the paragraph that sets them up, followed by a paragraph that reflects on what the reader saw). A widget must let the reader *do* something that builds intuition; never add decoration.
+${formatNote ? `${formatNote}\n\n` : ""}${formatNote ? "Otherwise" : "Length"}: about 300–650 words of prose, in 4–10 paragraphs, plus 1–2 widgets placed exactly where they help (usually right after the paragraph that sets them up, followed by a paragraph that reflects on what the reader saw). A widget must let the reader *do* something that builds intuition; never add decoration.
 
 ${WRITING_STYLE}
 ${languageRule(input.course.language)}
@@ -43,7 +47,10 @@ Output JSON shape: {"blocks":[…]} — ids unique within the section; prefix th
 
 ${JSON_ONLY}`;
 
-  const customRule = customIdea
+  const mapIdea = interactive?.toLowerCase().startsWith("conceptmap") ? interactive.replace(/^conceptmap\s*:?\s*/i, "") : null;
+  const customRule = mapIdea
+    ? `Include exactly one "conceptMap" block covering: ${mapIdea}. Do not use a "custom" widget.`
+    : customIdea
     ? `You may use ONE "custom" widget for: ${customIdea}. Write a precise "brief" and include a "fallback" library widget.`
     : `Do not use a "custom" widget in this section; use the library widgets.`;
 

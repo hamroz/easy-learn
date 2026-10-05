@@ -1,8 +1,10 @@
 import type { Level } from "@/server/db/schema";
 import { DEFAULT_FONTS, fontById, type FontId } from "@/content/fonts";
+import { type FormatId, formatInfo } from "@/content/formats";
 import { AUTHOR, JSON_ONLY, LEVELS, type Prompt } from "./style";
 
-export function buildOutlinePrompt(input: { topic: string; level: Level; language?: string | null; fonts?: FontId[] }): Prompt {
+export function buildOutlinePrompt(input: { topic: string; level: Level; language?: string | null; fonts?: FontId[]; format?: FormatId }): Prompt {
+  const single = !!input.format && input.format !== "course";
   const fonts = (input.fonts?.length ? input.fonts : DEFAULT_FONTS).map((id) => `   ${id} (${fontById(id).description})`).join(",\n");
   const language = input.language
     ? `Write the course in the language with code "${input.language}".`
@@ -10,12 +12,14 @@ export function buildOutlinePrompt(input: { topic: string; level: Level; languag
 
   const system = `${AUTHOR}
 
-A learner tells you what they want to learn. Design the course: a title, a one-line subtitle, 5–9 lessons in a natural learning order, and a visual identity.
+A learner tells you what they want to learn. ${single ? `Design a single ${formatInfo(input.format).label.toUpperCase()} (one page, not a course): a title, a one-line subtitle, exactly one lesson describing that page, and a visual identity.` : "Design the course: a title, a one-line subtitle, 5–9 lessons in a natural learning order, and a visual identity."}
 
 Learner level: ${LEVELS[input.level]}.
 ${language}
 
-Lessons:
+${single ? `The single lesson: its "title" is the page's title (short and evocative) and its "summary" says in 1–2 sentences what the reader will understand. Return exactly one lesson.
+
+` : ""}Lessons:
 - Each lesson is a 10–15 minute calm read. Start from the very beginning for the level, build one idea per lesson, and end somewhere satisfying.
 - "title": short and evocative, not academic ("Why light refuses to slow down", not "Lesson 2: Invariance of c").
 - "summary": 1–2 sentences on what the reader will understand afterwards.
