@@ -14,7 +14,9 @@
     "db:migrate": "tsx src/server/db/migrate-cli.ts",
     "predev": "node scripts/copy-widget-libs.mjs",
     "prebuild": "node scripts/copy-widget-libs.mjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "course:validate": "tsx scripts/validate-course.ts",
+    "course:send": "tsx --env-file=.env.local scripts/send-course.ts"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.20",

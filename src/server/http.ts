@@ -1,7 +1,10 @@
 import { ZodError, type z } from "zod";
 import { isSameOrigin } from "@/server/auth/origin";
 import { SESSION_COOKIE, SESSION_TTL_MS, userFromToken } from "@/server/auth/session";
-import type { User } from "@/server/db/schema";
+import { createHash } from "node:crypto";
+import { eq } from "drizzle-orm";
+import { db } from "@/server/db/client";
+import { settings, type User, users } from "@/server/db/schema";
 
 export class HttpError extends Error {
   constructor(
@@ -51,6 +54,24 @@ export function clearedSessionCookie() {
   return attrs.join("; ");
 }
 
+/** No cookies and no Origin (curl, the authoring API): nothing ambient for another site to forge. */
+function isCookieless(req: Request) {
+  return !req.headers.get("cookie") && !req.headers.get("origin");
+}
+
+/** For the authoring API: the user whose personal access token is in the Authorization header. */
+export async function requireBearerUser(req: Request): Promise<User> {
+  const token = req.headers.get("authorization")?.match(/^Bearer\s+(\S+)$/i)?.[1];
+  if (!token) throw new HttpError(401, "Send a personal access token: Authorization: Bearer <token>");
+  const [row] = await db
+    .select({ user: users })
+    .from(settings)
+    .innerJoin(users, eq(users.id, settings.userId))
+    .where(eq(settings.authorTokenHash, createHash("sha256").update(token).digest("hex")));
+  if (!row) throw new HttpError(401, "Invalid or revoked access token");
+  return row.user;
+}
+
 export async function requireUser(req: Request): Promise<User> {
   const user = await userFromToken(readCookie(req, SESSION_COOKIE));
   if (!user) throw new HttpError(401, "Please sign in");
@@ -64,7 +85,7 @@ export async function requireUser(req: Request): Promise<User> {
 export function route<Ctx = unknown>(fn: (req: Request, ctx: Ctx) => Promise<Response>) {
   return async (req: Request, ctx: Ctx = {} as Ctx): Promise<Response> => {
     try {
-      if (!isSameOrigin(req)) throw new HttpError(403, "Cross-origin request blocked");
+      if (!isSameOrigin(req) && !isCookieless(req)) throw new HttpError(403, "Cross-origin request blocked");
       return await fn(req, ctx);
     } catch (e) {
       if (e instanceof HttpError) return json({ error: e.message }, { status: e.status });

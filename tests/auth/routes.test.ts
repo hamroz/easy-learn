@@ -56,6 +56,11 @@ describe("auth routes", () => {
     expect(res.status).toBe(403);
   });
 
+  it("rejects cookie-carrying writes that have no Origin header", async () => {
+    const res = await logout(new Request(`${ORIGIN}/api/auth/logout`, { method: "POST", headers: { cookie: "el_session=x" } }));
+    expect(res.status).toBe(403);
+  });
+
   it("returns 429 after too many failures", async () => {
     await setup(post("/api/auth/setup", { token: "tok", ...creds }));
     for (let i = 0; i < 10; i++) await login(post("/api/auth/login", { ...creds, password: "nope-nope-nope" }));
