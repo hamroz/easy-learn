@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { lessonPlanSchema, outlineSchema, quizSchema } from "@/content/outline";
+import { lessonPlanSchema, lessonPlanSchemaFor, outlineSchema, quizSchema } from "@/content/outline";
 
 const lessons = (n: number) => Array.from({ length: n }, (_, i) => ({ title: `L${i}`, summary: "s" }));
 
@@ -15,10 +15,12 @@ describe("outlineSchema", () => {
 });
 
 describe("lessonPlanSchema", () => {
-  it("requires 3–8 sections with goals", () => {
+  it("course plans require 3–8 sections; single formats use their own bounds", () => {
     const sections = Array.from({ length: 4 }, (_, i) => ({ heading: `S${i}`, goal: "g", keyPoints: ["k"] }));
     expect(lessonPlanSchema.parse({ sections }).sections).toHaveLength(4);
-    expect(lessonPlanSchema.safeParse({ sections: sections.slice(0, 2) }).success).toBe(false);
+    expect(lessonPlanSchemaFor([3, 8]).safeParse({ sections: sections.slice(0, 2) }).success).toBe(false);
+    expect(lessonPlanSchemaFor([1, 2]).safeParse({ sections: sections.slice(0, 1) }).success).toBe(true);
+    expect(lessonPlanSchemaFor([1, 2]).safeParse({ sections }).success).toBe(false);
   });
 });
 
