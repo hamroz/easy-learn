@@ -1,0 +1,216 @@
+opencode/big-pickle
+{
+  "id": "big-pickle",
+  "providerID": "opencode",
+  "name": "Big Pickle",
+  "family": "big-pickle",
+  "api": {
+    "id": "big-pickle",
+    "url": "https://opencode.ai/zen/v1",
+    "npm": "@ai-sdk/openai-compatible"
+  },
+  "status": "active",
+  "headers": {},
+  "options": {},
+  "cost": {
+    "input": 0,
+    "output": 0,
+    "cache": {
+      "read": 0,
+      "write": 0
+    }
+  },
+  "limit": {
+    "context": 200000,
+    "input": 160000,
+    "output": 32000
+  },
+  "capabilities": {
+    "temperature": true,
+    "reasoning": true,
+    "attachment": false,
+    "toolcall": true,
+    "input": {
+      "text": true,
+      "audio": false,
+      "image": false,
+      "video": false,
+      "pdf": false
+    },
+    "output": {
+      "text": true,
+      "audio": false,
+      "image": false,
+      "video": false,
+      "pdf": false
+    },
+    "interleaved": {
+      "field": "reasoning_content"
+    }
+  },
+  "release_date": "2025-10-17",
+  "variants": {}
+}
+opencode/gpt-5.2
+{
+  "id": "gpt-5.2",
+  "providerID": "opencode",
+  "name": "GPT-5.2",
+  "family": "gpt",
+  "api": {
+    "id": "gpt-5.2",
+    "url": "https://opencode.ai/zen/v1",
+    "npm": "@ai-sdk/openai"
+  },
+  "status": "active",
+  "headers": {},
+  "options": {},
+  "cost": {
+    "input": 1.75,
+    "output": 14,
+    "cache": {
+      "read": 0.175,
+      "write": 0
+    }
+  },
+  "limit": {
+    "context": 400000,
+    "input": 272000,
+    "output": 128000
+  },
+  "capabilities": {
+    "temperature": false,
+    "reasoning": true,
+    "attachment": true,
+    "toolcall": true,
+    "input": {
+      "text": true,
+      "audio": false,
+      "image": true,
+      "video": false,
+      "pdf": false
+    },
+    "output": {
+      "text": true,
+      "audio": false,
+      "image": false,
+      "video": false,
+      "pdf": false
+    },
+    "interleaved": false
+  },
+  "release_date": "2025-12-11",
+  "variants": {
+    "none": {
+      "reasoningEffort": "none",
+      "reasoningSummary": "auto",
+      "include": [
+        "reasoning.encrypted_content"
+      ]
+    },
+    "low": {
+      "reasoningEffort": "low",
+      "reasoningSummary": "auto",
+      "include": [
+        "reasoning.encrypted_content"
+      ]
+    },
+    "medium": {
+      "reasoningEffort": "medium",
+      "reasoningSummary": "auto",
+      "include": [
+        "reasoning.encrypted_content"
+      ]
+    },
+    "high": {
+      "reasoningEffort": "high",
+      "reasoningSummary": "auto",
+      "include": [
+        "reasoning.encrypted_content"
+      ]
+    },
+    "xhigh": {
+      "reasoningEffort": "xhigh",
+      "reasoningSummary": "auto",
+      "include": [
+        "reasoning.encrypted_content"
+      ]
+    }
+  }
+}
+openrouter/~anthropic/claude-fable-latest
+{
+  "id": "~anthropic/claude-fable-latest",
+  "providerID": "openrouter",
+  "name": "Claude Fable Latest",
+  "family": "claude-fable",
+  "api": {
+    "id": "~anthropic/claude-fable-latest",
+    "url": "https://openrouter.ai/api/v1",
+    "npm": "@openrouter/ai-sdk-provider"
+  },
+  "status": "active",
+  "headers": {},
+  "options": {},
+  "cost": {
+    "input": 10,
+    "output": 50,
+    "cache": {
+      "read": 0.25,
+      "write": 12.5
+    }
+  },
+  "limit": {
+    "context": 1000000,
+    "output": 128000
+  },
+  "capabilities": {
+    "temperature": false,
+    "reasoning": true,
+    "attachment": true,
+    "toolcall": true,
+    "input": {
+      "text": true,
+      "audio": false,
+      "image": true,
+      "video": false,
+      "pdf": true
+    },
+    "output": {
+      "text": true,
+      "audio": false,
+      "image": false,
+      "video": false,
+      "pdf": false
+    },
+    "interleaved": false
+  },
+  "release_date": "2026-06-09",
+  "variants": {
+    "low": {
+      "reasoning": {
+        "effort": "low"
+      }
+    },
+    "medium": {
+      "reasoning": {
+        "effort": "medium"
+      }
+    },
+    "high": {
+      "reasoning": {
+        "effort": "high"
+      }
+    },
+    "xhigh": {
+      "reasoning": {
+        "effort": "xhigh"
+      }
+    },
+    "max": {
+      "reasoning": {
+        "effort": "max"
+      }
+    }
+  }
+}

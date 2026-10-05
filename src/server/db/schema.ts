@@ -40,7 +40,7 @@ export const sessions = pgTable("sessions", {
   createdAt: timestamps.createdAt,
 });
 
-export type ProviderId = "codex-cli" | "claude-cli" | "mock";
+export type ProviderId = "codex-cli" | "opencode-cli" | "openrouter" | "claude-cli" | "mock";
 
 export const settings = pgTable("settings", {
   userId: uuid("user_id")

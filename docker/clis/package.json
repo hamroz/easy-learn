@@ -3,6 +3,7 @@
   "private": true,
   "description": "Pinned AI CLIs installed into the Easy Learn image",
   "dependencies": {
-    "@openai/codex": "0.160.0"
+    "@openai/codex": "0.160.0",
+    "opencode-ai": "1.18.34"
   }
 }

@@ -26,7 +26,7 @@ ARG CLAUDE_SHA256_ARM64=0292fa22ac2fd43e16be9d0e511ddd8347280d6e0ebaca744ef5b27e
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl && rm -rf /var/lib/apt/lists/*
 WORKDIR /opt/clis
 COPY docker/clis/package.json docker/clis/package-lock.json ./
-RUN npm ci --omit=dev --ignore-scripts --no-audit --no-fund && npm cache clean --force
+RUN npm ci --omit=dev --no-audit --no-fund && npm cache clean --force
 RUN set -eu; \
     case "${TARGETARCH:-$(dpkg --print-architecture)}" in \
       amd64) platform=linux-x64; sum="$CLAUDE_SHA256_AMD64" ;; \
@@ -48,8 +48,9 @@ RUN apt-get update \
 
 COPY --from=clis /opt/clis /opt/clis
 RUN ln -s /opt/clis/node_modules/.bin/codex /usr/local/bin/codex \
+    && ln -s /opt/clis/node_modules/.bin/opencode /usr/local/bin/opencode \
     && ln -s /opt/clis/claude /usr/local/bin/claude \
-    && codex --version && claude --version
+    && codex --version && claude --version && opencode --version
 
 WORKDIR /app
 COPY --from=build --chown=10010:10010 /app/.next/standalone ./

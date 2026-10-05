@@ -1,0 +1,9 @@
+: OPENROUTER PROCESSING
+
+data: {"id":"gen-1","choices":[{"index":0,"delta":{"role":"assistant","content":"{\"word\": "}}]}
+
+data: {"id":"gen-1","choices":[{"index":0,"delta":{"content":"\"meadow\"}"}}]}
+
+data: {"id":"gen-1","choices":[{"index":0,"delta":{"content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":20,"completion_tokens":6}}
+
+data: [DONE]

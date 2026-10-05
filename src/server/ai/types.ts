@@ -39,10 +39,21 @@ export interface ProviderHealth {
   fix?: string;
 }
 
+export interface ModelInfo {
+  id: string;
+  name: string;
+  /** Effort levels this model accepts (empty = no effort control). */
+  efforts: string[];
+  defaultEffort?: string | null;
+  /** Short extra info, e.g. price. */
+  note?: string;
+}
+
 export interface AIProvider {
   id: ProviderId;
   complete(req: CompleteRequest): Promise<string>;
   health(): Promise<ProviderHealth>;
+  listModels?(): Promise<ModelInfo[]>;
 }
 
 export type ProviderErrorKind = "not_logged_in" | "missing" | "timeout" | "rate_limited" | "aborted" | "failed";

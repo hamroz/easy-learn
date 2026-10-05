@@ -173,6 +173,10 @@ export class MockProvider implements AIProvider {
     return text;
   }
 
+  async listModels() {
+    return [{ id: "mock", name: "Sample content", efforts: [] }];
+  }
+
   async health(): Promise<ProviderHealth> {
     return { ok: true, message: "Mock provider (offline, canned content)" };
   }

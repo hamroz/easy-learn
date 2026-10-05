@@ -5,9 +5,32 @@ import {
   type CompleteRequest,
   GENERATION_TIMEOUT_MS,
   ProviderError,
+  type ModelInfo,
   type ProviderHealth,
   withSignInHint,
 } from "./types";
+
+type CodexCatalogEntry = {
+  slug?: string;
+  display_name?: string;
+  visibility?: string;
+  default_reasoning_level?: string;
+  supported_reasoning_levels?: (string | { effort?: string })[];
+};
+
+/** Parse `codex debug models` output; only models Codex itself lists are offered. */
+export function parseCodexModels(json: string): ModelInfo[] {
+  const parsed = JSON.parse(json) as { models?: CodexCatalogEntry[] } | CodexCatalogEntry[];
+  const list = Array.isArray(parsed) ? parsed : (parsed.models ?? []);
+  return list
+    .filter((m) => m.slug && m.visibility !== "hide")
+    .map((m) => ({
+      id: m.slug!,
+      name: m.display_name ?? m.slug!,
+      efforts: (m.supported_reasoning_levels ?? []).map((e) => (typeof e === "string" ? e : (e.effort ?? ""))).filter(Boolean),
+      defaultEffort: m.default_reasoning_level ?? null,
+    }));
+}
 
 /** Pull the human-readable message out of codex's nested JSON error strings. */
 function readableMessage(raw: string): string {
@@ -80,6 +103,11 @@ export class CodexCliProvider implements AIProvider {
     }
     if (parsed.error) throw parsed.error;
     throw classifyError(result.stderr.trim() || `codex exited with code ${result.code} and no answer`);
+  }
+
+  async listModels(): Promise<ModelInfo[]> {
+    const r = await runCli({ cmd: this.bin, args: ["debug", "models"], timeoutMs: 30_000 });
+    return parseCodexModels(r.lines.join("\n"));
   }
 
   async health(): Promise<ProviderHealth> {
