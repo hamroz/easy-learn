@@ -2,7 +2,8 @@ import { eq } from "drizzle-orm";
 import { db } from "@/server/db/client";
 import { sections } from "@/server/db/schema";
 import { generateJson } from "@/server/ai";
-import { parseBlocksLenient, sectionBlocksSchema } from "@/content/blocks";
+import { parseBlocksLenient } from "@/content/blocks";
+import { plotIssues, sectionQualitySchema } from "@/server/content/quality";
 import { buildSectionPrompt } from "@/server/ai/prompts/section";
 import { sanitizeBlocks } from "@/server/content/sanitize";
 import { aiFor, courseCtx } from "@/server/services/aiConfig";
@@ -20,7 +21,7 @@ export const sectionHandler: JobHandler = {
     const { provider, model } = await aiFor(course.userId, "lesson");
     const out = await generateJson(
       provider,
-      sectionBlocksSchema,
+      sectionQualitySchema,
       {
         task: "section",
         ...buildSectionPrompt({
@@ -36,7 +37,8 @@ export const sectionHandler: JobHandler = {
       },
       {
         lenient: (raw) => {
-          const blocks = parseBlocksLenient((raw as { blocks?: unknown })?.blocks);
+          // Keep what is valid; drop plots that still fail the pedagogical checks.
+          const blocks = parseBlocksLenient((raw as { blocks?: unknown })?.blocks).filter((b) => b.type !== "plot" || plotIssues(b).length === 0);
           return blocks.length ? { blocks } : null;
         },
       },

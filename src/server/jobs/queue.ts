@@ -21,7 +21,8 @@ export async function enqueue(
 ): Promise<string> {
   const [row] = await db
     .insert(jobs)
-    .values({ type, payload, priority: opts.priority ?? 100, runAfter: opts.runAfter ?? new Date() })
+    // Default run_after comes from the database clock (claims compare against Postgres now()).
+    .values({ type, payload, priority: opts.priority ?? 100, ...(opts.runAfter ? { runAfter: opts.runAfter } : {}) })
     .returning({ id: jobs.id });
   listeners.forEach((fn) => fn());
   return row.id;
