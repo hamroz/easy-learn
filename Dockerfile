@@ -56,6 +56,7 @@ COPY --from=build --chown=10010:10010 /app/.next/standalone ./
 COPY --from=build --chown=10010:10010 /app/.next/static ./.next/static
 COPY --from=build --chown=10010:10010 /app/public ./public
 COPY --from=build --chown=10010:10010 /app/drizzle ./drizzle
+COPY --from=build --chown=10010:10010 /app/examples ./examples
 
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \

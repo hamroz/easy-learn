@@ -4,6 +4,7 @@ import { AppHeader } from "@/components/ui/AppHeader";
 import { AutoRefresh } from "@/components/ui/AutoRefresh";
 import { NewCourseForm } from "@/components/home/NewCourseForm";
 import { CourseCard } from "@/components/home/CourseCard";
+import { AddExamplesButton } from "@/components/examples/AddExamplesButton";
 
 export default async function HomePage() {
   const user = await requirePageUser();
@@ -54,7 +55,10 @@ export default async function HomePage() {
         )}
 
         {courses.length === 0 && (
-          <p className="mt-20 text-center text-[15px] text-muted">Your courses will appear here.</p>
+          <div className="mt-20 flex flex-col items-center gap-4 text-center">
+            <p className="text-[15px] text-muted">Your courses will appear here. Want to look around first?</p>
+            <AddExamplesButton />
+          </div>
         )}
       </main>
     </div>

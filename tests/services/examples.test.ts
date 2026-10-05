@@ -1,0 +1,45 @@
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { asc, eq } from "drizzle-orm";
+import { fileURLToPath } from "node:url";
+import { closeDb, db } from "@/server/db/client";
+import { runMigrations } from "@/server/db/migrate";
+import { courses, lessons, sections, users } from "@/server/db/schema";
+import { importExamples } from "@/server/services/examples";
+import { resetDb } from "../helpers/db";
+
+const DIR = fileURLToPath(new URL("../fixtures/examples", import.meta.url));
+let userId: string;
+
+beforeAll(runMigrations);
+beforeEach(async () => {
+  await resetDb();
+  const [u] = await db.insert(users).values({ email: "o@example.test", passwordHash: "x" }).returning();
+  userId = u.id;
+});
+afterAll(closeDb);
+
+describe("importExamples", () => {
+  it("imports courses as active examples with written and planned lessons", async () => {
+    expect(await importExamples(userId, DIR)).toBe(1);
+    const [c] = await db.select().from(courses);
+    expect(c).toMatchObject({ title: "Tiny example", isExample: true, status: "active" });
+    expect(c.theme?.fontPair).toBe("modern");
+    const ls = await db.select().from(lessons).where(eq(lessons.courseId, c.id)).orderBy(asc(lessons.position));
+    expect(ls.map((l) => [l.title, l.status])).toEqual([
+      ["Written", "ready"],
+      ["Planned", "planned"],
+    ]);
+    const secs = await db.select().from(sections).where(eq(sections.lessonId, ls[0].id)).orderBy(asc(sections.position));
+    expect(secs.map((s) => s.blocks.map((b) => b.id))).toEqual([["s0p1"], ["s1p1"], ["s2p1"]]);
+  });
+
+  it("does not import the same example twice", async () => {
+    await importExamples(userId, DIR);
+    expect(await importExamples(userId, DIR)).toBe(0);
+    expect(await db.select().from(courses)).toHaveLength(1);
+  });
+
+  it("returns 0 when the folder does not exist", async () => {
+    expect(await importExamples(userId, "/nonexistent/examples")).toBe(0);
+  });
+});

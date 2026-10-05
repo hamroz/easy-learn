@@ -5,6 +5,7 @@ import { api } from "@/lib/api";
 import { Button } from "@/components/ui/Button";
 import { Input, Label } from "@/components/ui/Field";
 import { Dots } from "@/components/ui/Spinner";
+import { AddExamplesButton } from "@/components/examples/AddExamplesButton";
 
 type ProviderId = "codex-cli" | "claude-cli" | "mock";
 type Health = { id: ProviderId; ok: boolean; message: string; fix?: string };
@@ -129,6 +130,12 @@ export function SettingsForm({
           <Label htmlFor="lang" hint="e.g. en, ru, de">Course language</Label>
           <Input id="lang" placeholder="Match the language I write in" value={form.language} onChange={(e) => setForm({ ...form, language: e.target.value })} />
         </div>
+      </section>
+
+      <section>
+        <h2 className="font-ui text-[13px] font-medium uppercase tracking-[0.14em] text-muted">Example courses</h2>
+        <p className="mb-4 mt-2 text-[14px] text-muted">Ready-made courses that show what Easy Learn can do. Their remaining lessons are written on demand.</p>
+        <AddExamplesButton />
       </section>
 
       <div className="flex items-center gap-4">

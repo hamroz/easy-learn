@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "course": {
+    "title": "Tiny example",
+    "subtitle": "A fixture",
+    "topicPrompt": "tiny",
+    "language": "en",
+    "level": "beginner",
+    "theme": { "name": "Fixture", "fontPair": "modern" },
+    "coverSvg": "<svg viewBox=\"0 0 10 10\"><circle cx=\"5\" cy=\"5\" r=\"4\" fill=\"var(--accent)\"/></svg>"
+  },
+  "lessons": [
+    {
+      "title": "Written",
+      "summary": "Has sections",
+      "plan": { "sections": [{ "heading": "One", "goal": "g", "keyPoints": [] }, { "heading": "Two", "goal": "g", "keyPoints": [] }, { "heading": "Three", "goal": "g", "keyPoints": [] }] },
+      "sections": [
+        { "heading": "One", "goal": "g", "blocks": [{ "type": "paragraph", "id": "s0p1", "md": "Hello." }] },
+        { "heading": "Two", "goal": "g", "blocks": [{ "type": "paragraph", "id": "s1p1", "md": "World." }, { "type": "hologram", "id": "bad" }] },
+        { "heading": "Three", "goal": "g", "blocks": [{ "type": "paragraph", "id": "s2p1", "md": "Bye.", "x": 1 }] }
+      ]
+    },
+    { "title": "Planned", "summary": "Not written yet", "plan": null, "sections": [] }
+  ]
+}
