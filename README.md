@@ -21,6 +21,12 @@ No streaks, no badges, no surprise quizzes. A quiz appears only when you ask for
   the thread, and highlights (CSS Custom Highlight API) reopen it on click. A "My questions" drawer lists them all.
 - **Simpler / deeper** — rewrite any paragraph and switch between versions.
 - **Steer the course** — at the end of each lesson, say where you want to go next and the upcoming lessons adapt.
+- **Your models, your mix** — Codex (ChatGPT subscription), OpenCode (any provider it is signed in to) and
+  OpenRouter (API key). Pick a model and effort per task — course design, lesson writing, simulations, answers… —
+  with a backup model if one fails, save combinations as presets, and curate which models appear at all.
+- **Fonts you like** — ten curated font combinations; switch on the ones courses may use.
+- **Write with Claude Code** — ask Claude Code in this repo to write a course; it validates the document and adds
+  it through a token-authenticated API (`.claude/skills/write-course`).
 
 ## How it works
 
@@ -29,7 +35,7 @@ Browser ── Next.js 16 (App Router, React 19, TypeScript, Tailwind 4)
              │  route handlers (/api/*), server components, SSE for answers
              │  in-process job runner (Postgres queue: SKIP LOCKED, leases, retries, orphan reclaim)
              ├── PostgreSQL 17 via Drizzle ORM
-             └── AI provider interface ── codex exec │ claude -p │ mock
+             └── AI providers ── codex exec │ opencode run │ OpenRouter API │ mock   (per-task routing + fallback)
 ```
 
 - **Providers** run the official CLIs as child processes (`codex exec --json …`, `claude -p --output-format
@@ -63,7 +69,7 @@ or `claude-cli`, the app uses the CLIs already signed in on your machine.
 cp .env.docker.example .env      # fill in POSTGRES_PASSWORD and SETUP_TOKEN
 docker compose up -d --build --wait
 docker compose exec -it web codex login --device-auth     # sign in with your ChatGPT account
-docker compose exec -it web claude                        # then /login with your Claude account
+docker compose exec -it web opencode providers login      # optional: OpenCode providers
 ```
 
 Sign-ins persist in the `home` volume. See [`deploy/vps/README.md`](deploy/vps/README.md) for the VPS deployment.
