@@ -20,12 +20,21 @@ question only if the topic is genuinely ambiguous. Default: beginner, the langua
 - `src/content/fonts.ts` — valid `fontPair` ids; `src/content/theme.ts` — theme shape.
 - `examples/relativity.json` — a real, complete document to imitate.
 
+## 2b. Pick the format
+The owner may ask for a full course (default) or a single page. Formats (`src/content/formats.ts`, guidance in
+`src/server/ai/prompts/formats.ts`): `explainer` (one question answered deeply, 3–5 sections), `bite` (quick
+bite: ~2 minutes, 1–2 sections, exactly one widget), `playground` (a large `custom` simulation + things to try +
+what's going on), `map` (one `conceptMap` block of 8–16 linked ideas), `story` (narrative, 4–6 sections),
+`cheatsheet` (dense reference, 2–4 sections). Set `"format"` at the top level; single-page formats have exactly
+one lesson (its title is the page title). You may leave that lesson's `sections` empty to let the app write it.
+
 ## 3. Write the document
 Save it as `authored/<slug>.json` (git-ignored):
 
 ```json
 {
   "version": 1,
+  "format": "course",
   "course": {
     "title": "…", "subtitle": "…", "topicPrompt": "<the owner's request>", "language": "en", "level": "beginner",
     "theme": { "name": "…", "mood": "…", "fontPair": "literata", "scheme": "light",

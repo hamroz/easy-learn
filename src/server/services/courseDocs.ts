@@ -1,3 +1,4 @@
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/server/db/client";
 import { courses, lessons, sections } from "@/server/db/schema";
@@ -8,11 +9,15 @@ import { DEFAULT_THEME, normalizeTheme, themeSchema } from "@/content/theme";
 import { plotIssues } from "@/server/content/quality";
 import { sanitizeBlocks, sanitizeSvg } from "@/server/content/sanitize";
 import { enqueue } from "@/server/jobs/queue";
+import { FORMAT_IDS, isSinglePage } from "@/content/formats";
+import { ensureLessonGenerating } from "./generation";
 import { getEnabledFonts } from "./settings";
 
 /** A whole course as a document: the format of examples/*.json and of the authoring API. */
 export const courseDocSchema = z.object({
   version: z.literal(1),
+  /** Course (default) or a single-page format; single-page documents have exactly one lesson. */
+  format: z.enum(FORMAT_IDS).default("course"),
   course: z.object({
     title: z.string().min(1).max(160),
     subtitle: z.string().max(300).nullish(),
@@ -41,6 +46,8 @@ export function validateCourseDocument(raw: unknown): { ok: true; doc: CourseDoc
   const parsed = courseDocSchema.safeParse(raw);
   if (!parsed.success) return { ok: false, issues: parsed.error.issues.slice(0, 30).map((i) => `${i.path.join(".")}: ${i.message}`) };
   const issues: string[] = [];
+  if (isSinglePage(parsed.data.format) && parsed.data.lessons.length !== 1)
+    issues.push(`lessons: a ${parsed.data.format} must have exactly one lesson (it is a single page)`);
   parsed.data.lessons.forEach((l, li) =>
     l.sections.forEach((s, si) => {
       if (!s.blocks.length) issues.push(`lessons.${li}.sections.${si}: has no blocks`);
@@ -78,7 +85,8 @@ export async function importCourseDocument(userId: string, doc: CourseDoc, opts:
         level: doc.course.level,
         theme: opts.isExample ? theme : { ...theme, fontPair: resolveFont(theme.fontPair, fonts) },
         coverSvg: cover,
-        status: doc.lessons.some(written) ? "active" : "outline_ready",
+        status: doc.lessons.some(written) || isSinglePage(doc.format) ? "active" : "outline_ready",
+        format: doc.format,
         isExample: !!opts.isExample,
       })
       .returning({ id: courses.id });
@@ -109,5 +117,10 @@ export async function importCourseDocument(userId: string, doc: CourseDoc, opts:
     return course.id;
   });
   if (!cover && !opts.isExample) await enqueue("cover", { courseId }, { priority: 200 });
+  // An outline-only single page has nothing to review: start writing it.
+  if (isSinglePage(doc.format) && !doc.lessons.some(written) && !opts.isExample) {
+    const [only] = await db.select({ id: lessons.id }).from(lessons).where(eq(lessons.courseId, courseId));
+    if (only) await ensureLessonGenerating(only.id);
+  }
   return courseId;
 }

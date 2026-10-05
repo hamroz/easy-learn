@@ -53,4 +53,12 @@ test("owner can create a course, read a lesson and ask about a passage", async (
   await expect
     .poll(() => page.evaluate(() => (CSS as unknown as { highlights: Map<string, Set<Range>> }).highlights.get("el-thread")?.size ?? 0))
     .toBe(1);
+
+  // A single-page format: pick Explainer, and the page opens straight in the reader.
+  await page.goto("/");
+  await page.getByRole("radio", { name: "Explainer" }).click();
+  await page.getByLabel("What do you want to learn?").fill("How does GPS know where I am?");
+  await page.getByRole("button", { name: "Create explainer" }).click();
+  await expect(page.getByText(/Explainer · 5–10 min/)).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByRole("button", { name: /Turn this into a full course/ })).toBeVisible();
 });

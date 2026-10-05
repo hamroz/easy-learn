@@ -69,4 +69,30 @@ describe("authoring API", () => {
     const covers = (await db.select().from(jobs)).filter((j) => j.type === "cover" && j.payload.courseId === id);
     expect(covers).toHaveLength(1);
   });
+
+  it("accepts single-page formats with exactly one lesson", async () => {
+    const doc = structuredClone(fixture);
+    doc.format = "explainer";
+    doc.lessons = [doc.lessons[0]];
+    doc.lessons[0].sections[1].blocks.pop();
+    const { id } = await (await authorCourse(post(doc))).json();
+    const [c] = await db.select().from(courses).where(eq(courses.id, id));
+    expect(c).toMatchObject({ format: "explainer", status: "active" });
+  });
+
+  it("rejects a single-page format with more than one lesson", async () => {
+    const doc = structuredClone(fixture);
+    doc.format = "bite";
+    const res = await authorCourse(post(doc));
+    expect(res.status).toBe(400);
+    expect((await res.json()).issues.join(" ")).toMatch(/exactly one lesson/);
+  });
+
+  it("an outline-only single page starts generating straight away", async () => {
+    const doc = { ...structuredClone(fixture), format: "story" };
+    doc.lessons = [{ title: "The race to split the atom", summary: "A story.", sections: [] }];
+    const { id } = await (await authorCourse(post(doc))).json();
+    const [lesson] = await db.select().from(lessons).where(eq(lessons.courseId, id));
+    expect(lesson.status).toBe("queued");
+  });
 });

@@ -24,6 +24,7 @@ async function main() {
 
   const file: ExampleFile = {
     version: 1,
+    format: course.format,
     course: {
       title: course.title,
       subtitle: course.subtitle,
