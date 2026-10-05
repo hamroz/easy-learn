@@ -3,7 +3,15 @@ import { db } from "@/server/db/client";
 import { blockVariants, courses, lessons, messages, quizzes, sections, threads } from "@/server/db/schema";
 import { HttpError } from "@/server/http";
 
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** Malformed ids are simply "not found" (and never reach Postgres' uuid parser). */
+function assertId(id: string, what: string) {
+  if (!UUID.test(id)) throw new HttpError(404, `${what} not found`);
+}
+
 export async function ownedCourse(userId: string, courseId: string) {
+  assertId(courseId, "Course");
   const [course] = await db
     .select()
     .from(courses)
@@ -13,6 +21,7 @@ export async function ownedCourse(userId: string, courseId: string) {
 }
 
 export async function ownedLesson(userId: string, lessonId: string) {
+  assertId(lessonId, "Lesson");
   const [row] = await db
     .select({ lesson: lessons, course: courses })
     .from(lessons)
@@ -23,6 +32,7 @@ export async function ownedLesson(userId: string, lessonId: string) {
 }
 
 export async function ownedSection(userId: string, sectionId: string) {
+  assertId(sectionId, "Section");
   const [row] = await db
     .select({ section: sections, lesson: lessons, course: courses })
     .from(sections)
@@ -34,6 +44,7 @@ export async function ownedSection(userId: string, sectionId: string) {
 }
 
 export async function ownedThread(userId: string, threadId: string) {
+  assertId(threadId, "Thread");
   const [thread] = await db
     .select()
     .from(threads)
