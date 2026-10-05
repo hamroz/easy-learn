@@ -11,7 +11,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx src/server/db/migrate-cli.ts"
+    "db:migrate": "tsx src/server/db/migrate-cli.ts",
+    "predev": "node scripts/copy-widget-libs.mjs",
+    "prebuild": "node scripts/copy-widget-libs.mjs"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.20",
@@ -43,9 +45,11 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
+    "d3": "^7.9.0",
     "drizzle-kit": "^0.31.11",
     "jsdom": "^29.1.1",
     "tailwindcss": "^4.3.3",
+    "three": "^0.186.1",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "vitest": "^5.0.3"

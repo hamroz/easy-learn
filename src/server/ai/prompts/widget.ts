@@ -6,7 +6,9 @@ export function buildWidgetPrompt(input: { course: CourseCtx; lessonTitle: strin
 Write one small, polished interactive simulation as a complete, self-contained HTML document. It is embedded in a lesson inside a sandboxed iframe of fixed height ${input.height}px and fluid width (320–760px).
 
 Requirements:
-- Plain HTML, CSS and JavaScript in the document. Optional libraries (load with a <script src> exactly as written, nothing else): "/widget-libs/d3.min.js" (global d3) and "/widget-libs/three.min.js" (global THREE).
+- Plain HTML, CSS and JavaScript in the document (prefer plain canvas/SVG). Optional libraries, loaded exactly like this and nothing else:
+  d3: <script src="/widget-libs/d3.min.js"></script> (global d3)
+  three.js: <script type="module">import * as THREE from "/widget-libs/three.module.js"; …</script>
 - No network access: no fetch/XHR/WebSocket, no external images, fonts or CDNs. No localStorage, alert, prompt or popups.
 - Theme: use these CSS variables, which are set on :root for you and updated when the theme changes: --bg, --surface, --text, --muted, --accent, --accent2, --border, --highlight, --font-body. Set body { margin:0; background:var(--surface); color:var(--text); font-family:var(--font-body); }. When drawing on a canvas, read colours with getComputedStyle(document.documentElement).getPropertyValue('--accent') and re-read them when a {type:'theme'} message arrives (window.addEventListener('message', …)).
 - Fill exactly the iframe: width 100%, height ${input.height}px, no scrollbars; resize-aware (redraw on resize, use devicePixelRatio for canvas).

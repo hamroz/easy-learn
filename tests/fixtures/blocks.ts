@@ -16,7 +16,7 @@ export const everyBlock = [
     x: { label: "v", min: 0, max: 1 },
     y: { label: "γ", min: 0, max: 10 },
     params: [{ name: "k", label: "k", min: 0, max: 2, value: 1 }],
-    curves: [{ expr: "1/sqrt(1-x^2)", label: "γ" }],
+    curves: [{ expr: "k/sqrt(1-x^2)", label: "γ" }],
   },
   { type: "chart", id: "ch1", kind: "bar", series: [{ name: "s", data: [{ x: "a", y: 1 }, { x: "b", y: 2 }] }] },
   {
