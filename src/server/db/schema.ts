@@ -69,6 +69,8 @@ export const courses = pgTable(
     language: text("language").notNull(),
     level: text("level").$type<Level>().notNull(),
     status: text("status").$type<CourseStatus>().notNull().default("outlining"),
+    /** Set while an outline rewrite (reshape/steer) is running. */
+    busy: text("busy").$type<"reshaping" | "steering">(),
     theme: jsonb("theme").$type<Theme>(),
     coverSvg: text("cover_svg"),
     isExample: boolean("is_example").notNull().default(false),
