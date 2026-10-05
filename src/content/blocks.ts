@@ -240,17 +240,42 @@ export const TEXT_BLOCK_TYPES = new Set<BlockType>(["paragraph", "callout", "lis
 /** Strict schema for one AI section response (used for validation + repair). */
 export const sectionBlocksSchema = z.object({ blocks: z.array(blockSchema).min(1) });
 
-/** Drop duplicate nodes and edges that point at missing nodes, so one bad edge does not lose the whole map. */
+/** Turn any model-chosen node id into a valid identifier (letters, digits, underscore; at most 16 characters). */
+function nodeIdentifier(raw: string, taken: Set<string>): string {
+  let base = raw.replace(/[^A-Za-z0-9_]+/g, "_").replace(/^_+|_+$/g, "") || "n";
+  if (!/^[A-Za-z_]/.test(base)) base = `n${base}`;
+  base = base.slice(0, 16);
+  let out = base;
+  for (let n = 2; taken.has(out); n++) out = `${base.slice(0, 16 - String(n).length)}${n}`;
+  return out;
+}
+
+const clamp100 = (v: unknown) => (typeof v === "number" && Number.isFinite(v) ? Math.min(100, Math.max(0, v)) : v);
+
+/**
+ * Repair what models commonly get wrong in a map instead of losing it: invalid or over-long node ids (edges follow
+ * the rename), duplicate nodes, coordinates just off the canvas, too many nodes, and edges to missing nodes.
+ */
 function cleanConceptMap(m: Record<string, unknown>) {
   if (!Array.isArray(m.nodes)) return;
-  const seen = new Set<string>();
-  m.nodes = m.nodes.filter((n) => {
-    const nid = (n as { id?: unknown })?.id;
-    if (typeof nid !== "string" || seen.has(nid)) return false;
-    seen.add(nid);
-    return true;
-  });
-  if (Array.isArray(m.edges)) m.edges = m.edges.filter((e) => seen.has((e as { from?: string })?.from ?? "") && seen.has((e as { to?: string })?.to ?? ""));
+  const rename = new Map<string, string>();
+  const taken = new Set<string>();
+  const nodes: Record<string, unknown>[] = [];
+  for (const n of m.nodes as Record<string, unknown>[]) {
+    if (nodes.length === 24) break;
+    if (!n || typeof n !== "object" || typeof n.id !== "string" || rename.has(n.id)) continue;
+    const nid = nodeIdentifier(n.id, taken);
+    taken.add(nid);
+    rename.set(n.id, nid);
+    nodes.push({ ...n, id: nid, x: clamp100(n.x), y: clamp100(n.y) });
+  }
+  m.nodes = nodes;
+  if (Array.isArray(m.edges))
+    m.edges = m.edges
+      .map((e) => (e && typeof e === "object" ? { ...(e as Record<string, unknown>) } : null))
+      .filter((e): e is Record<string, unknown> => !!e && !!rename.get(e.from as string) && !!rename.get(e.to as string))
+      .map((e) => ({ ...e, from: rename.get(e.from as string), to: rename.get(e.to as string) }))
+      .slice(0, 60);
 }
 
 /**

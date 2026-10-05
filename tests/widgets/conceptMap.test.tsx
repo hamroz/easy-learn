@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { BlockView } from "@/components/reader/BlockView";
 import { ReaderContext } from "@/components/reader/ReaderContext";
@@ -47,5 +48,20 @@ describe("ConceptMap", () => {
     const { container, queryByRole } = render(<BlockView block={map} sectionId="s" />);
     fireEvent.click(container.querySelector('[data-node="atom"]')!);
     expect(queryByRole("button", { name: /quick bite/i })).toBeNull();
+  });
+
+  it("recovers when opening a quick bite fails", async () => {
+    const openBite = vi.fn().mockRejectedValue(new Error("Server unavailable"));
+    const { container, getByRole } = render(
+      <ReaderContext.Provider value={{ lessonId: "l1", openBite }}>
+        <BlockView block={map} sectionId="s" />
+      </ReaderContext.Provider>,
+    );
+    fireEvent.click(container.querySelector('[data-node="ion"]')!);
+    await act(async () => {
+      fireEvent.click(getByRole("button", { name: /quick bite/i }));
+    });
+    expect((getByRole("button", { name: /quick bite/i }) as HTMLButtonElement).disabled).toBe(false);
+    expect(container.textContent).toContain("Server unavailable");
   });
 });

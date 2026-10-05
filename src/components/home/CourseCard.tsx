@@ -27,9 +27,9 @@ function StatusLine({ c }: { c: CourseCardData }) {
         Designing your {info.noun} <Dots />
       </span>
     );
+  if (c.status === "failed") return <span className="text-[#b42318] dark:text-[#ff8a80]">Something went wrong — open to retry</span>;
   if (isSinglePage(c.format)) return <span>{info.label} · {info.minutes}</span>;
   if (c.busy) return <span className="inline-flex items-center gap-2">Rewriting the outline <Dots /></span>;
-  if (c.status === "failed") return <span className="text-[#b42318] dark:text-[#ff8a80]">Something went wrong — open to retry</span>;
   if (c.status === "outline_ready") return <span>Outline ready · {c.lessonCount} lessons</span>;
   if (c.completedCount >= c.lessonCount && c.lessonCount > 0) return <span>Finished · {c.lessonCount} lessons</span>;
   return (

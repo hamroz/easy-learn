@@ -24,6 +24,9 @@ export function buildSectionPrompt(input: {
   format?: FormatId;
 }): Prompt {
   const formatNote = writingGuidance(input.format, input.sectionIndex);
+  const single = !!formatNote;
+  /** Formats whose widget budget is fixed by the plan: an unplanned section gets no widget. */
+  const plannedWidgetsOnly = input.format === "bite" || input.format === "map";
   const section = input.plan.sections[input.sectionIndex];
   const interactive = section.interactive?.trim();
   const customIdea = interactive?.toLowerCase().startsWith("custom") ? interactive.replace(/^custom\s*:?\s*/i, "") : null;
@@ -32,7 +35,7 @@ export function buildSectionPrompt(input: {
 
 Write ONE section of a lesson as a list of content blocks. Other sections are written separately, so do not repeat their content and do not write the lesson title. The section's heading is shown above your blocks — do not repeat it.
 
-${formatNote ? `${formatNote}\n\n` : ""}${formatNote ? "Otherwise" : "Length"}: about 300–650 words of prose, in 4–10 paragraphs, plus 1–2 widgets placed exactly where they help (usually right after the paragraph that sets them up, followed by a paragraph that reflects on what the reader saw). A widget must let the reader *do* something that builds intuition; never add decoration.
+${single ? formatNote : "Length: about 300–650 words of prose, in 4–10 paragraphs, plus 1–2 widgets placed exactly where they help (usually right after the paragraph that sets them up, followed by a paragraph that reflects on what the reader saw)."} A widget must let the reader *do* something that builds intuition; never add decoration.
 
 ${WRITING_STYLE}
 ${languageRule(input.course.language)}
@@ -65,9 +68,9 @@ ${input.plan.sections
 Write section ${input.sectionIndex + 1}: "${section.heading}"
 Goal: ${section.goal}
 Key points: ${section.keyPoints.length ? section.keyPoints.join("; ") : "(your choice)"}
-Interactive idea: ${interactive ?? "(your choice — or none if prose is better)"}
+Interactive idea: ${interactive ?? (plannedWidgetsOnly ? "none — no widget in this section" : "(your choice — or none if prose is better)")}
 ${customRule}
 ${input.sectionIndex === 0 ? "This is the first section: open with a situation or question that makes the reader curious." : ""}
-${input.sectionIndex === input.plan.sections.length - 1 ? "This is the last section: close the lesson calmly and hint at what comes next." : ""}`;
+${input.sectionIndex === input.plan.sections.length - 1 ? single ? "This is the last section: close the page calmly." : "This is the last section: close the lesson calmly and hint at what comes next." : ""}`;
   return { system, prompt };
 }

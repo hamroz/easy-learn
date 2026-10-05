@@ -45,6 +45,11 @@ export async function cheatSheetFor(userId: string, courseId: string): Promise<s
 export async function goDeeper(userId: string, courseId: string): Promise<string> {
   const item = await ownedCourse(userId, courseId);
   if (item.format === "course") throw new HttpError(400, "This is already a course");
+  if (item.parentId) {
+    // A cheat sheet (or anything made from a course) goes deeper by returning to that course, not by copying it.
+    const [parent] = await db.select({ id: courses.id, format: courses.format }).from(courses).where(and(eq(courses.id, item.parentId), eq(courses.userId, userId)));
+    if (parent?.format === "course") return parent.id;
+  }
   const existing = await childWithTopic(userId, item.id, "course");
   if (existing) return existing;
   const course = await createCourse(userId, { topic: item.topicPrompt, level: item.level, format: "course", parentId: item.id, title: item.title });

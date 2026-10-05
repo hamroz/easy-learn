@@ -51,4 +51,10 @@ describe("derived items", () => {
     const [c] = await db.select().from(courses).where(eq(courses.id, id));
     expect(c).toMatchObject({ format: "course", parentId: courseId, topicPrompt: "Atoms" });
   });
+
+  it("go deeper from a course's cheat sheet leads back to that course instead of copying it", async () => {
+    const { courseId } = await readyItem("course");
+    const sheet = await cheatSheetFor(userId, courseId);
+    expect(await goDeeper(userId, sheet)).toBe(courseId);
+  });
 });

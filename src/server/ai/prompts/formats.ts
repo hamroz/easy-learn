@@ -36,8 +36,7 @@ const GUIDE: Record<Exclude<FormatId, "course">, { plan: string; writing: (secti
 
 export function planGuidance(format: FormatId | undefined): string {
   if (!format || format === "course") return "";
-  const [min, max] = formatInfo(format).sections;
-  return `${GUIDE[format].plan}\nUse ${min}–${max} sections${min === max ? "" : ""}.`;
+  return GUIDE[format].plan;
 }
 
 export function writingGuidance(format: FormatId | undefined, sectionIndex: number): string {

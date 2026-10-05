@@ -38,6 +38,13 @@ export function blockText(b: Block): string {
       return b.steps.map((s) => mdToText(s.md)).join("\n");
     case "formula":
       return `$$${b.tex}$$ ` + b.parts.map((p) => `${p.label}: ${mdToText(p.md)}`).join("; ");
+    case "conceptMap": {
+      const label = new Map(b.nodes.map((n) => [n.id, n.label]));
+      return [
+        ...b.nodes.map((n) => `${n.label}: ${mdToText(n.summary)}`),
+        ...b.edges.map((e) => `${label.get(e.from)} → ${label.get(e.to)}${e.label ? ` (${e.label})` : ""}`),
+      ].join("\n");
+    }
     default:
       return "caption" in b && b.caption ? `[${b.caption}]` : "";
   }

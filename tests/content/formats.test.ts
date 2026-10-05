@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { blockSchema, parseBlocksLenient } from "@/content/blocks";
 import { FORMATS, formatInfo, isSinglePage } from "@/content/formats";
+import { blockText } from "@/content/text";
 
 const map = {
   type: "conceptMap",
@@ -40,5 +41,29 @@ describe("conceptMap block", () => {
     const [b] = parseBlocksLenient([{ ...map, edges: [...map.edges, { from: "atom", to: "ghost" }] }]);
     expect(b.type).toBe("conceptMap");
     expect(b.type === "conceptMap" && b.edges).toHaveLength(3);
+  });
+});
+
+describe("map robustness", () => {
+  it("lenient parsing shortens over-long node ids and keeps their edges", () => {
+    const long = {
+      ...map,
+      nodes: [...map.nodes.slice(0, 3), { id: "supervised_learning_methods", label: "Supervised", summary: "Learning from labels.", x: 140, y: -5 }],
+      edges: [...map.edges, { from: "atom", to: "supervised_learning_methods" }],
+    };
+    const [b] = parseBlocksLenient([long]);
+    expect(b?.type).toBe("conceptMap");
+    if (b?.type !== "conceptMap") return;
+    const n = b.nodes.find((x) => x.label === "Supervised")!;
+    expect(n.id.length).toBeLessThanOrEqual(16);
+    expect(n.x).toBe(100);
+    expect(n.y).toBe(0);
+    expect(b.edges.some((e) => e.to === n.id)).toBe(true);
+  });
+
+  it("map ideas are visible to the AI context (quiz, questions)", () => {
+    const text = blockText(blockSchema.parse(map) as never);
+    expect(text).toContain("Ion: A charged atom.");
+    expect(text).toContain("Atom → Ion (gains or loses electrons)");
   });
 });

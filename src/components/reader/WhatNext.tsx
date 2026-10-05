@@ -84,7 +84,22 @@ export function WhatNext({ view, onChanged, onReached }: { view: LessonViewJson;
         <span className="h-px flex-1 bg-border" />
       </div>
 
-      {single && (
+      {single && view.parent?.format === "course" && (
+        <Link
+          href={`/courses/${view.parent.id}`}
+          className="group mt-10 flex items-center justify-between gap-4 rounded-[var(--radius)] bg-text px-6 py-5 text-bg transition hover:opacity-95"
+        >
+          <div className="min-w-0">
+            <div className="text-[12px] uppercase tracking-[0.14em] opacity-70">Go deeper</div>
+            <div className="mt-1 font-[family-name:var(--font-heading)] text-[22px]">Back to the course · {view.parent.title}</div>
+          </div>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="shrink-0 transition group-hover:translate-x-1" aria-hidden>
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </Link>
+      )}
+
+      {single && view.parent?.format !== "course" && (
         <button
           type="button"
           onClick={goDeeper}

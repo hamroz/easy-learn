@@ -20,6 +20,7 @@ export function ConceptMap({ block }: { block: BlockOf<"conceptMap"> }) {
   const [selected, setSelected] = useState<string | null>(null);
   const [hover, setHover] = useState<string | null>(null);
   const [opening, setOpening] = useState(false);
+  const [biteError, setBiteError] = useState<string | null>(null);
 
   const pos = useMemo(() => {
     // Keep the widest pill fully inside the canvas.
@@ -101,9 +102,15 @@ export function ConceptMap({ block }: { block: BlockOf<"conceptMap"> }) {
                 <button
                   type="button"
                   disabled={opening}
-                  onClick={() => {
+                  onClick={async () => {
                     setOpening(true);
-                    reader.openBite!(node.id);
+                    setBiteError(null);
+                    try {
+                      await reader.openBite!(node.id);
+                    } catch (e) {
+                      setBiteError((e as Error).message || "Could not open the quick bite");
+                      setOpening(false);
+                    }
                   }}
                   className="rounded-full bg-text px-3.5 py-1.5 text-[13px] text-bg transition hover:opacity-90 disabled:opacity-60"
                 >
@@ -114,6 +121,7 @@ export function ConceptMap({ block }: { block: BlockOf<"conceptMap"> }) {
             <p className="mt-1.5 font-[family-name:var(--font-body)] text-[16.5px] leading-relaxed text-text">
               <Markdown md={node.summary} />
             </p>
+            {biteError && <p className="mt-2 font-ui text-[13px] text-[color:var(--accent2)]">{biteError}</p>}
           </div>
         ) : (
           <p className="text-[14px] text-muted">Select an idea to read about it{reader?.openBite ? ", or open a two-minute quick bite on it" : ""}.</p>
