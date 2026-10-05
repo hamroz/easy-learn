@@ -23,7 +23,7 @@ describe("importExamples", () => {
     expect(await importExamples(userId, DIR)).toBe(1);
     const [c] = await db.select().from(courses);
     expect(c).toMatchObject({ title: "Tiny example", isExample: true, status: "active" });
-    expect(c.theme?.fontPair).toBe("modern");
+    expect(c.theme?.fontPair).toBe("inter"); // legacy "modern" mapped forward
     const ls = await db.select().from(lessons).where(eq(lessons.courseId, c.id)).orderBy(asc(lessons.position));
     expect(ls.map((l) => [l.title, l.status])).toEqual([
       ["Written", "ready"],

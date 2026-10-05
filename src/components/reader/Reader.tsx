@@ -16,8 +16,9 @@ import { WhatNext } from "./WhatNext";
 import { AskLayer } from "./ask/AskLayer";
 import { ParagraphTools } from "./ParagraphTools";
 import type { VariantJson } from "@/lib/types";
+import type { FontId } from "@/content/fonts";
 
-export function Reader({ initial }: { initial: LessonViewJson }) {
+export function Reader({ initial, fonts }: { initial: LessonViewJson; fonts: FontId[] }) {
   const { view, setView, refresh } = useLessonData(initial);
   const { course, lesson, sections, nav } = view;
   const [activeVariant, setActiveVariant] = useState<Record<string, string | null>>({});
@@ -90,7 +91,7 @@ export function Reader({ initial }: { initial: LessonViewJson }) {
   const planning = sections.length === 0 && (lesson.status === "queued" || lesson.status === "generating" || lesson.status === "planned");
 
   return (
-    <div style={themeStyle(course.theme)} className={`${themeClass(course.theme)} min-h-screen`}>
+    <div style={themeStyle(course.theme, fonts)} className={`${themeClass(course.theme)} min-h-screen`}>
       <header className="sticky top-0 z-30 border-b border-border/60 bg-[color-mix(in_oklab,var(--bg)_82%,transparent)] backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
           <Link href={`/courses/${course.id}`} className="flex min-w-0 items-center gap-2 font-ui text-[13px] text-muted transition hover:text-text">

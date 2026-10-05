@@ -1,7 +1,9 @@
 import type { Level } from "@/server/db/schema";
+import { DEFAULT_FONTS, fontById, type FontId } from "@/content/fonts";
 import { AUTHOR, JSON_ONLY, LEVELS, type Prompt } from "./style";
 
-export function buildOutlinePrompt(input: { topic: string; level: Level; language?: string | null }): Prompt {
+export function buildOutlinePrompt(input: { topic: string; level: Level; language?: string | null; fonts?: FontId[] }): Prompt {
+  const fonts = (input.fonts?.length ? input.fonts : DEFAULT_FONTS).map((id) => `   ${id} (${fontById(id).description})`).join(",\n");
   const language = input.language
     ? `Write the course in the language with code "${input.language}".`
     : `Write the course in the same language the learner used in their request (detect it); report its code in "language".`;
@@ -22,12 +24,7 @@ Lessons:
 Visual identity ("theme") — choose a design that fits the topic's feeling. It is used for the whole course.
 - "name": an evocative 2–3 word name. "mood": a few words.
 - "fontPair": one of
-   editorial (elegant serif reading text, like a fine magazine),
-   classic (bookish serif + clean sans, like a textbook done beautifully),
-   modern (clean geometric sans, crisp and contemporary),
-   humanist (warm, soft serif with character),
-   technical (precise grotesk + mono accents, for computing/engineering/math),
-   storybook (friendly rounded type, for history, nature, gentle topics).
+${fonts}.
 - "scheme": "light" or "dark" — the preferred mode (e.g. dark for astronomy or night themes).
 - "light" and "dark": palettes, each {"bg","surface","text","muted","accent","accent2","highlight","border"} as #rrggbb. Calm, harmonious, not saturated neon. "bg" is the page, "surface" cards/widgets, "accent" the main interactive colour, "accent2" a complementary secondary, "highlight" a soft marker colour for highlighted text (must keep text readable on it), "border" subtle lines. Text must be highly readable on bg.
 - "texture": one of none, grid, dots, paper, stars, waves — a very subtle background pattern that suits the topic.

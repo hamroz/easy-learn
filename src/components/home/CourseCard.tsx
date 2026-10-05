@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Theme } from "@/content/theme";
+import type { FontId } from "@/content/fonts";
 import { themeClass, themeStyle } from "@/lib/theme";
 import { Dots } from "@/components/ui/Spinner";
 
@@ -34,12 +35,12 @@ function StatusLine({ c }: { c: CourseCardData }) {
   );
 }
 
-export function CourseCard({ course: c }: { course: CourseCardData }) {
+export function CourseCard({ course: c, fonts }: { course: CourseCardData; fonts: FontId[] }) {
   const pct = c.lessonCount ? Math.round((c.completedCount / c.lessonCount) * 100) : 0;
   return (
     <Link
       href={`/courses/${c.id}`}
-      style={themeStyle(c.theme)}
+      style={themeStyle(c.theme, fonts)}
       className={`${themeClass(null)} group relative flex flex-col overflow-hidden rounded-[22px] border border-border transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.35)]`}
     >
       <div className="relative aspect-[2/1] overflow-hidden bg-surface">

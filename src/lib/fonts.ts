@@ -5,6 +5,7 @@ import {
   Inter_Tight,
   JetBrains_Mono,
   Literata,
+  Lora,
   Newsreader,
   Nunito,
   Source_Sans_3,
@@ -23,6 +24,7 @@ export const literata = Literata({ subsets: ["latin", "latin-ext", "cyrillic", "
 export const spaceGrotesk = Space_Grotesk({ subsets: ["latin", "latin-ext"], variable: "--font-space-grotesk", display: "swap" });
 export const plexSans = IBM_Plex_Sans({ subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"], variable: "--font-plex-sans", display: "swap" });
 export const jetbrains = JetBrains_Mono({ subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"], variable: "--font-jetbrains", display: "swap" });
+export const lora = Lora({ subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"], variable: "--font-lora", display: "swap", style: ["normal", "italic"] });
 export const nunito = Nunito({ subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"], variable: "--font-nunito", display: "swap" });
 
 export const fontVariables = [
@@ -36,6 +38,7 @@ export const fontVariables = [
   spaceGrotesk,
   plexSans,
   jetbrains,
+  lora,
   nunito,
 ]
   .map((f) => f.variable)

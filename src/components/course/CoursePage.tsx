@@ -13,10 +13,11 @@ import { Dots } from "@/components/ui/Spinner";
 import { OutlineEditor } from "./OutlineEditor";
 import { LessonList } from "./LessonList";
 import { CourseMenu } from "./CourseMenu";
+import { type FontId, resolveFont } from "@/content/fonts";
 
 const LEVEL_LABEL = { beginner: "Beginner", intermediate: "Intermediate", advanced: "Advanced" } as const;
 
-export function CoursePage({ view }: { view: CourseViewJson }) {
+export function CoursePage({ view, fonts }: { view: CourseViewJson; fonts: FontId[] }) {
   const { course, lessons } = view;
   const router = useRouter();
   const [retrying, setRetrying] = useState(false);
@@ -33,7 +34,7 @@ export function CoursePage({ view }: { view: CourseViewJson }) {
   };
 
   return (
-    <div style={themeStyle(course.theme)} className={`${themeClass(course.theme)} min-h-screen`}>
+    <div style={themeStyle(course.theme, fonts)} className={`${themeClass(course.theme)} min-h-screen`}>
       <AutoRefresh enabled={pending} />
       <AppHeader />
       <main className="mx-auto w-full max-w-3xl px-5 pb-28 sm:px-8">
@@ -52,7 +53,7 @@ export function CoursePage({ view }: { view: CourseViewJson }) {
             <h1 className="font-[family-name:var(--font-heading)] text-[38px] leading-[1.1] tracking-tight sm:text-[48px]">
               {course.status === "outlining" ? <span className="text-muted">{course.title}</span> : course.title}
             </h1>
-            {course.status !== "outlining" && <CourseMenu courseId={course.id} isExample={course.isExample} />}
+            {course.status !== "outlining" && <CourseMenu courseId={course.id} isExample={course.isExample} fonts={fonts} currentFont={resolveFont(course.theme?.fontPair, fonts)} />}
           </div>
           {course.subtitle && <p className="mt-3 font-[family-name:var(--font-body)] text-[19px] leading-relaxed text-muted">{course.subtitle}</p>}
           {course.status !== "outlining" && (

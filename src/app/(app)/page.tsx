@@ -1,5 +1,6 @@
 import { requirePageUser } from "@/server/auth/current";
 import { listCourses } from "@/server/services/courses";
+import { getEnabledFonts } from "@/server/services/settings";
 import { AppHeader } from "@/components/ui/AppHeader";
 import { AutoRefresh } from "@/components/ui/AutoRefresh";
 import { NewCourseForm } from "@/components/home/NewCourseForm";
@@ -8,7 +9,7 @@ import { AddExamplesButton } from "@/components/examples/AddExamplesButton";
 
 export default async function HomePage() {
   const user = await requirePageUser();
-  const courses = await listCourses(user.id);
+  const [courses, fonts] = await Promise.all([listCourses(user.id), getEnabledFonts(user.id)]);
   const mine = courses.filter((c) => !c.isExample);
   const examples = courses.filter((c) => c.isExample);
   const pending = courses.some((c) => c.status === "outlining" || c.busy);
@@ -36,7 +37,7 @@ export default async function HomePage() {
             <h2 className="mb-6 font-ui text-[13px] font-medium uppercase tracking-[0.14em] text-muted">Your courses</h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {mine.map((c) => (
-                <CourseCard key={c.id} course={c} />
+                <CourseCard key={c.id} course={c} fonts={fonts} />
               ))}
             </div>
           </section>
@@ -48,7 +49,7 @@ export default async function HomePage() {
             <p className="mb-6 text-[15px] text-muted">A few courses to show what Easy Learn can do.</p>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {examples.map((c) => (
-                <CourseCard key={c.id} course={c} />
+                <CourseCard key={c.id} course={c} fonts={fonts} />
               ))}
             </div>
           </section>

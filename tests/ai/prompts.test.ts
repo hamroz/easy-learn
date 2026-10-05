@@ -18,11 +18,11 @@ const plan = {
 };
 
 describe("prompts", () => {
-  it("outline prompt carries the topic, level and the curated theme options", () => {
+  it("outline prompt carries the topic, level and the default enabled fonts", () => {
     const p = buildOutlinePrompt({ topic: "quantum entanglement", level: "beginner" });
     expect(p.prompt).toContain("quantum entanglement");
     expect(p.system).toContain("beginner");
-    for (const f of ["editorial", "classic", "modern", "humanist", "technical", "storybook"]) expect(p.system).toContain(f);
+    for (const f of ["literata", "inter", "plex"]) expect(p.system).toContain(f);
   });
 
   it("section prompt documents every widget type and the course language", () => {

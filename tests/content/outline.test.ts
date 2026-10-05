@@ -7,7 +7,7 @@ describe("outlineSchema", () => {
   it("accepts 3–12 lessons and a lenient theme", () => {
     const o = outlineSchema.parse({ title: "Relativity", subtitle: "Space and time", language: "en", theme: { fontPair: "nope" }, lessons: lessons(6) });
     expect(o.lessons).toHaveLength(6);
-    expect(o.theme.fontPair).toBe("editorial");
+    expect(o.theme.fontPair).toBe("literata");
   });
   it("rejects outlines with too few lessons", () => {
     expect(outlineSchema.safeParse({ title: "x", language: "en", lessons: lessons(2) }).success).toBe(false);

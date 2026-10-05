@@ -1,14 +1,14 @@
 import { z } from "zod";
 import { ensureContrast, isHex } from "./color";
+import { FONT_IDS, type FontId, LEGACY_FONT_IDS } from "./fonts";
 
 /** Per-course visual identity chosen by the AI at outline time (spec §5). */
 
-export const FONT_PAIRS = ["editorial", "classic", "modern", "humanist", "technical", "storybook"] as const;
 export const TEXTURES = ["none", "grid", "dots", "paper", "stars", "waves"] as const;
 export const RADII = ["sharp", "soft", "round"] as const;
 export const PALETTE_KEYS = ["bg", "surface", "text", "muted", "accent", "accent2", "highlight", "border"] as const;
 
-export type FontPair = (typeof FONT_PAIRS)[number];
+export type FontPair = FontId;
 export type Palette = Record<(typeof PALETTE_KEYS)[number], string>;
 
 const LIGHT: Palette = {
@@ -47,7 +47,7 @@ export type Theme = {
 export const DEFAULT_THEME: Theme = {
   name: "Quiet paper",
   mood: "calm",
-  fontPair: "editorial",
+  fontPair: "literata",
   scheme: "light",
   light: LIGHT,
   dark: DARK,
@@ -72,7 +72,7 @@ function paletteSchema(defaults: Palette) {
 export const themeSchema: z.ZodType<Theme> = z.object({
   name: z.string().catch(DEFAULT_THEME.name).default(DEFAULT_THEME.name),
   mood: z.string().catch(DEFAULT_THEME.mood).default(DEFAULT_THEME.mood),
-  fontPair: z.enum(FONT_PAIRS).catch(DEFAULT_THEME.fontPair),
+  fontPair: z.preprocess((v) => (typeof v === "string" && LEGACY_FONT_IDS[v]) || v, z.enum(FONT_IDS)).catch(DEFAULT_THEME.fontPair),
   scheme: z.enum(["light", "dark"]).catch("light"),
   light: paletteSchema(LIGHT).default(LIGHT),
   dark: paletteSchema(DARK).default(DARK),

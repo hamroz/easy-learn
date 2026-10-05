@@ -6,6 +6,7 @@ import { requirePageUser } from "@/server/auth/current";
 import { HttpError } from "@/server/http";
 import { lessonView, ownedLesson } from "@/server/services/courses";
 import { openLesson } from "@/server/services/generation";
+import { getEnabledFonts } from "@/server/services/settings";
 import { Reader } from "@/components/reader/Reader";
 
 export default async function LessonRoute({ params }: { params: Promise<{ id: string; lessonId: string }> }) {
@@ -21,7 +22,7 @@ export default async function LessonRoute({ params }: { params: Promise<{ id: st
     await db.update(courses).set({ status: "active" }).where(and(eq(courses.id, id), eq(courses.status, "outline_ready")));
   await openLesson(lessonId);
   const view = await lessonView(user.id, lessonId);
-  return <Reader key={lessonId} initial={JSON.parse(JSON.stringify(view))} />;
+  return <Reader key={lessonId} initial={JSON.parse(JSON.stringify(view))} fonts={await getEnabledFonts(user.id)} />;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ lessonId: string }> }) {

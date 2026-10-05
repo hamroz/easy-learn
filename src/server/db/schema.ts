@@ -50,6 +50,14 @@ export const settings = pgTable("settings", {
   lessonModel: text("lesson_model"),
   chatModel: text("chat_model"),
   language: text("language"),
+  /** Model library, presets and the active preset (see src/server/ai/routing.ts). */
+  ai: jsonb("ai").$type<Record<string, unknown>>(),
+  /** Enabled lesson font ids (src/content/fonts.ts). */
+  fonts: jsonb("fonts").$type<string[]>(),
+  /** Encrypted provider secrets, e.g. the OpenRouter key. */
+  secrets: jsonb("secrets").$type<Record<string, string>>(),
+  /** SHA-256 of the personal access token used by the authoring API. */
+  authorTokenHash: text("author_token_hash"),
   updatedAt: timestamps.updatedAt,
 });
 

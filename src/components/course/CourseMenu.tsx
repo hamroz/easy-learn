@@ -3,8 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { api } from "@/lib/api";
+import { fontById, type FontId } from "@/content/fonts";
 
-export function CourseMenu({ courseId, isExample }: { courseId: string; isExample: boolean }) {
+export function CourseMenu({ courseId, isExample, fonts, currentFont }: { courseId: string; isExample: boolean; fonts: FontId[]; currentFont: FontId }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -19,6 +20,11 @@ export function CourseMenu({ courseId, isExample }: { courseId: string; isExampl
   const toggleExample = async () => {
     setOpen(false);
     await api(`/api/courses/${courseId}`, { method: "PATCH", body: { isExample: !isExample } });
+    router.refresh();
+  };
+  const setFont = async (fontPair: FontId) => {
+    setOpen(false);
+    await api(`/api/courses/${courseId}`, { method: "PATCH", body: { fontPair } });
     router.refresh();
   };
   const remove = async () => {
@@ -43,6 +49,22 @@ export function CourseMenu({ courseId, isExample }: { courseId: string; isExampl
       </button>
       {open && (
         <div className="absolute right-0 z-20 mt-2 w-56 overflow-hidden rounded-2xl border border-border bg-surface p-1.5 font-ui text-[14px] shadow-[0_20px_50px_-20px_rgba(0,0,0,0.4)]">
+          {fonts.length > 1 && (
+            <div className="mb-1 border-b border-border pb-1">
+              <div className="px-3 pb-1 pt-1.5 text-[11px] uppercase tracking-[0.12em] text-muted">Font</div>
+              {fonts.map((f) => (
+                <button
+                  key={f}
+                  onClick={() => setFont(f)}
+                  style={{ fontFamily: fontById(f).body }}
+                  className="flex w-full items-center justify-between rounded-xl px-3 py-1.5 text-left text-[15px] hover:bg-border/40"
+                >
+                  {fontById(f).name}
+                  {f === currentFont && <span className="font-ui text-[12px] text-accent">✓</span>}
+                </button>
+              ))}
+            </div>
+          )}
           <button onClick={toggleExample} className="block w-full rounded-xl px-3 py-2 text-left hover:bg-border/40">
             {isExample ? "Remove from examples" : "Show as an example"}
           </button>

@@ -6,6 +6,8 @@ import { outlineSchema } from "@/content/outline";
 import { normalizeTheme } from "@/content/theme";
 import { buildOutlinePrompt } from "@/server/ai/prompts/outline";
 import { aiFor } from "@/server/services/aiConfig";
+import { getEnabledFonts } from "@/server/services/settings";
+import { resolveFont } from "@/content/fonts";
 import { enqueue } from "../queue";
 import { loadCourse } from "./load";
 import type { JobHandler } from "./types";
@@ -15,9 +17,10 @@ export const outlineHandler: JobHandler = {
     const course = await loadCourse(String(job.payload.courseId));
     const { provider, model } = await aiFor(course.userId, "lesson");
     const language = course.language === "auto" ? null : course.language;
+    const fonts = await getEnabledFonts(course.userId);
     const outline = await generateJson(provider, outlineSchema, {
       task: "outline",
-      ...buildOutlinePrompt({ topic: course.topicPrompt, level: course.level, language }),
+      ...buildOutlinePrompt({ topic: course.topicPrompt, level: course.level, language, fonts }),
       model,
       effort: "medium",
       meta: { topic: course.topicPrompt },
@@ -34,7 +37,7 @@ export const outlineHandler: JobHandler = {
           title: outline.title,
           subtitle: outline.subtitle ?? null,
           language: outline.language,
-          theme: normalizeTheme(outline.theme),
+          theme: { ...normalizeTheme(outline.theme), fontPair: resolveFont(outline.theme.fontPair, fonts) },
           status: "outline_ready",
           error: null,
         })

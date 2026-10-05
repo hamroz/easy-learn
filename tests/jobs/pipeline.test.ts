@@ -16,6 +16,7 @@ import { resetDb } from "../helpers/db";
 import { vi } from "vitest";
 import { MockProvider } from "@/server/ai/mock";
 import { ensureLessonGenerating } from "@/server/services/generation";
+import { setEnabledFonts } from "@/server/services/settings";
 import type { BlockOf } from "@/content/blocks";
 
 let userId: string;
@@ -41,9 +42,17 @@ describe("generation pipeline (mock provider)", () => {
     const [c] = await db.select().from(courses).where(eq(courses.id, course.id));
     expect(c.status).toBe("outline_ready");
     expect(c.title).toBe("Special relativity");
-    expect(c.theme?.fontPair).toBe("editorial");
+    expect(c.theme?.fontPair).toBe("literata"); // mock asks for "editorial"→newsreader, which is not enabled by default
     expect(c.coverSvg).toContain("<svg");
     expect((await lessonsOf(course.id)).map((l) => l.position)).toEqual([0, 1, 2, 3, 4]);
+  });
+
+  it("a new course only uses fonts the owner enabled", async () => {
+    await setEnabledFonts(userId, ["inter", "plex"]);
+    const course = await createCourse(userId, { topic: "Relativity", level: "beginner" });
+    await runJobsUntilIdle();
+    const [c] = await db.select().from(courses).where(eq(courses.id, course.id));
+    expect(c.theme?.fontPair).toBe("inter");
   });
 
   it("start → first lesson planned, every section written, custom widget code attached; next lesson prefetched", async () => {
