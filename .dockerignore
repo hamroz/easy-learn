@@ -1,0 +1,16 @@
+.git
+.next
+node_modules
+data
+coverage
+playwright-report
+test-results
+.superpowers
+.claude
+.env
+.env.*
+!.env.example
+public/widget-libs
+*.log
+.DS_Store
+.next-e2e

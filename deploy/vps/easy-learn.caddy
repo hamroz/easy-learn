@@ -1,0 +1,18 @@
+# /srv/fuse/platform/gateway/sites/easy-learn.caddy
+learn.fuseservice.cloud {
+    request_body {
+        max_size 1MiB
+    }
+    encode zstd gzip
+    header {
+        Strict-Transport-Security "max-age=31536000"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "same-origin"
+        -Server
+    }
+    reverse_proxy easy-learn-web:3000 {
+        # Answers stream as Server-Sent Events.
+        flush_interval -1
+    }
+    import observed_app easy-learn
+}

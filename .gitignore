@@ -12,3 +12,4 @@ test-results/
 next-env.d.ts
 .DS_Store
 public/widget-libs/
+.next-e2e/

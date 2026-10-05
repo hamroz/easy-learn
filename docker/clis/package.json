@@ -1,0 +1,8 @@
+{
+  "name": "easy-learn-clis",
+  "private": true,
+  "description": "Pinned AI CLIs installed into the Easy Learn image",
+  "dependencies": {
+    "@openai/codex": "0.160.0"
+  }
+}

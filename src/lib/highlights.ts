@@ -34,3 +34,12 @@ export function caretAt(x: number, y: number): { node: Node; offset: number } | 
   const r = d.caretRangeFromPoint?.(x, y);
   return r ? { node: r.startContainer, offset: r.startOffset } : null;
 }
+
+/**
+ * ::highlight() rules, injected as a plain <style> tag because the build's CSS parser does not
+ * understand the pseudo-element and mangles it.
+ */
+export const HIGHLIGHT_CSS = `
+::highlight(el-thread){background-color:color-mix(in oklab,var(--highlight) 70%,transparent);text-decoration:underline;text-decoration-color:color-mix(in oklab,var(--accent) 55%,transparent);text-decoration-thickness:1.5px;text-underline-offset:4px}
+::highlight(el-thread-active){background-color:var(--highlight);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:4px}
+`;

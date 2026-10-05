@@ -254,18 +254,4 @@ input.range::-moz-range-thumb {
   box-shadow: 0 0 0 1px var(--accent);
 }
 
-/* Ask-about-selection highlights (CSS Custom Highlight API) */
-::highlight(el-thread) {
-  background-color: color-mix(in oklab, var(--highlight) 70%, transparent);
-  text-decoration: underline;
-  text-decoration-color: color-mix(in oklab, var(--accent) 55%, transparent);
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 4px;
-}
-::highlight(el-thread-active) {
-  background-color: var(--highlight);
-  text-decoration: underline;
-  text-decoration-color: var(--accent);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-}
+/* Ask-about-selection highlight styles live in src/lib/highlights.ts (the CSS pipeline cannot parse ::highlight()). */

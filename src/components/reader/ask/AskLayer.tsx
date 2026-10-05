@@ -3,7 +3,7 @@
 import { autoUpdate, flip, offset, shift, useFloating } from "@floating-ui/react";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { buildAnchor, rangeFromOffsets, reanchor, selectableText } from "@/lib/anchors";
-import { caretAt, clearHighlights, paintHighlights } from "@/lib/highlights";
+import { caretAt, clearHighlights, HIGHLIGHT_CSS, paintHighlights } from "@/lib/highlights";
 import type { ThreadJson } from "@/lib/types";
 import { AskPopover, type Draft } from "./AskPopover";
 import { ThreadsDrawer } from "./ThreadsDrawer";
@@ -161,6 +161,7 @@ export function AskLayer({
 
   return (
     <>
+      <style dangerouslySetInnerHTML={{ __html: HIGHLIGHT_CSS }} />
       {sel && !open && <SelectionToolbar range={sel.range} paragraph={sel.paragraph} onAsk={() => startAsk()} onExplain={() => startAsk("Explain this simply")} onRewrite={(kind) => {
         onRewrite(sel.draft.sectionId, sel.draft.blockId, kind);
         setSel(null);

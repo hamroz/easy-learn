@@ -1,0 +1,72 @@
+# /srv/fuse/apps/easy-learn/compose.yaml — follows the Fuse VPS runbook (/srv/fuse/README.md).
+# Source is uploaded to ./src; images are versioned via EASY_LEARN_IMAGE in the private .env.
+name: easy-learn
+
+services:
+  web:
+    image: ${EASY_LEARN_IMAGE:?Set a reviewed, versioned image tag in .env}
+    build:
+      context: ./src
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://easylearn:${POSTGRES_PASSWORD:?}@db:5432/easylearn
+      APP_ORIGIN: https://learn.fuseservice.cloud
+      SETUP_TOKEN: ${SETUP_TOKEN:?}
+      AI_PROVIDER: ${AI_PROVIDER:-codex-cli}
+      AI_CONCURRENCY: ${AI_CONCURRENCY:-2}
+    volumes:
+      # CLI sign-ins (codex/claude) persist here; owned by UID 10010.
+      - /srv/fuse/data/easy-learn/home:/data/home
+    read_only: true
+    tmpfs:
+      - /tmp:size=512m,mode=1777
+      - /app/.next/cache:size=64m,uid=10010,gid=10010
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    cpus: 2.0
+    mem_limit: 2g
+    pids_limit: 512
+    networks:
+      edge:
+        aliases: [easy-learn-web]
+      outbound:
+      backend:
+    logging:
+      driver: local
+      options: { max-size: 10m, max-file: "3" }
+
+  db:
+    image: ${POSTGRES_IMAGE:?Pin postgres:17-alpine by digest in .env}
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: easylearn
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: easylearn
+    volumes:
+      - /srv/fuse/data/easy-learn/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U easylearn -d easylearn"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    cap_drop: [ALL]
+    cap_add: [CHOWN, DAC_OVERRIDE, FOWNER, SETUID, SETGID]
+    security_opt: [no-new-privileges:true]
+    cpus: 1.0
+    mem_limit: 768m
+    pids_limit: 256
+    networks: [backend]
+    logging:
+      driver: local
+      options: { max-size: 10m, max-file: "3" }
+
+networks:
+  edge:
+    external: true
+    name: easy-learn-edge
+  outbound: {}
+  backend:
+    internal: true
