@@ -1,0 +1,20 @@
+# Development database only. Run: docker compose -f compose.dev.yaml up -d --wait
+name: easy-learn-dev
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: easylearn
+      POSTGRES_PASSWORD: easylearn
+      POSTGRES_DB: easylearn
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - ./data/dev-postgres:/var/lib/postgresql/data
+      - ./docker/dev-init.sql:/docker-entrypoint-initdb.d/10-test-db.sql:ro
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U easylearn -d easylearn"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
