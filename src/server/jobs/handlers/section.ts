@@ -1,12 +1,12 @@
 import { eq } from "drizzle-orm";
 import { db } from "@/server/db/client";
 import { sections } from "@/server/db/schema";
-import { generateJson } from "@/server/ai";
 import { parseBlocksLenient } from "@/content/blocks";
 import { plotIssues, sectionQualitySchema } from "@/server/content/quality";
 import { buildSectionPrompt } from "@/server/ai/prompts/section";
 import { sanitizeBlocks } from "@/server/content/sanitize";
-import { aiFor, courseCtx } from "@/server/services/aiConfig";
+import { aiFor } from "@/server/ai/routing";
+import { courseCtx } from "@/server/services/aiConfig";
 import { enqueue } from "../queue";
 import { loadSection, refreshLessonStatus } from "./load";
 import type { JobHandler } from "./types";
@@ -18,10 +18,8 @@ export const sectionHandler: JobHandler = {
     const priority = Number(job.payload.priority ?? 10);
     await db.update(sections).set({ status: "generating", error: null }).where(eq(sections.id, section.id));
 
-    const { provider, model } = await aiFor(course.userId, "lesson");
-    const out = await generateJson(
-      provider,
-      sectionQualitySchema,
+    const ai = await aiFor(course.userId, "writing");
+    const out = await ai.json(sectionQualitySchema,
       {
         task: "section",
         ...buildSectionPrompt({
@@ -31,8 +29,6 @@ export const sectionHandler: JobHandler = {
           sectionIndex: section.position,
           lessonCount: all.length,
         }),
-        model,
-        effort: "medium",
         meta: { position: section.position },
       },
       {

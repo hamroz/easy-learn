@@ -1,11 +1,10 @@
 import { eq } from "drizzle-orm";
 import { db } from "@/server/db/client";
 import { courses, lessons } from "@/server/db/schema";
-import { generateJson } from "@/server/ai";
 import { outlineSchema } from "@/content/outline";
 import { normalizeTheme } from "@/content/theme";
 import { buildOutlinePrompt } from "@/server/ai/prompts/outline";
-import { aiFor } from "@/server/services/aiConfig";
+import { aiFor } from "@/server/ai/routing";
 import { getEnabledFonts } from "@/server/services/settings";
 import { resolveFont } from "@/content/fonts";
 import { enqueue } from "../queue";
@@ -15,14 +14,12 @@ import type { JobHandler } from "./types";
 export const outlineHandler: JobHandler = {
   async run(job) {
     const course = await loadCourse(String(job.payload.courseId));
-    const { provider, model } = await aiFor(course.userId, "lesson");
+    const ai = await aiFor(course.userId, "course");
     const language = course.language === "auto" ? null : course.language;
     const fonts = await getEnabledFonts(course.userId);
-    const outline = await generateJson(provider, outlineSchema, {
+    const outline = await ai.json(outlineSchema, {
       task: "outline",
       ...buildOutlinePrompt({ topic: course.topicPrompt, level: course.level, language, fonts }),
-      model,
-      effort: "medium",
       meta: { topic: course.topicPrompt },
     });
 

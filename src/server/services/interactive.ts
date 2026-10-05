@@ -1,14 +1,15 @@
 import { and, asc, eq } from "drizzle-orm";
 import { db } from "@/server/db/client";
 import { type Anchor, blockVariants, type Course, messages, quizzes, sections, threads, type VariantKind } from "@/server/db/schema";
-import { generateJson, INTERACTIVE_TIMEOUT_MS } from "@/server/ai";
+import { INTERACTIVE_TIMEOUT_MS } from "@/server/ai";
+import { aiFor } from "@/server/ai/routing";
 import { quizSchema, variantSchema } from "@/content/outline";
 import { sectionText } from "@/content/text";
 import { buildVariantPrompt } from "@/server/ai/prompts/variant";
 import { buildQuizPrompt } from "@/server/ai/prompts/quiz";
 import { buildAnswerPrompt } from "@/server/ai/prompts/answer";
 import { HttpError } from "@/server/http";
-import { aiFor, courseCtx } from "./aiConfig";
+import { courseCtx } from "./aiConfig";
 import { ownedLesson, ownedSection, ownedThread } from "./courses";
 
 export async function getOrCreateVariant(userId: string, sectionId: string, blockId: string, kind: VariantKind) {
@@ -21,8 +22,8 @@ export async function getOrCreateVariant(userId: string, sectionId: string, bloc
 
   const block = section.blocks.find((b) => b.id === blockId);
   if (!block || block.type !== "paragraph") throw new HttpError(400, "Only paragraphs can be rewritten");
-  const { provider, model } = await aiFor(userId, "chat");
-  const { md } = await generateJson(provider, variantSchema, {
+  const ai = await aiFor(userId, "rewrite");
+  const { md } = await ai.json(variantSchema, {
     task: "variant",
     ...buildVariantPrompt({
       course: courseCtx(course),
@@ -31,8 +32,6 @@ export async function getOrCreateVariant(userId: string, sectionId: string, bloc
       context: sectionText(section.heading, section.blocks),
       kind,
     }),
-    model,
-    effort: "low",
     timeoutMs: INTERACTIVE_TIMEOUT_MS,
     meta: { kind },
   });
@@ -45,12 +44,10 @@ export async function createQuiz(userId: string, lessonId: string) {
   const secs = await db.select().from(sections).where(eq(sections.lessonId, lessonId)).orderBy(asc(sections.position));
   const text = secs.map((s) => sectionText(s.heading, s.blocks)).join("\n\n");
   if (!text.trim()) throw new HttpError(409, "The lesson is not written yet");
-  const { provider, model } = await aiFor(userId, "chat");
-  const content = await generateJson(provider, quizSchema, {
+  const ai = await aiFor(userId, "quiz");
+  const content = await ai.json(quizSchema, {
     task: "quiz",
     ...buildQuizPrompt({ course: courseCtx(course), lessonTitle: lesson.title, lessonText: text }),
-    model,
-    effort: "low",
     timeoutMs: 3 * 60_000,
   });
   const [row] = await db.insert(quizzes).values({ lessonId, content }).returning();
@@ -95,10 +92,10 @@ export async function answerInThread(userId: string, threadId: string, content: 
   await db.insert(messages).values({ threadId, role: "user", content });
 
   const quote = thread.anchor.quote;
-  const { provider, model } = await aiFor(userId, "chat");
+  const ai = await aiFor(userId, "answer");
   let streamed = "";
   try {
-    const text = await provider.complete({
+    const text = await ai.complete({
       task: "answer",
       ...buildAnswerPrompt({
         course: courseCtx(course as Course),
@@ -108,8 +105,6 @@ export async function answerInThread(userId: string, threadId: string, content: 
         history: history.map((m) => ({ role: m.role, content: m.content })),
         question: content,
       }),
-      model,
-      effort: "low",
       timeoutMs: INTERACTIVE_TIMEOUT_MS,
       signal,
       meta: { quote },

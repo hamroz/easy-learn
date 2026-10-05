@@ -1,11 +1,11 @@
 import { eq } from "drizzle-orm";
 import { db } from "@/server/db/client";
 import { sections } from "@/server/db/schema";
-import { generateJson } from "@/server/ai";
 import type { Block } from "@/content/blocks";
 import { widgetCodeSchema } from "@/content/outline";
 import { buildWidgetPrompt } from "@/server/ai/prompts/widget";
-import { aiFor, courseCtx } from "@/server/services/aiConfig";
+import { aiFor } from "@/server/ai/routing";
+import { courseCtx } from "@/server/services/aiConfig";
 import { loadSection } from "./load";
 import type { JobHandler } from "./types";
 
@@ -26,12 +26,10 @@ export const widgetHandler: JobHandler = {
     const block = section.blocks.find((b) => b.id === blockId);
     if (!block || block.type !== "custom") return;
 
-    const { provider, model } = await aiFor(course.userId, "lesson");
-    const { html } = await generateJson(provider, widgetCodeSchema, {
+    const ai = await aiFor(course.userId, "simulation");
+    const { html } = await ai.json(widgetCodeSchema, {
       task: "widget",
       ...buildWidgetPrompt({ course: courseCtx(course), lessonTitle: lesson.title, brief: block.brief, height: block.height }),
-      model,
-      effort: "medium",
     });
     await updateCustomBlock(sectionId, blockId, { code: html, status: "ready" });
   },

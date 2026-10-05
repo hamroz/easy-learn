@@ -1,10 +1,10 @@
 import { and, asc, eq, inArray } from "drizzle-orm";
 import { db } from "@/server/db/client";
 import { courses, lessons } from "@/server/db/schema";
-import { generateJson } from "@/server/ai";
 import { lessonsListSchema } from "@/content/outline";
 import { buildReshapePrompt } from "@/server/ai/prompts/reshape";
-import { aiFor, courseCtx } from "@/server/services/aiConfig";
+import { aiFor } from "@/server/ai/routing";
+import { courseCtx } from "@/server/services/aiConfig";
 import { loadCourse } from "./load";
 import type { JobHandler } from "./types";
 
@@ -21,8 +21,8 @@ function rewriteHandler(mode: "reshape" | "steer"): JobHandler {
       const fixed = all.filter((l) => l.position <= afterPosition || l.status !== "planned");
       const planned = all.filter((l) => !fixed.includes(l));
 
-      const { provider, model } = await aiFor(course.userId, "lesson");
-      const out = await generateJson(provider, lessonsListSchema, {
+      const ai = await aiFor(course.userId, "course");
+      const out = await ai.json(lessonsListSchema, {
         task: mode,
         ...buildReshapePrompt({
           course: courseCtx(course),
@@ -31,8 +31,6 @@ function rewriteHandler(mode: "reshape" | "steer"): JobHandler {
           instruction: String(job.payload.instruction ?? ""),
           mode,
         }),
-        model,
-        effort: "medium",
       });
 
       await db.transaction(async (tx) => {

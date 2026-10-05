@@ -1,10 +1,10 @@
 import { eq } from "drizzle-orm";
 import { db } from "@/server/db/client";
 import { lessons, sections } from "@/server/db/schema";
-import { generateJson } from "@/server/ai";
 import { lessonPlanSchema } from "@/content/outline";
 import { buildLessonPlanPrompt } from "@/server/ai/prompts/lessonPlan";
-import { aiFor, courseCtx } from "@/server/services/aiConfig";
+import { aiFor } from "@/server/ai/routing";
+import { courseCtx } from "@/server/services/aiConfig";
 import { enqueue } from "../queue";
 import { loadLesson } from "./load";
 import type { JobHandler } from "./types";
@@ -18,8 +18,8 @@ export const lessonPlanHandler: JobHandler = {
     const prev = all.find((l) => l.position === lesson.position - 1);
     const previous = prev?.plan ? prev.plan.sections.map((s) => `- ${s.heading}: ${s.goal}`).join("\n") : prev ? `- ${prev.title}: ${prev.summary}` : null;
 
-    const { provider, model } = await aiFor(course.userId, "lesson");
-    const plan = await generateJson(provider, lessonPlanSchema, {
+    const ai = await aiFor(course.userId, "plan");
+    const plan = await ai.json(lessonPlanSchema, {
       task: "lesson_plan",
       ...buildLessonPlanPrompt({
         course: courseCtx(course),
@@ -27,8 +27,6 @@ export const lessonPlanHandler: JobHandler = {
         lessons: all.map((l) => ({ title: l.title, summary: l.summary, position: l.position })),
         previous,
       }),
-      model,
-      effort: "medium",
     });
 
     const created = await db.transaction(async (tx) => {
